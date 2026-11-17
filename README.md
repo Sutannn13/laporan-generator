@@ -31,6 +31,7 @@ Format dokumen dikonfigurasi secara baku pada pustaka layout (`lib.typ`):
 
 ## Cakupan Outline Program Studi Teknologi Informasi
 
+### A. Outline Praktik Kerja Lapangan (PKL)
 Disediakan draf bab sesuai 4 outline resmi peminatan TI S1 serta Proposal PKL:
 
 1. **Proposal PKL** (3 Bab):
@@ -60,6 +61,31 @@ Disediakan draf bab sesuai 4 outline resmi peminatan TI S1 serta Proposal PKL:
    - Bab III Pembahasan (Dokumen/File/Kode/Program Berjalan, UML)
    - Bab IV Penutup
 
+### B. Outline Skripsi Program Sarjana (S1)
+1. **Skripsi - Kode 156: Perancangan Program Science** (5 Bab):
+   - Bab I Pendahuluan (Latar Belakang, Identifikasi Permasalahan, Perumusan Masalah, Maksud dan Tujuan, Metode Penelitian, Ruang Lingkup)
+   - Bab II Landasan Teori (Tinjauan Pustaka, UML, Penelitian Terkait Min. 5 Jurnal)
+   - Bab III Analisis dan Perancangan Aplikasi (Tinjauan Perusahaan, Analisis Masalah/Kebutuhan, Rancangan Algoritma)
+   - Bab IV Implementasi dan Pengujian Software (Desain Basis Data, Software Architecture/Pseudocode, UI, Code Generation, Testing, Support/Publikasi)
+   - Bab V Penutup (Kesimpulan, Saran Manajerial, Sistem & Penelitian Lanjutan)
+2. **Skripsi - Kode 138: Penelitian Ilmiah** (5 Bab):
+   - Bab I Pendahuluan (Latar Belakang, Identifikasi Permasalahan, Perumusan Masalah, Maksud dan Tujuan, Metode Penelitian, Ruang Lingkup, Hipotesis)
+   - Bab II Landasan Teori (Tinjauan Pustaka, Penelitian Terkait Min. 5 Jurnal, Tinjauan Organisasi/Objek Penelitian)
+   - Bab III Metodologi Penelitian (Tahapan Penelitian, Instrumen Penelitian, Metode Pengumpulan Data/Populasi/Sampel, Metode Analisis Data)
+   - Bab IV Hasil Penelitian dan Pembahasan (Deskripsi Dataset, Implementasi Metode/Perhitungan, Hasil Uji Hipotesis, Pembahasan Komparatif)
+   - Bab V Penutup (Kesimpulan, Saran Manajerial, Sistem/Teknis & Penelitian Lanjutan)
+3. **Skripsi - Kode 137: Jaringan Komputer** (5 Bab):
+   - Bab I Pendahuluan (Latar Belakang, Identifikasi Permasalahan, Perumusan Masalah, Tujuan dan Manfaat, Metode Penelitian NDLC, Ruang Lingkup)
+   - Bab II Landasan Teori (Tinjauan Pustaka, OSI/TCP-IP, Routing, QoS, Firewall/VPN, Penelitian Terkait Min. 5 Jurnal)
+   - Bab III Analisis Jaringan Berjalan (Tinjauan Perusahaan, Skema Jaringan Berjalan Simulator, Keamanan, Spesifikasi Hardware/Software, Permasalahan, Alternatif Pemecahan)
+   - Bab IV Rancangan Jaringan Usulan (Topologi & Skema Usulan Simulator, Keamanan, Layanan Jaringan, QoS/Queue Tree, Pengujian Jaringan Awal & Akhir)
+   - Bab V Penutup (Kesimpulan, Saran Manajerial, Sistem & Penelitian Lanjutan)
+4. **Skripsi - Kode 158: Aplikasi StartUp** (4 Bab - Kelompok Maksimal 2 Mahasiswa):
+   - Bab I Pendahuluan (Latar Belakang Masalah 4 Konten, Identifikasi Masalah, Perumusan Masalah, Tujuan dan Manfaat, Metode RUP, Ruang Lingkup)
+   - Bab II Landasan Teori (Konsep Dasar Aplikasi, Algoritma, BMC 9 Blok, Penelitian Terkait Min. 5 Jurnal, Pengujian & Peralatan Pendukung)
+   - Bab III Analisis dan Perancangan Aplikasi (Matriks BMC 9 Blok, Analisis Kebutuhan, Use Case/Activity, UI Mockup, Basis Data ERD/LRS, Bukti Rilis Play Store, Spesifikasi Hardware/Software, Pengujian Blackbox, Uraian Tugas Tim)
+   - Bab IV Penutup (Kesimpulan, Saran Manajerial/Bisnis, Sistem & Penelitian Lanjutan)
+
 ---
 
 ## Struktur Direktori Proyek
@@ -70,18 +96,23 @@ templatebsi/
 ├── template/
 │   ├── main.typ              # Entrypoint resmi Laporan PKL (Teknologi Informasi)
 │   ├── proposal.typ          # Entrypoint resmi Proposal PKL (3 Bab)
-│   ├── metadata.typ          # Konfigurasi data mahasiswa, dosen PA, instansi, & switch catatan
+│   ├── skripsi.typ           # Entrypoint resmi Skripsi Sarjana (S1)
+│   ├── metadata.typ          # Konfigurasi data mahasiswa (1-2 orang), dosen PA, penguji, pembimbing, & switch catatan
 │   ├── pustaka.bib           # Sumber pustaka BibTeX (Style APA 6th Edition)
 │   ├── public/logo-ubsi.png  # Logo resmi UBSI berwarna (standar 4x4 cm)
 │   ├── gambar/               # Folder penyimpanan gambar naskah & berkas scan instansi
-│   ├── bagian-awal/          # Lembar Pengesahan, Kata Pengantar, Daftar Isi/Simbol/Gambar/Tabel/Lampiran
-│   ├── bagian-akhir/         # Riwayat Hidup, Surat Keterangan, Nilai, Kuesioner, Lampiran-Lampiran
+│   ├── bagian-awal/          # Pengesahan, Persetujuan, Hak Cipta, Konsultasi, Persembahan, Abstraksi, Kata Pengantar, Daftar Isi/Simbol/Gambar/Tabel/Lampiran
+│   ├── bagian-akhir/         # Riwayat Hidup, Bukti Plagiarisme, Surat Keterangan, Nilai, Kuesioner, Lampiran
 │   └── outlines/             # Draf bab per outline peminatan S1 Teknologi Informasi:
 │       ├── proposal/         # Bab 1 s.d. Bab 3 Proposal PKL
-│       ├── pkl-ti-inovasi/   # Outline 1: Proyek Inovasi Perangkat Lunak (6 Bab)
-│       ├── pkl-ti-mobile/    # Outline 2: Analisa Program Mobile (4 Bab)
-│       ├── pkl-ti-jaringan/         # Outline 3: Jaringan Komputer (4 Bab)
-│       └── pkl-ti-analisis-sistem/  # Outline 4: Analisis Sistem (4 Bab)
+│       ├── pkl-ti-inovasi/   # PKL Outline 1: Proyek Inovasi Perangkat Lunak (6 Bab)
+│       ├── pkl-ti-mobile/    # PKL Outline 2: Analisa Program Mobile (4 Bab)
+│       ├── pkl-ti-jaringan/         # PKL Outline 3: Jaringan Komputer (4 Bab)
+│       ├── pkl-ti-analisis-sistem/  # PKL Outline 4: Analisis Sistem (4 Bab)
+│       ├── skripsi-ti-156/          # Skripsi Outline 156: Perancangan Program Science (5 Bab)
+│       ├── skripsi-ti-138/          # Skripsi Outline 138: Penelitian Ilmiah (5 Bab)
+│       ├── skripsi-ti-137/          # Skripsi Outline 137: Jaringan Komputer (5 Bab)
+│       └── skripsi-ti-158/          # Skripsi Outline 158: Aplikasi StartUp (4 Bab)
 ```
 
 ---
@@ -107,8 +138,8 @@ npx github:fatidaprilian/templatebsi . --force
 ```
 
 CLI mendukung opsi flag berikut:
-- `-t, --type <proposal|laporan>` : Memilih jenis dokumen (proposal 3 bab atau laporan akhir).
-- `-o, --outline <1|2|3|4>` : Memilih outline laporan (1: Inovasi, 2: Mobile, 3: Jaringan, 4: Analisis Sistem).
+- `-t, --type <proposal|laporan|skripsi>` : Memilih jenis dokumen (proposal 3 bab, laporan PKL, atau skripsi sarjana).
+- `-o, --outline <1|2|3|4|156|138|137|158>` : Memilih outline naskah (PKL: 1-4; Skripsi: 156 untuk Perancangan Program Science, 138 untuk Penelitian Ilmiah, 137 untuk Jaringan Komputer, 158 untuk Aplikasi StartUp).
 - `-y, --yes` : Menggunakan seluruh konfigurasi default tanpa prompt interaktif.
 - `-f, --force` : Mengizinkan inisialisasi pada direktori yang sudah ada atau menimpa berkas proyek yang konflik.
 - `-h, --help` : Menampilkan petunjuk opsi CLI.

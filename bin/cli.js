@@ -35,6 +35,41 @@ const outlines = {
   },
 };
 
+const skripsiOutlines = {
+  '156': {
+    id: '156',
+    code: '156',
+    name: 'Perancangan Program Science',
+    slug: 'program-science',
+    dir: 'skripsi-ti-156',
+    babs: ['bab1', 'bab2', 'bab3', 'bab4', 'bab5'],
+  },
+  '138': {
+    id: '138',
+    code: '138',
+    name: 'Penelitian Ilmiah',
+    slug: 'penelitian-ilmiah',
+    dir: 'skripsi-ti-138',
+    babs: ['bab1', 'bab2', 'bab3', 'bab4', 'bab5'],
+  },
+  '137': {
+    id: '137',
+    code: '137',
+    name: 'Jaringan Komputer',
+    slug: 'jaringan-komputer',
+    dir: 'skripsi-ti-137',
+    babs: ['bab1', 'bab2', 'bab3', 'bab4', 'bab5'],
+  },
+  '158': {
+    id: '158',
+    code: '158',
+    name: 'Aplikasi StartUp',
+    slug: 'startup',
+    dir: 'skripsi-ti-158',
+    babs: ['bab1', 'bab2', 'bab3', 'bab4'],
+  },
+};
+
 function parseArgs(args) {
   const parsed = {
     targetDir: null,
@@ -74,28 +109,35 @@ function parseArgs(args) {
 }
 
 function printHelp() {
-  console.log(`Template Typst PKL & Proposal UBSI Scaffolder CLI
+  console.log(`Template Typst PKL, Proposal & Skripsi UBSI Scaffolder CLI
 Program Studi: Teknologi Informasi (S1)
 
 Penggunaan:
   npx github:fatidaprilian/templatebsi [nama-folder] [opsi]
 
 Opsi:
-  -t, --type <proposal|laporan>  Pilih jenis naskah:
-                                   proposal : Proposal PKL (3 Bab)
-                                   laporan  : Laporan Akhir PKL (default)
-  -o, --outline <1|2|3|4>        Pilih outline untuk Laporan Akhir:
-                                   1 : Proyek Inovasi Perangkat Lunak (6 Bab) (default)
-                                   2 : Analisa Program Berbasis Mobile (4 Bab)
-                                   3 : Jaringan Komputer (4 Bab)
-                                   4 : Analisis Sistem (4 Bab)
-  -y, --yes                      Gunakan seluruh nilai default tanpa interaksi
-  -f, --force                    Timpa berkas bila direktori tujuan telah berisi proyek
-  -h, --help                     Tampilkan bantuan ini
+  -t, --type <proposal|laporan|skripsi>  Pilih jenis naskah:
+                                           proposal : Proposal PKL (3 Bab)
+                                           laporan  : Laporan Akhir PKL (default)
+                                           skripsi  : Skripsi Sarjana (S1)
+  -o, --outline <1|2|3|4|156>            Pilih outline naskah:
+                                           Untuk Laporan PKL:
+                                             1 : Proyek Inovasi Perangkat Lunak (6 Bab) (default)
+                                             2 : Analisa Program Berbasis Mobile (4 Bab)
+                                             3 : Jaringan Komputer (4 Bab)
+                                             4 : Analisis Sistem (4 Bab)
+                                           Untuk Skripsi S1:
+                                             156 : Perancangan Program Science (5 Bab) (default)
+                                             138 : Penelitian Ilmiah (5 Bab)
+                                             137 : Jaringan Komputer (5 Bab)
+                                             158 : Aplikasi StartUp (4 Bab - Kelompok Maks 2)
+  -y, --yes                              Gunakan seluruh nilai default tanpa interaksi
+  -f, --force                            Timpa berkas bila direktori tujuan telah berisi proyek
+  -h, --help                             Tampilkan bantuan ini
 
 Contoh:
   npx github:fatidaprilian/templatebsi my-laporan
-  npx github:fatidaprilian/templatebsi . --force
+  npx github:fatidaprilian/templatebsi skripsi-ku --type skripsi --outline 156 --yes
   npx github:fatidaprilian/templatebsi proposal-pkl --type proposal --yes
   npx github:fatidaprilian/templatebsi laporan-jaringan --type laporan --outline 3 --yes
 `);
@@ -187,24 +229,26 @@ function copyDirSync(src, dest) {
   }
 }
 
-function resolveOutline(outlineArg) {
+function resolveOutline(outlineArg, docType = 'laporan') {
   if (!outlineArg) return null;
   const lower = String(outlineArg).trim().toLowerCase();
-  if (outlines[lower]) return outlines[lower];
-  for (const key of Object.keys(outlines)) {
-    const o = outlines[key];
-    if (o.slug === lower || o.name.toLowerCase().includes(lower)) {
+  const dict = docType === 'skripsi' ? skripsiOutlines : outlines;
+  if (dict[lower]) return dict[lower];
+  for (const key of Object.keys(dict)) {
+    const o = dict[key];
+    if (o.slug === lower || o.name.toLowerCase().includes(lower) || (o.code && o.code === lower)) {
       return o;
     }
   }
   return null;
 }
 
-function resolveIsProposal(typeArg) {
+function resolveDocType(typeArg) {
   if (!typeArg) return null;
   const lower = String(typeArg).trim().toLowerCase();
-  if (lower === '1' || lower === 'prop' || lower === 'proposal') return true;
-  if (lower === '2' || lower === 'lap' || lower === 'laporan' || lower === 'akhir') return false;
+  if (lower === '1' || lower === 'prop' || lower === 'proposal') return 'proposal';
+  if (lower === '2' || lower === 'lap' || lower === 'laporan' || lower === 'akhir' || lower === 'pkl') return 'laporan';
+  if (lower === '3' || lower === 'skripsi' || lower === 'ta' || lower === 'tugas-akhir') return 'skripsi';
   return null;
 }
 
@@ -217,18 +261,21 @@ async function main() {
   }
 
   console.log('====================================================');
-  console.log('Template Typst PKL & Proposal UBSI Scaffolder CLI');
+  console.log('Template Typst PKL, Proposal & Skripsi UBSI CLI');
   console.log('Program Studi: Teknologi Informasi (S1)');
   console.log('====================================================\n');
 
   const pr = createPromptReader();
 
   let targetDirName = parsed.targetDir || '';
-  let isProposal = resolveIsProposal(parsed.type);
-  let selectedOutline = resolveOutline(parsed.outline);
+  let docType = resolveDocType(parsed.type);
+  if (docType === null && parsed.outline && skripsiOutlines[parsed.outline]) {
+    docType = 'skripsi';
+  }
+  let selectedOutline = resolveOutline(parsed.outline, docType || 'laporan');
 
   try {
-    const defaultName = 'laporan-pkl-ubsi';
+    const defaultName = docType === 'skripsi' ? 'skripsi-ubsi' : (docType === 'proposal' ? 'proposal-pkl-ubsi' : 'laporan-pkl-ubsi');
     if (!targetDirName) {
       if (parsed.yes) {
         targetDirName = defaultName;
@@ -237,19 +284,22 @@ async function main() {
       }
     }
 
-    if (isProposal === null) {
+    if (docType === null) {
       if (parsed.yes) {
-        isProposal = false;
+        docType = 'laporan';
       } else {
         console.log('\nPilih Jenis Dokumen:');
         console.log('  1. Proposal PKL (3 Bab)');
         console.log('  2. Laporan Akhir PKL (4 Pilihan Outline)');
-        const jenisChoice = await pr.ask('Pilihan Anda [1-2] (default: 2): ', '2');
-        isProposal = jenisChoice === '1';
+        console.log('  3. Skripsi Sarjana (Outline 156: Perancangan Program Science)');
+        const jenisChoice = await pr.ask('Pilihan Anda [1-3] (default: 2): ', '2');
+        if (jenisChoice === '1') docType = 'proposal';
+        else if (jenisChoice === '3') docType = 'skripsi';
+        else docType = 'laporan';
       }
     }
 
-    if (!isProposal && !selectedOutline) {
+    if (docType === 'laporan' && !selectedOutline) {
       if (parsed.yes) {
         selectedOutline = outlines['1'];
       } else {
@@ -260,6 +310,19 @@ async function main() {
         console.log('  4. Analisis Sistem (4 Bab)');
         const outlineChoice = await pr.ask('Pilihan Outline [1-4] (default: 1): ', '1');
         selectedOutline = outlines[outlineChoice] || outlines['1'];
+      }
+    } else if (docType === 'skripsi' && !selectedOutline) {
+      if (parsed.yes) {
+        selectedOutline = skripsiOutlines['156'];
+      } else {
+        console.log('\nPilih Outline Skripsi Teknologi Informasi:');
+        const keys = Object.keys(skripsiOutlines);
+        keys.forEach((k, idx) => {
+          console.log(`  ${idx + 1}. [Kode ${skripsiOutlines[k].code}] ${skripsiOutlines[k].name} (${skripsiOutlines[k].babs.length} Bab)`);
+        });
+        const outlineChoice = await pr.ask(`Pilihan Outline [1-${keys.length}] (default: 1): `, '1');
+        const pickedKey = keys[parseInt(outlineChoice, 10) - 1] || '156';
+        selectedOutline = skripsiOutlines[pickedKey];
       }
     }
 
@@ -302,7 +365,7 @@ async function main() {
     );
 
     // 2. Adjust and copy sections
-    if (isProposal) {
+    if (docType === 'proposal') {
       copyDirSync(path.join(pkgRoot, 'template/bagian-awal'), path.join(targetDir, 'bagian-awal'));
 
       const awalPath = path.join(targetDir, 'bagian-awal');
@@ -330,6 +393,50 @@ async function main() {
       propContent = propContent.replace(/logo-path: "public\/logo-ubsi\.png"/g, 'logo-path: "gambar/logo-ubsi.png"');
       propContent = propContent.replace(/outlines\/proposal\//g, 'bab/');
       fs.writeFileSync(path.join(targetDir, 'main.typ'), propContent, 'utf8');
+    } else if (docType === 'skripsi') {
+      copyDirSync(path.join(pkgRoot, 'template/bagian-awal'), path.join(targetDir, 'bagian-awal'));
+      copyDirSync(path.join(pkgRoot, 'template/bagian-akhir'), path.join(targetDir, 'bagian-akhir'));
+
+      ['bagian-awal', 'bagian-akhir'].forEach(folder => {
+        const dirPath = path.join(targetDir, folder);
+        for (const f of fs.readdirSync(dirPath)) {
+          if (f.endsWith('.typ')) {
+            const filePath = path.join(dirPath, f);
+            let c = fs.readFileSync(filePath, 'utf8');
+            c = c.replace(/\.\.\/\.\.\/lib\.typ/g, '../lib.typ');
+            c = c.replace(/\.\.\/metadata\.typ/g, '../metadata.typ');
+            fs.writeFileSync(filePath, c, 'utf8');
+          }
+        }
+      });
+
+      fs.mkdirSync(path.join(targetDir, 'bab'), { recursive: true });
+      const outlineSrc = path.join(pkgRoot, 'template/outlines', selectedOutline.dir);
+      for (const b of selectedOutline.babs) {
+        const srcFile = path.join(outlineSrc, `${b}.typ`);
+        let c = fs.readFileSync(srcFile, 'utf8');
+        c = c.replace(/\.\.\/\.\.\/\.\.\/lib\.typ/g, '../lib.typ');
+        c = c.replace(/\.\.\/\.\.\/\.\.\/metadata\.typ/g, '../metadata.typ');
+        fs.writeFileSync(path.join(targetDir, 'bab', `${b}.typ`), c, 'utf8');
+      }
+
+      let skripsiContent = fs.readFileSync(path.join(pkgRoot, 'template/skripsi.typ'), 'utf8');
+      skripsiContent = skripsiContent.replace(/#import "\.\.\/lib\.typ": \*/g, '#import "lib.typ": *');
+      skripsiContent = skripsiContent.replace(/logo-path: "public\/logo-ubsi\.png"/g, 'logo-path: "gambar/logo-ubsi.png"');
+
+      const babIncludes = selectedOutline.babs.map(b => `#include "bab/${b}.typ"`).join('\n');
+      const startMarker = '// OUTLINE SKRIPSI: KODE 156 - PERANCANGAN PROGRAM SCIENCE (5 BAB)';
+      const endMarker = '// 4. Bagian Akhir';
+      const sIdx = skripsiContent.indexOf(startMarker);
+      const eIdx = skripsiContent.indexOf(endMarker);
+      if (sIdx !== -1 && eIdx !== -1) {
+        skripsiContent = skripsiContent.slice(0, sIdx) +
+          `// OUTLINE SKRIPSI: ${selectedOutline.name.toUpperCase()} (KODE ${selectedOutline.code || selectedOutline.id})\n${babIncludes}\n\n` +
+          skripsiContent.slice(eIdx);
+      } else {
+        skripsiContent = skripsiContent.replace(new RegExp(`outlines\/${selectedOutline.dir}\/`, 'g'), 'bab/');
+      }
+      fs.writeFileSync(path.join(targetDir, 'main.typ'), skripsiContent, 'utf8');
     } else {
       copyDirSync(path.join(pkgRoot, 'template/bagian-awal'), path.join(targetDir, 'bagian-awal'));
       copyDirSync(path.join(pkgRoot, 'template/bagian-akhir'), path.join(targetDir, 'bagian-akhir'));
@@ -374,12 +481,18 @@ async function main() {
       fs.writeFileSync(path.join(targetDir, 'main.typ'), mainContent, 'utf8');
     }
 
-    const subReadme = `# ${isProposal ? 'Proposal PKL UBSI' : `Laporan PKL UBSI - ${selectedOutline.name}`}
+    const docTitle = docType === 'proposal'
+      ? 'Proposal PKL UBSI'
+      : (docType === 'skripsi'
+          ? `Skripsi UBSI - ${selectedOutline.name} (Kode ${selectedOutline.code || selectedOutline.id})`
+          : `Laporan PKL UBSI - ${selectedOutline.name}`);
+
+    const subReadme = `# ${docTitle}
 Program Studi: Teknologi Informasi (S1)
 
 ## Struktur Folder Proyek
 - \`main.typ\` : Berkas dokumen utama untuk dikompilasi / dilihat pratinjaunya.
-- \`metadata.typ\` : Tempat mengisi Nama, NIM, Judul, Dosen PA, dan tempat PKL.
+- \`metadata.typ\` : Tempat mengisi data identitas, pembimbing/penguji, judul, dan instansi.
 - \`bab/\` : Berisi draf bab penulisan dokumen Anda.
 - \`gambar/\` : Simpan foto, scan dokumen, dan diagram di sini.
 - \`pustaka.bib\` : Referensi daftar pustaka (APA Style Versi 6).

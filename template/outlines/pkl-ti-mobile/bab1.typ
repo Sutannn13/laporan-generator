@@ -13,15 +13,21 @@ Tujuan dari pelaksanaan analisis aplikasi mobile ini antara lain:
 
 === Manfaat Analisis
 Manfaat yang diharapkan meliputi:
-+ *Bagi Penulis*: Memperdalam pemahaman praktis mengenai arsitektur pengembangan aplikasi _mobile computing_.
-+ *Bagi Pengembang Aplikasi*: Memberikan masukan konstruktif untuk optimasi performa dan perbaikan pengalaman pengguna (_user experience_).
-+ *Bagi Akademisi*: Menjadi bahan referensi komparatif dalam studi analisis perangkat lunak bergerak di Program Studi Teknologi Informasi.
++ *Bagi Penulis:*\
+  Memperdalam pemahaman praktis mengenai arsitektur pengembangan aplikasi _mobile computing_.
++ *Bagi Pengembang Aplikasi:*\
+  Memberikan masukan konstruktif untuk optimasi performa dan perbaikan pengalaman pengguna (_user experience_).
++ *Bagi Akademisi:*\
+  Menjadi bahan referensi komparatif dalam studi analisis perangkat lunak bergerak di Program Studi Teknologi Informasi.
 
 == Metode Penelitian
 Deskripsikan metode atau teknik pengumpulan data dan pengujian yang digunakan:
-+ *Pengujian Aplikasi Secara Langsung*: Mengoperasikan seluruh fungsionalitas modul aplikasi pada perangkat fisik (_real device_).
-+ *Studi Literatur*: Mengkaji buku referensi, jurnal ilmiah terakreditasi, dan dokumentasi resmi developer (Android Developers / Apple Developer).
-+ *Wawancara & Observasi*: Mengumpulkan data dari pengguna aktif mengenai performa dan kendala penggunaan aplikasi.
++ *Pengujian Aplikasi Secara Langsung:*\
+  Mengoperasikan seluruh fungsionalitas modul aplikasi pada perangkat fisik (_real device_).
++ *Studi Literatur:*\
+  Mengkaji buku referensi, jurnal ilmiah terakreditasi, dan dokumentasi resmi developer (Android Developers / Apple Developer).
++ *Wawancara & Observasi:*\
+  Mengumpulkan data dari pengguna aktif mengenai performa dan kendala penggunaan aplikasi.
 
 == Ruang Lingkup
 Batasi cakupan analisis program berbasis mobile ini agar pembahasan terfokus:

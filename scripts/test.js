@@ -71,6 +71,37 @@ const testCases = [
       babs: ['bab1', 'bab2', 'bab3', 'bab4'],
     },
   },
+  {
+    name: 'Skripsi S1 - Outline 156: Perancangan Program Science (5 Bab)',
+    entry: path.join(repoRoot, 'template/skripsi.typ'),
+  },
+  {
+    name: 'Skripsi S1 - Outline 138: Penelitian Ilmiah (5 Bab)',
+    customOutline: {
+      name: 'Penelitian Ilmiah',
+      dir: 'outlines/skripsi-ti-138',
+      babs: ['bab1', 'bab2', 'bab3', 'bab4', 'bab5'],
+    },
+    isSkripsi: true,
+  },
+  {
+    name: 'Skripsi S1 - Outline 137: Jaringan Komputer (5 Bab)',
+    customOutline: {
+      name: 'Jaringan Komputer',
+      dir: 'outlines/skripsi-ti-137',
+      babs: ['bab1', 'bab2', 'bab3', 'bab4', 'bab5'],
+    },
+    isSkripsi: true,
+  },
+  {
+    name: 'Skripsi S1 - Outline 158: Aplikasi StartUp (4 Bab)',
+    customOutline: {
+      name: 'Aplikasi StartUp',
+      dir: 'outlines/skripsi-ti-158',
+      babs: ['bab1', 'bab2', 'bab3', 'bab4'],
+    },
+    isSkripsi: true,
+  },
 ];
 
 let failed = 0;
@@ -83,13 +114,22 @@ for (const tc of testCases) {
   let targetFile = tc.entry;
 
   if (tc.customOutline) {
-    const mainContent = fs.readFileSync(path.join(repoRoot, 'template/main.typ'), 'utf8');
+    const templatePath = tc.isSkripsi
+      ? path.join(repoRoot, 'template/skripsi.typ')
+      : path.join(repoRoot, 'template/main.typ');
+    const mainContent = fs.readFileSync(templatePath, 'utf8');
     const includeBlock = tc.customOutline.babs
       .map(b => `#include "${tc.customOutline.dir}/${b}.typ"`)
       .join('\n');
+    const pattern = tc.isSkripsi
+      ? /\/\/ OUTLINE SKRIPSI: KODE 156[\s\S]*?\/\/ 4\. Bagian Akhir/
+      : /\/\/ OUTLINE PKL: PROYEK INOVASI PERANGKAT LUNAK \(6 BAB\)[\s\S]*?\/\/ 4\. Bagian Akhir/;
+    const headerTitle = tc.isSkripsi
+      ? `// OUTLINE SKRIPSI: ${tc.customOutline.name.toUpperCase()}`
+      : `// OUTLINE PKL: ${tc.customOutline.name}`;
     const generated = mainContent.replace(
-      /\/\/ OUTLINE PKL: PROYEK INOVASI PERANGKAT LUNAK \(6 BAB\)[\s\S]*?\/\/ 4\. Bagian Akhir/,
-      `// OUTLINE PKL: ${tc.customOutline.name}\n${includeBlock}\n\n// 4. Bagian Akhir`
+      pattern,
+      `${headerTitle}\n${includeBlock}\n\n// 4. Bagian Akhir`
     );
     fs.writeFileSync(tmpTyp, generated, 'utf8');
     targetFile = tmpTyp;
@@ -118,6 +158,10 @@ const cliTestCases = [
   { name: 'CLI Laporan PKL - Mobile (Outline 2)', args: '--type laporan --outline 2 --yes' },
   { name: 'CLI Laporan PKL - Jaringan (Outline 3)', args: '--type laporan --outline 3 --yes' },
   { name: 'CLI Laporan PKL - Analisis Sistem (Outline 4)', args: '--type laporan --outline 4 --yes' },
+  { name: 'CLI Skripsi S1 - Program Science (Outline 156)', args: '--type skripsi --outline 156 --yes' },
+  { name: 'CLI Skripsi S1 - Penelitian Ilmiah (Outline 138)', args: '--type skripsi --outline 138 --yes' },
+  { name: 'CLI Skripsi S1 - Jaringan Komputer (Outline 137)', args: '--type skripsi --outline 137 --yes' },
+  { name: 'CLI Skripsi S1 - Aplikasi StartUp (Outline 158)', args: '--type skripsi --outline 158 --yes' },
 ];
 
 const testScaffoldDir = path.join(repoRoot, 'temp_test_cli_scaffold');
