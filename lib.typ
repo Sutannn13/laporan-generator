@@ -12,7 +12,20 @@
 // =============================================================================
 #let format-heading-level-1(it) = {
   // Hidden anchor untuk cover dan lembar persetujuan agar terdaftar rapi di Daftar Isi
-  if it.body in ([Lembar Judul Laporan PKL], [Lembar Judul Proposal], [Lembar Persetujuan Laporan PKL], [Lembar Persetujuan Proposal PKL]) {
+  if it.body in (
+    [Lembar Judul Laporan PKL],
+    [Lembar Judul Proposal],
+    [Lembar Judul Skripsi],
+    [Lembar Persetujuan Laporan PKL],
+    [Lembar Persetujuan Proposal PKL],
+    [Lembar Persetujuan dan Pengesahan Skripsi],
+    [Lembar Pernyataan Keaslian Skripsi],
+    [Lembar Pernyataan Persetujuan Publikasi Karya Ilmiah],
+    [Lembar Pedoman Penggunaan Hak Cipta],
+    [Lembar Konsultasi Skripsi],
+    [Lembar Persembahan],
+    [Abstraksi],
+  ) {
     return none
   }
 
@@ -216,9 +229,11 @@
 // =============================================================================
 #let cover-pkl(
   judul: "",
-  jenis: "laporan", // "laporan" | "proposal"
+  jenis: "laporan", // "laporan" | "proposal" | "skripsi"
   penulis: "",
   nim: "",
+  penulis-2: none,
+  nim-2: none,
   jenjang: "Program Sarjana (S1)",
   program-studi: "Teknologi Informasi",
   fakultas: "Teknik dan Informatika",
@@ -230,14 +245,26 @@
 ) = {
   let label-jenis = if jenis == "proposal" {
     [PROPOSAL\ PRAKTIK KERJA LAPANGAN]
+  } else if jenis == "skripsi" {
+    [SKRIPSI]
   } else {
     [LAPORAN\ PRAKTIK KERJA LAPANGAN]
   }
 
   let sub-teks = if jenis == "proposal" {
     "Diajukan untuk memenuhi salah satu syarat pelaksanaan Mata Kuliah Praktik Kerja Lapangan"
+  } else if jenis == "skripsi" {
+    "Diajukan untuk memenuhi salah satu syarat kelulusan " + jenjang
   } else {
     "Diajukan untuk memenuhi mata kuliah PKL pada Program " + jenjang
+  }
+
+  let heading-cover = if jenis == "proposal" {
+    [Lembar Judul Proposal]
+  } else if jenis == "skripsi" {
+    [Lembar Judul Skripsi]
+  } else {
+    [Lembar Judul Laporan PKL]
   }
 
   // Cover dihitung sebagai halaman i tetapi nomor tidak dicetak (Poin 2.4.1)
@@ -248,7 +275,7 @@
     margin: (left: 4cm, top: 3cm, right: 2.5cm, bottom: 2.5cm),
   )[
     #show heading: none
-    #heading(level: 1, numbering: none, outlined: true)[Lembar Judul Laporan PKL]
+    #heading(level: 1, numbering: none, outlined: true)[#heading-cover]
     #set align(center)
     #set par(leading: 6pt) // Spasi 1.5 untuk lembar judul
 
@@ -272,10 +299,22 @@
 
     // 5. Nama Penulis & NIM: 14pt, 1.5 Spasi (Sesuai Lampiran 11)
     #v(1.2cm)
-    #text(size: 14pt, weight: "bold")[
-      #upper(penulis)\
-      #v(6pt)
-      NIM : #nim
+    #if penulis-2 != none and nim-2 != none [
+      #text(size: 14pt, weight: "bold")[
+        #upper(penulis)\
+        #v(4pt)
+        NIM : #nim\
+        #v(8pt)
+        #upper(penulis-2)\
+        #v(4pt)
+        NIM : #nim-2
+      ]
+    ] else [
+      #text(size: 14pt, weight: "bold")[
+        #upper(penulis)\
+        #v(6pt)
+        NIM : #nim
+      ]
     ]
 
     #v(1fr)
@@ -625,3 +664,42 @@
   show bibliography: set par(leading: 6pt, spacing: 24pt, justify: true)
   body
 }
+
+// =============================================================================
+// HELPER: COVER SKRIPSI & TEMPLATE SKRIPSI
+// =============================================================================
+#let cover-skripsi(
+  judul: "",
+  penulis: "",
+  nim: "",
+  penulis-2: none,
+  nim-2: none,
+  jenjang: "Program Sarjana (S1)",
+  program-studi: "Teknologi Informasi",
+  fakultas: "Teknik dan Informatika",
+  universitas: "Universitas Bina Sarana Informatika",
+  kota: "Jakarta",
+  tahun: "2026",
+  is-kampus-utama: true,
+  logo-path: "public/logo-ubsi.png",
+) = cover-pkl(
+  judul: judul,
+  jenis: "skripsi",
+  penulis: penulis,
+  nim: nim,
+  penulis-2: penulis-2,
+  nim-2: nim-2,
+  jenjang: jenjang,
+  program-studi: program-studi,
+  fakultas: fakultas,
+  universitas: universitas,
+  kota: kota,
+  tahun: tahun,
+  is-kampus-utama: is-kampus-utama,
+  logo-path: logo-path,
+)
+
+#let skripsi = pkl
+#let frontmatter-skripsi = frontmatter-pkl
+#let backmatter-skripsi = backmatter-pkl
+

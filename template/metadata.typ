@@ -8,6 +8,9 @@
 #let jenis = "proposal" // Pilihan: "proposal" | "laporan"
 #let penulis = "Nama Mahasiswa"
 #let nim = "12200001"
+// Mahasiswa Kedua (Khusus outline skripsi kelompok: Outline 158 Aplikasi StartUp)
+#let penulis-2 = none // contoh: "Nama Mahasiswa Kedua"
+#let nim-2 = none     // contoh: "12200002"
 #let jenjang = "Sarjana (S1)" // "Sarjana (S1)" atau "Diploma Tiga (D3)"
 #let program-studi = "Teknologi Informasi"
 #let fakultas = "Teknik dan Informatika"
@@ -48,4 +51,33 @@
 // true  = Menampilkan catatan petunjuk pedoman kampus (disertai peringatan wajib dihapus)
 // false = Otomatis menyembunyikan seluruh catatan petunjuk pedoman saat dijilid/dicetak
 #let tampilkan-catatan-pedoman = true
+
+// =============================================================================
+// KONFIGURASI SKRIPSI / TUGAS AKHIR SARJANA (S1)
+// =============================================================================
+#let kode-outline = "156" // "156" = Perancangan Program Science
+#let nama-outline = "Perancangan Program Science"
+
+// Dewan Penguji, Pembimbing & Pejabat Prodi Skripsi
+#let ketua-prodi = "Nama Ketua Program Studi, M.Kom"
+#let dosen-pembimbing-1 = "Nama Dosen Pembimbing I, M.Kom"
+#let dosen-pembimbing-2 = "Nama Dosen Pembimbing II, M.Kom"
+#let dosen-penguji-1 = "Nama Ketua Penguji, M.Kom"
+#let dosen-penguji-2 = "Nama Anggota Penguji, M.Kom"
+
+// Abstrak Skripsi Dwibahasa (ID & EN)
+#let abstrak-id = [
+  Perkembangan teknologi informasi saat ini menuntut pengolahan data yang cepat, mangkus, dan akurat. Penelitian skripsi ini bertujuan untuk merancang dan membangun perangkat lunak menggunakan metode algoritma komputasi guna mengatasi permasalahan inefisiensi alur operasional pada objek penelitian. Metode pengembangan sistem mengadopsi model Waterfall yang mencakup analisis kebutuhan, perancangan arsitektur, pemodelan basis data, penulisan kode program, serta pengujian sistem. Hasil pengujian menunjukkan bahwa aplikasi berhasil memproses kalkulasi komputasi secara valid, bebas dari kesalahan logika, dan meningkatkan efektivitas kinerja sistem secara signifikan.
+]
+#let abstrak-en = [
+  The rapid development of information technology demands fast, efficient, and accurate data processing. This thesis aims to design and implement application software utilizing computational algorithms to overcome operational workflow inefficiencies in the research object. The development methodology adopts the Waterfall model encompassing requirements analysis, architectural design, database modeling, code generation, and system testing. The testing results demonstrate that the application successfully performs computational tasks accurately, free from logic errors, and significantly optimizes operational efficiency.
+]
+#let kata-kunci-id = "Rekayasa Perangkat Lunak, Algoritma Komputasi, Perancangan Program, Basis Data"
+#let kata-kunci-en = "Software Engineering, Computational Algorithm, Program Design, Database"
+
+// Pengujian Plagiarisme Skripsi
+#let tingkat-kemiripan-plagiarisme = "14%"
+#let tanggal-cek-plagiarisme = "10 Januari 2026"
+#let file-bukti-plagiarisme = none // contoh: "gambar/scan-turnitin.png"
+
 
