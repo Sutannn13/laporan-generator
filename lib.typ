@@ -283,10 +283,11 @@
     #v(0.5cm)
     #text(size: 14pt, weight: "bold")[#upper(judul)]
 
-    // 2. Logo Kampus Berwarna Ukuran Standar (4x4 cm)
+    // 2. Logo Kampus Berwarna Ukuran Standar (5x5 cm Skripsi/TA, 4x4 cm PKL)
     #v(1.2cm)
+    #let logo-size = if jenis == "skripsi" { 5cm } else { 4cm }
     #if logo-path != none [
-      #image(logo-path, width: 4cm, height: 4cm)
+      #image(logo-path, width: logo-size, height: logo-size)
     ]
 
     // 3. Tulisan PROPOSAL / LAPORAN: 18pt Huruf Kapital, Tebal
@@ -583,9 +584,20 @@
     show outline.entry: it => {
       if it.element != none and it.element.func() == figure and it.element.kind == image {
         fig-counter.step()
-        context [
-          #fig-counter.display("1.") #it.element.supplement #it.element.counter.display(it.element.numbering) #it.element.caption.body #box(width: 1fr, it.fill) #it.element.location().page()\
-        ]
+        context {
+          let loc = it.element.location()
+          let chap-vals = counter(heading.where(level: 1)).at(loc)
+          let chap-roman = if chap-vals.len() > 0 and chap-vals.first() > 0 {
+            numbering("I", chap-vals.first())
+          } else {
+            "I"
+          }
+          let fig-vals = counter(figure.where(kind: image)).at(loc)
+          let fig-idx = if fig-vals.len() > 0 { fig-vals.first() } else { 1 }
+          let page-vals = counter(page).at(loc)
+          let page-num = if page-vals.len() > 0 { page-vals.first() } else { loc.page() }
+          [#fig-counter.display("1.") #it.element.supplement #chap-roman.#str(fig-idx). #it.element.caption.body #box(width: 1fr, it.fill) #page-num\ ]
+        }
       } else {
         it
       }
@@ -615,9 +627,20 @@
     show outline.entry: it => {
       if it.element != none and it.element.func() == figure and it.element.kind == table {
         tbl-counter.step()
-        context [
-          #tbl-counter.display("1.") #it.element.supplement #it.element.counter.display(it.element.numbering) #it.element.caption.body #box(width: 1fr, it.fill) #it.element.location().page()\
-        ]
+        context {
+          let loc = it.element.location()
+          let chap-vals = counter(heading.where(level: 1)).at(loc)
+          let chap-roman = if chap-vals.len() > 0 and chap-vals.first() > 0 {
+            numbering("I", chap-vals.first())
+          } else {
+            "I"
+          }
+          let tbl-vals = counter(figure.where(kind: table)).at(loc)
+          let tbl-idx = if tbl-vals.len() > 0 { tbl-vals.first() } else { 1 }
+          let page-vals = counter(page).at(loc)
+          let page-num = if page-vals.len() > 0 { page-vals.first() } else { loc.page() }
+          [#tbl-counter.display("1.") #it.element.supplement #chap-roman.#str(tbl-idx). #it.element.caption.body #box(width: 1fr, it.fill) #page-num\ ]
+        }
       } else {
         it
       }

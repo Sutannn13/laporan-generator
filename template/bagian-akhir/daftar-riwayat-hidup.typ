@@ -17,8 +17,8 @@
     inset: (y: 3pt),
     [NIM], [:], [#nim],
     [Nama Lengkap], [:], [#penulis],
-    [Tempat/ Tanggal Lahir], [:], [Jakarta, 1 Januari 2003],
-    [Alamat lengkap], [:], [Jl. Raya Kampus UBSI No. 12, Kelurahan Slipi, Jakarta Barat 11480],
+    [Tempat/ Tanggal Lahir], [:], [#kota, 1 Januari 2003],
+    [Alamat lengkap], [:], [Jl. Contoh Pendidikan No. 1, #kota],
   )
 ]
 
@@ -29,9 +29,9 @@
   #text(weight: "bold")[a.  Formal]
   #v(0.1cm)
   #pad(left: 0.5cm)[
-    1. SD Negeri 01 Jakarta, lulus tahun 2015\
-    2. SMP Negeri 01 Jakarta, lulus tahun 2018\
-    3. SMA Negeri 01 Jakarta, lulus tahun 2021\
+    1. SD Negeri 01 #kota, lulus tahun 2015\
+    2. SMP Negeri 01 #kota, lulus tahun 2018\
+    3. SMA Negeri 01 #kota, lulus tahun 2021\
     4. Universitas Bina Sarana Informatika (#program-studi, Sarjana), sedang ditempuh
   ]
   #v(0.3cm)

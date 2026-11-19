@@ -1,0 +1,182 @@
+KANDIDAT REFERENSI ILMIAH TERVERIFIKASI (TERBITAN >= 2022 | CROSSREF DOI | PENULIS LENGKAP)
+Naskah Target : website/public/downloads/03_Sampel_Jurnal_SINTA4_JKI_UBSI_2Kolom.docx
+Judul Naskah  : Komparasi Algoritma Random Forest dan Gradient Boosting pada Klasifikasi Situs Web Phishing Berbasis Fitur URL dan Struktur HTML
+Tanggal Riset : 2026-11-18
+Total Entri   : 16
+================================================================================
+
+[1] Wahyudi, Rizki, Barkah, Azhari Shouni, Selamat, Siti Rahayu, & Subarkah, Pungkas (2026) [Peringkat: SINTA 1 - Terverifikasi SINTA Kemdiktisaintek (ID 1017)]
+Judul Artikel : Fine-tuned hyperparameter optimization for phishing website detection: insights into efficiency and performance
+Nama Jurnal   : International Journal of Advances in Intelligent Informatics
+ISSN          : 2442-6571, 2548-3161
+Volume/No/Hal : Vol. 12, No. 1, hlm. 213
+DOI Aktif     : https://doi.org/10.26555/ijain.v12i1.1920
+Download PDF  : https://ijain.org/index.php/IJAIN/article/viewFile/1920/ijain_vol12i1_pp213-230
+Relevansi     : [Studi Primer Phishing] Optimasi hiperparameter deteksi situs web phishing (IJAIN - SINTA 1).
+Format APA 7  : Wahyudi, Rizki, Barkah, Azhari Shouni, Selamat, Siti Rahayu, & Subarkah, Pungkas (2026). Fine-tuned hyperparameter optimization for phishing website detection: insights into efficiency and performance. International Journal of Advances in Intelligent Informatics, 12(1), 213. https://doi.org/10.26555/ijain.v12i1.1920
+Format IEEE   : [1] R. Wahyudi, A. S. Barkah, S. R. Selamat, and P. Subarkah, "Fine-tuned hyperparameter optimization for phishing website detection: insights into efficiency and performance," International Journal of Advances in Intelligent Informatics, vol. 12, no. 1, pp. 213, 2026, doi: 10.26555/ijain.v12i1.1920.
+
+[2] Wardhana, Indrawata, Musi Ariawijaya, Vandri Ahmad Isnaini, & Rahmi Putri Wirman (2022) [Peringkat: SINTA 2 - Terverifikasi SINTA Kemdiktisaintek (ID 3999)]
+Judul Artikel : Gradient Boosting Machine, Random Forest dan Light GBM untuk Klasifikasi Kacang Kering
+Nama Jurnal   : Jurnal RESTI (Rekayasa Sistem dan Teknologi Informasi)
+ISSN          : 2580-0760, 2580-0760
+Volume/No/Hal : Vol. 6, No. 1, hlm. 92-99
+DOI Aktif     : https://doi.org/10.29207/resti.v6i1.3682
+Download PDF  : https://jurnal.iaii.or.id/index.php/RESTI/article/download/3682/548
+Relevansi     : [Analogi Metode Ansambel] Komparasi Gradient Boosting, Random Forest, dan LightGBM pada klasifikasi multikelas kacang kering (RESTI - SINTA 2).
+Format APA 7  : Wardhana, Indrawata, Musi Ariawijaya, Vandri Ahmad Isnaini, & Rahmi Putri Wirman (2022). Gradient Boosting Machine, Random Forest dan Light GBM untuk Klasifikasi Kacang Kering. Jurnal RESTI (Rekayasa Sistem dan Teknologi Informasi), 6(1), 92-99. https://doi.org/10.29207/resti.v6i1.3682
+Format IEEE   : [2] I. Wardhana, Musi Ariawijaya, Vandri Ahmad Isnaini, and Rahmi Putri Wirman, "Gradient Boosting Machine, Random Forest dan Light GBM untuk Klasifikasi Kacang Kering," Jurnal RESTI (Rekayasa Sistem dan Teknologi Informasi), vol. 6, no. 1, pp. 92-99, 2022, doi: 10.29207/resti.v6i1.3682.
+
+[3] Herni Yulianti, Sri Elina, Oni Soesanto, & Yuana Sukmawaty (2022) [Peringkat: SINTA 3 - Terverifikasi SINTA Kemdiktisaintek (ID 10033)]
+Judul Artikel : Penerapan Metode Extreme Gradient Boosting (XGBOOST) pada Klasifikasi Nasabah Kartu Kredit
+Nama Jurnal   : Journal of Mathematics: Theory and Applications
+ISSN          : 2685-9653, 2722-2705
+Volume/No/Hal : Vol. -, No. -, hlm. 21-26
+DOI Aktif     : https://doi.org/10.31605/jomta.v4i1.1792
+Download PDF  : https://ojs.unsulbar.ac.id/index.php/Mathematics/article/download/1792/918
+Relevansi     : [Analogi Metode Boosting] Penerapan varian gradien pohon XGBoost pada klasifikasi nasabah kartu kredit (JOMTA - SINTA 3).
+Format APA 7  : Herni Yulianti, Sri Elina, Oni Soesanto, & Yuana Sukmawaty (2022). Penerapan Metode Extreme Gradient Boosting (XGBOOST) pada Klasifikasi Nasabah Kartu Kredit. Journal of Mathematics: Theory and Applications, 21-26. https://doi.org/10.31605/jomta.v4i1.1792
+Format IEEE   : [3] S. E. Herni Yulianti, Oni Soesanto, and Yuana Sukmawaty, "Penerapan Metode Extreme Gradient Boosting (XGBOOST) pada Klasifikasi Nasabah Kartu Kredit," Journal of Mathematics: Theory and Applications, pp. 21-26, 2022, doi: 10.31605/jomta.v4i1.1792.
+
+[4] Ariatmanto, Dhani, & Rifai, Anggi Muhammad (2024) [Peringkat: SINTA 2 - Terverifikasi SINTA Kemdiktisaintek (ID 3999)]
+Judul Artikel : The Impact of Feature Extraction in Random Forest Classifier for Fake News Detection
+Nama Jurnal   : Jurnal RESTI (Rekayasa Sistem dan Teknologi Informasi)
+ISSN          : 2580-0760, 2580-0760
+Volume/No/Hal : Vol. 8, No. 6, hlm. 730-736
+DOI Aktif     : https://doi.org/10.29207/resti.v8i6.6017
+Download PDF  : https://jurnal.iaii.or.id/index.php/RESTI/article/download/6017/988
+Relevansi     : [Analogi Metode Ekstraksi Fitur RF] Dampak ekstraksi fitur pada pengklasifikasi Random Forest untuk deteksi berita palsu (RESTI - SINTA 2).
+Format APA 7  : Ariatmanto, Dhani, & Rifai, Anggi Muhammad (2024). The Impact of Feature Extraction in Random Forest Classifier for Fake News Detection. Jurnal RESTI (Rekayasa Sistem dan Teknologi Informasi), 8(6), 730-736. https://doi.org/10.29207/resti.v8i6.6017
+Format IEEE   : [4] D. Ariatmanto and A. M. Rifai, "The Impact of Feature Extraction in Random Forest Classifier for Fake News Detection," Jurnal RESTI (Rekayasa Sistem dan Teknologi Informasi), vol. 8, no. 6, pp. 730-736, 2024, doi: 10.29207/resti.v8i6.6017.
+
+[5] Nanda, Wahyuli Dwiki, & Sumadi, Fauzi Dwi Setiawan (2022) [Peringkat: SINTA 2 - Terverifikasi SINTA Kemdiktisaintek (ID 3999)]
+Judul Artikel : LRDDoS Attack Detection on SD-IoT Using Random Forest with Logistic Regression Coefficient
+Nama Jurnal   : Jurnal RESTI (Rekayasa Sistem dan Teknologi Informasi)
+ISSN          : 2580-0760, 2580-0760
+Volume/No/Hal : Vol. 6, No. 2, hlm. 220-226
+DOI Aktif     : https://doi.org/10.29207/resti.v6i2.3878
+Download PDF  : https://jurnal.iaii.or.id/index.php/RESTI/article/download/3878/568
+Relevansi     : [Analogi Metode Keamanan Jaringan] Deteksi serangan LRDDoS pada SD-IoT menggunakan Random Forest (RESTI - SINTA 2).
+Format APA 7  : Nanda, Wahyuli Dwiki, & Sumadi, Fauzi Dwi Setiawan (2022). LRDDoS Attack Detection on SD-IoT Using Random Forest with Logistic Regression Coefficient. Jurnal RESTI (Rekayasa Sistem dan Teknologi Informasi), 6(2), 220-226. https://doi.org/10.29207/resti.v6i2.3878
+Format IEEE   : [5] W. D. Nanda and F. D. S. Sumadi, "LRDDoS Attack Detection on SD-IoT Using Random Forest with Logistic Regression Coefficient," Jurnal RESTI (Rekayasa Sistem dan Teknologi Informasi), vol. 6, no. 2, pp. 220-226, 2022, doi: 10.29207/resti.v6i2.3878.
+
+[6] Baalia, Saida, Boughareb, Djalila, Kouahla, Zineddine, & Seridi, Hamid (2025) [Peringkat: SINTA 1 - Terverifikasi SINTA Kemdiktisaintek (ID 1017)]
+Judul Artikel : Enhanced intrusion detection in smart grids using extended long short-term memory variants
+Nama Jurnal   : International Journal of Advances in Intelligent Informatics
+ISSN          : 2442-6571, 2548-3161
+Volume/No/Hal : Vol. 11, No. 4, hlm. 734
+DOI Aktif     : https://doi.org/10.26555/ijain.v11i4.2169
+Download PDF  : https://ijain.org/index.php/IJAIN/article/viewFile/2169/ijain_vol11no4pp734-755
+Relevansi     : [Analogi Metode Deteksi Intrusi] Sistem deteksi intrusi siber pada smart grid (IJAIN - SINTA 1).
+Format APA 7  : Baalia, Saida, Boughareb, Djalila, Kouahla, Zineddine, & Seridi, Hamid (2025). Enhanced intrusion detection in smart grids using extended long short-term memory variants. International Journal of Advances in Intelligent Informatics, 11(4), 734. https://doi.org/10.26555/ijain.v11i4.2169
+Format IEEE   : [6] S. Baalia, D. Boughareb, Z. Kouahla, and H. Seridi, "Enhanced intrusion detection in smart grids using extended long short-term memory variants," International Journal of Advances in Intelligent Informatics, vol. 11, no. 4, pp. 734, 2025, doi: 10.26555/ijain.v11i4.2169.
+
+[7] Hanafi, Hanafi, Pranolo, Andri, Mao, Yingchi, Hariguna, Taqwa, Hernandez, Leonel, & Kurniawan, Nanang Fitriana (2023) [Peringkat: SINTA 1 - Terverifikasi SINTA Kemdiktisaintek (ID 1017)]
+Judul Artikel : IDSX-Attention: Intrusion detection system (IDS) based hybrid MADE-SDAE and LSTM-Attention mechanism
+Nama Jurnal   : International Journal of Advances in Intelligent Informatics
+ISSN          : 2442-6571, 2548-3161
+Volume/No/Hal : Vol. 9, No. 1, hlm. 121
+DOI Aktif     : https://doi.org/10.26555/ijain.v9i1.942
+Download PDF  : http://ijain.org/index.php/IJAIN/article/viewFile/942/ijain_v9i1_p121-135
+Relevansi     : [Analogi Metode Deteksi Intrusi] Sistem deteksi intrusi jaringan berbasis mekanisme hibrida (IJAIN - SINTA 1).
+Format APA 7  : Hanafi, Hanafi, Pranolo, Andri, Mao, Yingchi, Hariguna, Taqwa, Hernandez, Leonel, & Kurniawan, Nanang Fitriana (2023). IDSX-Attention: Intrusion detection system (IDS) based hybrid MADE-SDAE and LSTM-Attention mechanism. International Journal of Advances in Intelligent Informatics, 9(1), 121. https://doi.org/10.26555/ijain.v9i1.942
+Format IEEE   : [7] H. Hanafi, A. Pranolo, Y. Mao, T. Hariguna, L. Hernandez, and N. F. Kurniawan, "IDSX-Attention: Intrusion detection system (IDS) based hybrid MADE-SDAE and LSTM-Attention mechanism," International Journal of Advances in Intelligent Informatics, vol. 9, no. 1, pp. 121, 2023, doi: 10.26555/ijain.v9i1.942.
+
+[8] Zamakhsyari, Fardan, Makayasa, Bagas Adi, Hamami, R. Abudullah, Akbar, Muhammad Tulus, Cahyono, Andi, Amirullah, Amirullah, Hisyamuddin, Muhammad Zida, & Siregar, Maria Ulfah (2025) [Peringkat: SINTA 3 - Terverifikasi SINTA Kemdiktisaintek (ID 3521)]
+Judul Artikel : Comparison of KNN and Random Forest Algorithms on E-Commerce Service Chatbot
+Nama Jurnal   : JISKA (Jurnal Informatika Sunan Kalijaga)
+ISSN          : 2527-5836, 2528-0074
+Volume/No/Hal : Vol. 10, No. 1, hlm. 100-109
+DOI Aktif     : https://doi.org/10.14421/jiska.2025.10.1.100-109
+Download PDF  : https://ejournal.uin-suka.ac.id/saintek/JISKA/article/download/4405/2869
+Relevansi     : [Analogi Metode Random Forest] Komparasi algoritma KNN dan Random Forest pada klasifikasi layanan chatbot niaga elektronik (JISKA - SINTA 3).
+Format APA 7  : Zamakhsyari, Fardan, Makayasa, Bagas Adi, Hamami, R. Abudullah, Akbar, Muhammad Tulus, Cahyono, Andi, Amirullah, Amirullah, Hisyamuddin, Muhammad Zida, & Siregar, Maria Ulfah (2025). Comparison of KNN and Random Forest Algorithms on E-Commerce Service Chatbot. JISKA (Jurnal Informatika Sunan Kalijaga), 10(1), 100-109. https://doi.org/10.14421/jiska.2025.10.1.100-109
+Format IEEE   : [8] F. Zamakhsyari, B. A. Makayasa, R. A. Hamami, M. T. Akbar, A. Cahyono, A. Amirullah, M. Z. Hisyamuddin, and M. U. Siregar, "Comparison of KNN and Random Forest Algorithms on E-Commerce Service Chatbot," JISKA (Jurnal Informatika Sunan Kalijaga), vol. 10, no. 1, pp. 100-109, 2025, doi: 10.14421/jiska.2025.10.1.100-109.
+
+[9] Sepbriant, Genta Dwigi, & Utomo, Danang Wahyu (2024) [Peringkat: SINTA 3 - Terverifikasi SINTA Kemdiktisaintek (ID 3521)]
+Judul Artikel : Ensemble Learning pada Kategorisasi Produk E-Commerce Menggunakan Teknik Boosting
+Nama Jurnal   : JISKA (Jurnal Informatika Sunan Kalijaga)
+ISSN          : 2527-5836, 2528-0074
+Volume/No/Hal : Vol. 9, No. 2, hlm. 123-133
+DOI Aktif     : https://doi.org/10.14421/jiska.2024.9.2.123-133
+Download PDF  : https://ejournal.uin-suka.ac.id/saintek/JISKA/article/download/4412/2760
+Relevansi     : [Analogi Metode Boosting] Pembelajaran ansambel menggunakan teknik boosting pada kategorisasi produk niaga elektronik (JISKA - SINTA 3).
+Format APA 7  : Sepbriant, Genta Dwigi, & Utomo, Danang Wahyu (2024). Ensemble Learning pada Kategorisasi Produk E-Commerce Menggunakan Teknik Boosting. JISKA (Jurnal Informatika Sunan Kalijaga), 9(2), 123-133. https://doi.org/10.14421/jiska.2024.9.2.123-133
+Format IEEE   : [9] G. D. Sepbriant and D. W. Utomo, "Ensemble Learning pada Kategorisasi Produk E-Commerce Menggunakan Teknik Boosting," JISKA (Jurnal Informatika Sunan Kalijaga), vol. 9, no. 2, pp. 123-133, 2024, doi: 10.14421/jiska.2024.9.2.123-133.
+
+[10] Nabila, Nabila, Hesti, Emilia, & Aryanti, Aryanti (2025) [Peringkat: SINTA 3 - Terverifikasi SINTA Kemdiktisaintek (ID 7790)]
+Judul Artikel : Deteksi URL Phishing Menggunakan Natural Language Processing Dan Support Vector Machine Berbasis Machine Learning
+Nama Jurnal   : Building of Informatics, Technology and Science (BITS)
+ISSN          : 2684-8910, 2685-3310
+Volume/No/Hal : Vol. 7, No. 1, hlm. 526-537
+DOI Aktif     : https://doi.org/10.47065/bits.v7i1.7443
+Download PDF  : https://ejurnal.seminar-id.com/index.php/bits/article/download/7443/3815
+Relevansi     : [Studi Primer Phishing] Deteksi URL phishing menggunakan NLP dan Support Vector Machine (BITS - SINTA 3).
+Format APA 7  : Nabila, Nabila, Hesti, Emilia, & Aryanti, Aryanti (2025). Deteksi URL Phishing Menggunakan Natural Language Processing Dan Support Vector Machine Berbasis Machine Learning. Building of Informatics, Technology and Science (BITS), 7(1), 526-537. https://doi.org/10.47065/bits.v7i1.7443
+Format IEEE   : [10] N. Nabila, E. Hesti, and A. Aryanti, "Deteksi URL Phishing Menggunakan Natural Language Processing Dan Support Vector Machine Berbasis Machine Learning," Building of Informatics, Technology and Science (BITS), vol. 7, no. 1, pp. 526-537, 2025, doi: 10.47065/bits.v7i1.7443.
+
+[11] Yoga, Yoga, Umbara, Fajri Rakhmat, & Sabrina, Puspita Nurul (2025) [Peringkat: SINTA 3 - Terverifikasi SINTA Kemdiktisaintek (ID 7790)]
+Judul Artikel : Klasifikasi Website Phishing Menggunakan Metode X-Gboost dengan Teknik Penyeimbang Data Radial Based Undersampling
+Nama Jurnal   : Building of Informatics, Technology and Science (BITS)
+ISSN          : 2684-8910, 2685-3310
+Volume/No/Hal : Vol. 7, No. 2, hlm. 1153-1163
+DOI Aktif     : https://doi.org/10.47065/bits.v7i2.7920
+Download PDF  : https://ejurnal.seminar-id.com/index.php/bits/article/download/7920/4056
+Relevansi     : [Studi Primer Phishing] Klasifikasi situs web phishing menggunakan metode XGBoost dan Radial Based Undersampling (BITS - SINTA 3).
+Format APA 7  : Yoga, Yoga, Umbara, Fajri Rakhmat, & Sabrina, Puspita Nurul (2025). Klasifikasi Website Phishing Menggunakan Metode X-Gboost dengan Teknik Penyeimbang Data Radial Based Undersampling. Building of Informatics, Technology and Science (BITS), 7(2), 1153-1163. https://doi.org/10.47065/bits.v7i2.7920
+Format IEEE   : [11] Y. Yoga, F. R. Umbara, and P. N. Sabrina, "Klasifikasi Website Phishing Menggunakan Metode X-Gboost dengan Teknik Penyeimbang Data Radial Based Undersampling," Building of Informatics, Technology and Science (BITS), vol. 7, no. 2, pp. 1153-1163, 2025, doi: 10.47065/bits.v7i2.7920.
+
+[12] Hasibuan, Lailan Sahrina (2025) [Peringkat: SINTA 3 - Terverifikasi SINTA Kemdiktisaintek (ID 7790)]
+Judul Artikel : Credit Card Fraud Detection Using Support Vector Machine: A Study on Data Balancing Strategies
+Nama Jurnal   : Building of Informatics, Technology and Science (BITS)
+ISSN          : 2684-8910, 2685-3310
+Volume/No/Hal : Vol. 7, No. 3, hlm. 1900-1909
+DOI Aktif     : https://doi.org/10.47065/bits.v7i3.8514
+Download PDF  : https://ejurnal.seminar-id.com/index.php/bits/article/download/8514/4313
+Relevansi     : [Analogi Metode Deteksi Penipuan] Deteksi penipuan kartu kredit dan strategi penyeimbangan kelas (BITS - SINTA 3).
+Format APA 7  : Hasibuan, Lailan Sahrina (2025). Credit Card Fraud Detection Using Support Vector Machine: A Study on Data Balancing Strategies. Building of Informatics, Technology and Science (BITS), 7(3), 1900-1909. https://doi.org/10.47065/bits.v7i3.8514
+Format IEEE   : [12] L. S. Hasibuan, "Credit Card Fraud Detection Using Support Vector Machine: A Study on Data Balancing Strategies," Building of Informatics, Technology and Science (BITS), vol. 7, no. 3, pp. 1900-1909, 2025, doi: 10.47065/bits.v7i3.8514.
+
+[13] Pratiwi, Anisa Wahyu, Widjajarto, A., & Budiyono, Avon (2025) [Peringkat: SINTA 4 - Terverifikasi SINTA Kemdiktisaintek (ID 8355)]
+Judul Artikel : Pemodelan Attack Tree Pada Spear Phishing Attack di Instansi Publik dengan Metrik Granularitas Data
+Nama Jurnal   : Journal of Information System Research (JOSH)
+ISSN          : 2686-228X
+Volume/No/Hal : Vol. 6, No. 3, hlm. 1544-1554
+DOI Aktif     : https://doi.org/10.47065/josh.v6i3.5876
+Download PDF  : https://ejurnal.seminar-id.com/index.php/josh/article/download/5876/3049
+Relevansi     : [Studi Primer Phishing] Pemodelan Attack Tree pada serangan spear phishing di instansi publik (JOSH - SINTA 4).
+Format APA 7  : Pratiwi, Anisa Wahyu, Widjajarto, A., & Budiyono, Avon (2025). Pemodelan Attack Tree Pada Spear Phishing Attack di Instansi Publik dengan Metrik Granularitas Data. Journal of Information System Research (JOSH), 6(3), 1544-1554. https://doi.org/10.47065/josh.v6i3.5876
+Format IEEE   : [13] A. W. Pratiwi, A. Widjajarto, and A. Budiyono, "Pemodelan Attack Tree Pada Spear Phishing Attack di Instansi Publik dengan Metrik Granularitas Data," Journal of Information System Research (JOSH), vol. 6, no. 3, pp. 1544-1554, 2025, doi: 10.47065/josh.v6i3.5876.
+
+[14] Tangka, George Morris William, & Putra, Edson Yahuda (2025) [Peringkat: SINTA 4 - Terverifikasi SINTA Kemdiktisaintek (ID 8355)]
+Judul Artikel : Classification of Indonesian Undergraduate Students’ Awareness Level of Phishing Attacks using Decision Tree Algorithm
+Nama Jurnal   : Journal of Information System Research (JOSH)
+ISSN          : 2686-228X
+Volume/No/Hal : Vol. 6, No. 4, hlm. 1911-1919
+DOI Aktif     : https://doi.org/10.47065/josh.v6i4.7859
+Download PDF  : https://ejurnal.seminar-id.com/index.php/josh/article/download/7859/3895
+Relevansi     : [Studi Primer Phishing] Klasifikasi tingkat kesadaran terhadap serangan phishing menggunakan algoritma pohon keputusan (JOSH - SINTA 4).
+Format APA 7  : Tangka, George Morris William, & Putra, Edson Yahuda (2025). Classification of Indonesian Undergraduate Students’ Awareness Level of Phishing Attacks using Decision Tree Algorithm. Journal of Information System Research (JOSH), 6(4), 1911-1919. https://doi.org/10.47065/josh.v6i4.7859
+Format IEEE   : [14] G. M. W. Tangka and E. Y. Putra, "Classification of Indonesian Undergraduate Students’ Awareness Level of Phishing Attacks using Decision Tree Algorithm," Journal of Information System Research (JOSH), vol. 6, no. 4, pp. 1911-1919, 2025, doi: 10.47065/josh.v6i4.7859.
+
+[15] Renaldi, Aldy, & Maharani, Warih (2022) [Peringkat: SINTA 4 - Terverifikasi SINTA Kemdiktisaintek (ID 8355)]
+Judul Artikel : Depression Detection of User in Media Social Twitter Using Random Forest
+Nama Jurnal   : Journal of Information System Research (JOSH)
+ISSN          : 2686-228X
+Volume/No/Hal : Vol. 3, No. 4, hlm. 410-416
+DOI Aktif     : https://doi.org/10.47065/josh.v3i4.1837
+Download PDF  : https://ejurnal.seminar-id.com/index.php/josh/article/download/1837/1173
+Relevansi     : [Analogi Metode Random Forest] Klasifikasi teks media sosial menggunakan algoritma Random Forest (JOSH - SINTA 4).
+Format APA 7  : Renaldi, Aldy, & Maharani, Warih (2022). Depression Detection of User in Media Social Twitter Using Random Forest. Journal of Information System Research (JOSH), 3(4), 410-416. https://doi.org/10.47065/josh.v3i4.1837
+Format IEEE   : [15] A. Renaldi and W. Maharani, "Depression Detection of User in Media Social Twitter Using Random Forest," Journal of Information System Research (JOSH), vol. 3, no. 4, pp. 410-416, 2022, doi: 10.47065/josh.v3i4.1837.
+
+[16] Krisanti, Haeranisa Bella, & Umam, Chaerul (2026) [Peringkat: SINTA 3 - Terverifikasi SINTA Kemdiktisaintek (ID 3323)]
+Judul Artikel : Comparative Analysis of TinyBERT, SVM, and Char-CNN Models for Phishing URL Detection
+Nama Jurnal   : SISTEMASI
+ISSN          : 2302-8149, 2540-9719
+Volume/No/Hal : Vol. 15, No. 5, hlm. 1721
+DOI Aktif     : https://doi.org/10.32520/stmsi.v15i5.6345
+Download PDF  : https://sistemasi.ftik.unisi.ac.id/index.php/stmsi/article/viewFile/6345/1253
+Relevansi     : [Studi Primer Phishing] Analisis komparatif model TinyBERT, SVM, dan Char-CNN pada deteksi URL phishing (SISTEMASI - SINTA 3).
+Format APA 7  : Krisanti, Haeranisa Bella, & Umam, Chaerul (2026). Comparative Analysis of TinyBERT, SVM, and Char-CNN Models for Phishing URL Detection. SISTEMASI, 15(5), 1721. https://doi.org/10.32520/stmsi.v15i5.6345
+Format IEEE   : [16] H. B. Krisanti and C. Umam, "Comparative Analysis of TinyBERT, SVM, and Char-CNN Models for Phishing URL Detection," SISTEMASI, vol. 15, no. 5, pp. 1721, 2026, doi: 10.32520/stmsi.v15i5.6345.

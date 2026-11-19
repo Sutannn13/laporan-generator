@@ -25,7 +25,7 @@ Format dokumen dikonfigurasi secara baku pada pustaka layout (`lib.typ`):
 | **Penomoran Bab & Sub-bab** | Bab: Romawi kapital; Sub-bab: Latin berakhiran titik (Poin 2.3) | `BAB I`, `1.1.`, `1.1.1.` |
 | **Penomoran Halaman** | Awal: Romawi kecil bawah-tengah (Poin 2.4.1)<br>Pokok: Awal bab bawah-tengah, lanjutan kanan-atas (Poin 2.4.2)<br>Akhir: Angka latin bawah-tengah (Poin 2.4.3) | Terintegrasi otomatis melalui query posisi bab |
 | **Tabel & Gambar** | Judul tabel di atas tengah; Judul gambar di bawah tengah (Poin 2.5) | Penomoran romawi bab (`Gambar III.1`, `Tabel IV.1`) |
-| **Sitasi & Pustaka** | Standar APA Style Versi 6 (Poin 2.6.3 & Poin 2.7.10) | `style: "apa"`, pustaka spasi 1, jarak antar pustaka 2 spasi |
+| **Sitasi & Pustaka** | Standar Mendeley APA Style V.7 (SK Rektor UBSI 2026) | `style: "apa"`, pustaka spasi 1, jarak antar pustaka 2 spasi |
 
 ---
 
@@ -88,31 +88,93 @@ Disediakan draf bab sesuai 4 outline resmi peminatan TI S1 serta Proposal PKL:
 
 ---
 
-## Struktur Direktori Proyek
+## Struktur Direktori Proyek (Workspace Map untuk User, AI Agent, & CLI)
 
+```text
+project-laporan-ai/
+├── .agents/                          # Kustomisasi AI Agent (Always-on Rules & Skill jurnal-sinta)
+│   ├── rules/sinta-journal-prompt.md # Protokol wajib SINTA 1-6, OJS, DOI Crossref, & Anti-Slop
+│   └── skills/jurnal-sinta/SKILL.md  # Skill pembuatan jurnal baru, edit dokumen existing, & showcase
+├── bin/
+│   └── cli.js                        # Interactive CLI Scaffolder (npx create-templatebsi)
+├── contoh-template-ai/               # Katalog hasil jadi Jurnal SINTA 1-6 (.docx/.pdf) & Laporan PKL
+│   ├── 00_Jurnal_SINTA1_HukumSiber_APK_KUHP_Baru_PJIH_Unpad.docx
+│   ├── 01_Jurnal_SINTA1_IJAIN_UAD_2Kolom.docx
+│   ├── 02_Jurnal_SINTA2_JTIIK_UB_2Kolom.docx
+│   ├── 03_Jurnal_SINTA3_JISKA_UIN_2Kolom.docx
+│   ├── 04_Jurnal_SINTA4_JKI_UBSI_2Kolom.docx
+│   ├── 05_Jurnal_SINTA4_JKI_UBSI_1Kolom_Biasa.docx
+│   ├── 06_Jurnal_SINTA5_TEKNOIF_ITP_2Kolom.docx
+│   ├── 07_Jurnal_SINTA6_METIK_Jayakarta_1Kolom_Biasa.docx
+│   ├── 08_Jurnal_SINTA6_METIK_Jayakarta_2Kolom.docx
+│   ├── 09_Laporan_PKL_UBSI_Analisis_Sistem.docx
+│   ├── 10_Laporan_PKL_UBSI_Analisis_Sistem.pdf
+│   ├── 11_Jurnal_SINTA4_JKI_UBSI_Typst.pdf
+│   └── README.md
+├── presets/
+│   ├── sinta-catalog.json.gz         # Katalog 16.617 jurnal terakreditasi SINTA 1-6
+│   └── sinta-journals.json           # Spesifikasi OJS, ISSN, DOI Prefix, & Layout Jurnal SINTA 1-6
+├── scripts/                          # Seluruh modul data, generator diagram, & automated test suite
+│   ├── generate_diagrams.py          # Generator diagram arsitektur & UML 300 DPI (ke template/gambar/)
+│   ├── install_agent_skills.py       # Installer skill mandiri ke Antigravity, OpenCode, Freebuff, Claude, Cursor, KiloCode
+│   ├── sinta_content_data.py         # Database sitasi DOI Crossref terverifikasi & isi naskah SINTA 1-6
+│   ├── test.js                       # Unit test Node.js CLI & Typst (PKL, Proposal, Skripsi, Jurnal SINTA)
+│   ├── test_sinta.py                 # Audit otomatis XML Word, Header/Footer OJS, DOI, & Anti-Slop
+│   └── update_docx_script.py         # Scaffolder & editor in-place Laporan PKL / Skripsi Word (.docx)
+├── template/                         # Template Typst (.typ) & aset gambar diagram
+│   ├── gambar/                       # Seluruh diagram 300 DPI (.png) & aset visual
+│   ├── bagian-awal/                  # Pengesahan, Persetujuan, Hak Cipta, Konsultasi, Persembahan, Abstraksi, Kata Pengantar, Daftar Isi/Simbol/Gambar/Tabel/Lampiran
+│   ├── bagian-akhir/                 # Riwayat Hidup, Bukti Plagiarisme, Surat Keterangan, Nilai, Kuesioner, Lampiran
+│   ├── outlines/                     # Draf bab per outline peminatan S1 Teknologi Informasi:
+│   │   ├── proposal/                 # Bab 1 s.d. Bab 3 Proposal PKL
+│   │   ├── pkl-ti-inovasi/           # PKL Outline 1: Proyek Inovasi Perangkat Lunak (6 Bab)
+│   │   ├── pkl-ti-mobile/            # PKL Outline 2: Analisa Program Mobile (4 Bab)
+│   │   ├── pkl-ti-jaringan/          # PKL Outline 3: Jaringan Komputer (4 Bab)
+│   │   ├── pkl-ti-analisis-sistem/   # PKL Outline 4: Analisis Sistem (4 Bab)
+│   │   ├── skripsi-ti-156/           # Skripsi Outline 156: Perancangan Program Science (5 Bab)
+│   │   ├── skripsi-ti-138/           # Skripsi Outline 138: Penelitian Ilmiah (5 Bab)
+│   │   ├── skripsi-ti-137/           # Skripsi Outline 137: Jaringan Komputer (5 Bab)
+│   │   └── skripsi-ti-158/           # Skripsi Outline 158: Aplikasi StartUp (4 Bab)
+│   ├── jurnal-sinta.typ              # Entrypoint Typst Jurnal SINTA 1-6
+│   ├── main.typ                      # Entrypoint Typst Laporan PKL
+│   ├── metadata.typ                  # Konfigurasi identitas penulis (1-2 orang), dosen PA, penguji, pembimbing, & switch catatan
+│   ├── proposal.typ                  # Entrypoint Typst Proposal PKL (3 Bab)
+│   └── skripsi.typ                   # Entrypoint resmi Skripsi Sarjana (S1)
+├── website/                          # Halaman dokumentasi & galeri spesimen interaktif (Vite + React)
+├── generate_sinta_journal_docx.py    # CLI utama Generator & Inspector Jurnal SINTA 1-6 (.docx)
+├── lib.typ                           # Engine format baku Pedoman PKL & Skripsi UBSI 2026
+├── sinta.typ                         # Engine format baku Jurnal Ilmiah SINTA 1-6 (2 Kolom & 1 Kolom)
+├── package.json                      # NPM scripts terpadu untuk User, AI Agent, & CI
+└── typst.toml                        # Manifes paket Typst
 ```
-templatebsi/
-├── lib.typ                   # Engine format baku Pedoman UBSI 2026 (spasi, margin, heading, cover)
-├── template/
-│   ├── main.typ              # Entrypoint resmi Laporan PKL (Teknologi Informasi)
-│   ├── proposal.typ          # Entrypoint resmi Proposal PKL (3 Bab)
-│   ├── skripsi.typ           # Entrypoint resmi Skripsi Sarjana (S1)
-│   ├── metadata.typ          # Konfigurasi data mahasiswa (1-2 orang), dosen PA, penguji, pembimbing, & switch catatan
-│   ├── pustaka.bib           # Sumber pustaka BibTeX (Style APA 6th Edition)
-│   ├── public/logo-ubsi.png  # Logo resmi UBSI berwarna (standar 4x4 cm)
-│   ├── gambar/               # Folder penyimpanan gambar naskah & berkas scan instansi
-│   ├── bagian-awal/          # Pengesahan, Persetujuan, Hak Cipta, Konsultasi, Persembahan, Abstraksi, Kata Pengantar, Daftar Isi/Simbol/Gambar/Tabel/Lampiran
-│   ├── bagian-akhir/         # Riwayat Hidup, Bukti Plagiarisme, Surat Keterangan, Nilai, Kuesioner, Lampiran
-│   └── outlines/             # Draf bab per outline peminatan S1 Teknologi Informasi:
-│       ├── proposal/         # Bab 1 s.d. Bab 3 Proposal PKL
-│       ├── pkl-ti-inovasi/   # PKL Outline 1: Proyek Inovasi Perangkat Lunak (6 Bab)
-│       ├── pkl-ti-mobile/    # PKL Outline 2: Analisa Program Mobile (4 Bab)
-│       ├── pkl-ti-jaringan/         # PKL Outline 3: Jaringan Komputer (4 Bab)
-│       ├── pkl-ti-analisis-sistem/  # PKL Outline 4: Analisis Sistem (4 Bab)
-│       ├── skripsi-ti-156/          # Skripsi Outline 156: Perancangan Program Science (5 Bab)
-│       ├── skripsi-ti-138/          # Skripsi Outline 138: Penelitian Ilmiah (5 Bab)
-│       ├── skripsi-ti-137/          # Skripsi Outline 137: Jaringan Komputer (5 Bab)
-│       └── skripsi-ti-158/          # Skripsi Outline 158: Aplikasi StartUp (4 Bab)
+
+---
+
+## Pintasan Perintah Cepat (Untuk User & AI Agent)
+
+Seluruh workflow utama dapat dijalankan langsung melalui `npm run` maupun `uv run`:
+
+```powershell
+# 1. Pasang Skill & Slash Commands ke Antigravity, OpenCode, Freebuff, Claude Code, Cursor, & KiloCode:
+npm run agent:install
+
+# 2. Jalankan Generator Interaktif Jurnal SINTA 1-6 (Word .docx):
+npm run sinta
+
+# 3. Buat Jurnal SINTA 1 Topik "Unauthorized Access APK Berbahaya & KUHP Baru":
+uv run generate_sinta_journal_docx.py --sinta 1 --layout 2col --citation ieee --topic apk-kuhp --yes
+
+# 4. Inspeksi struktur / template .docx dari jurnal kampus lain atau draf yang sedang dibangun:
+npm run sinta:inspect -- "nama_file_jurnal.docx"
+
+# 5. Generate ulang seluruh 12 contoh file di folder contoh-template-ai/:
+npm run sinta:showcase
+
+# 6. Generate ulang seluruh diagram 300 DPI ke template/gambar/:
+npm run diagrams
+
+# 7. Jalankan seluruh pengujian otomatis (Typst PKL/Skripsi/SINTA + Audit OpenXML SINTA 1-6):
+npm run test:all
 ```
 
 ---
@@ -127,15 +189,27 @@ Pilih salah satu metode kerja yang paling nyaman untuk Anda:
 Perintah ini akan membuat folder kerja mandiri yang hanya memuat outline pilihan Anda (tanpa folder outline lain):
 ```bash
 # Mode Interaktif:
-npx github:fatidaprilian/templatebsi <nama-folder-proyek>
+npx github:Sutannn13/laporan-generator <nama-folder-proyek>
 
 # Mode Otomatis / Non-interaktif:
-npx github:fatidaprilian/templatebsi my-laporan --type laporan --outline 1 --yes
-npx github:fatidaprilian/templatebsi my-proposal --type proposal --yes
+npx github:Sutannn13/laporan-generator my-laporan --type laporan --outline 1 --yes
+npx github:Sutannn13/laporan-generator my-proposal --type proposal --yes
 
 # Di dalam folder yang sudah ada / folder aktif (.):
-npx github:fatidaprilian/templatebsi . --force
+npx github:Sutannn13/laporan-generator . --force
 ```
+
+#### Pemasangan Skill AI Agent & Scaffolder Word (.docx) SK Rektor UBSI 2026
+Untuk menyinkronkan 4 skill (`laporan-generator`, `mode-ilmiah`, `jurnal-sinta`, dan `humanizer-id` ber-preset UBSI 2026) ke Antigravity, KiloCode, OpenCode, Freebuff, Claude Code, dan Cursor:
+```powershell
+npm run agent:install
+npm run agent:status
+
+# Buat kerangka Word (.docx) Skripsi / TA / PKL UBSI 2026:
+uv run scripts/update_docx_script.py --scaffold --type skripsi --outline 156 --title "JUDUL SKRIPSI" --author "Penulis Contoh" --nim "00000001" --output "Skripsi_UBSI.docx"
+```
+
+*(Opsional - Live Preview di IDE): Extension `.docx` (`cweijan.vscode-office`) dan `.pdf` (`tomoki1207.pdf`) direkomendasikan di `.vscode/extensions.json` untuk memantau perubahan dokumen secara langsung di tab IDE. Saat agent menulis ke file `.docx` via `atomic_save_docx()`, pastikan file tersebut sedang tidak terbuka di aplikasi Microsoft Word desktop agar Windows tidak mengunci berkas (`PermissionError`); untuk tampilan cetak final 2 kolom, header/footer OJS, dan watermark tetap cek lewat Microsoft Word atau ekspor PDF.)*
 
 CLI mendukung opsi flag berikut:
 - `-t, --type <proposal|laporan|skripsi>` : Memilih jenis dokumen (proposal 3 bab, laporan PKL, atau skripsi sarjana).
@@ -145,7 +219,7 @@ CLI mendukung opsi flag berikut:
 - `-h, --help` : Menampilkan petunjuk opsi CLI.
 
 #### Opsi B: Menggunakan Visual Studio Code (Lokal)
-1. Pasang ekstensi **Tinymist Typst** (`myriad-dreamit.tinymist`) di VS Code.
+1. Pasang ekstensi **Tinymist Typst** (`myriad-dreamin.tinymist`) di VS Code.
 2. Buka folder repositori ini di VS Code.
 3. Buka berkas `template/main.typ` (untuk Laporan Akhir) atau `template/proposal.typ` (untuk Proposal).
 4. Klik tombol ikon **Preview** Tinymist di pojok kanan atas editor (atau gunakan pintasan `Ctrl + K, V`) untuk melihat pratinjau dokumen langsung secara *real-time*.

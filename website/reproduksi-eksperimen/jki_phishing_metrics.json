@@ -1,0 +1,130 @@
+{
+  "timestamp_iso": "2026-11-18T13:29:05.493525",
+  "python_version": "3.14.0",
+  "scikit_learn_version": "1.9.1",
+  "numpy_version": "2.5.5",
+  "dataset_doi": "https://doi.org/10.24432/C51W2X",
+  "arff_file": "Training Dataset.arff",
+  "total_rows": 11055,
+  "num_features": 30,
+  "phishing_rows": 4898,
+  "legitimate_rows": 6157,
+  "train_rows": 8844,
+  "test_rows": 2211,
+  "models": {
+    "Random Forest": {
+      "accuracy": 97.69,
+      "precision": 98.04,
+      "recall": 96.73,
+      "f1": 97.38,
+      "roc_auc": 99.64,
+      "cv5_mean": 97.01,
+      "cv5_std": 0.3,
+      "tn": 1212,
+      "fp": 19,
+      "fn": 32,
+      "tp": 948,
+      "train_ms": 1817.4,
+      "infer_test_ms": 237.38,
+      "top_features": [
+        {
+          "feature": "SSLfinal_State",
+          "importance": 0.3245
+        },
+        {
+          "feature": "URL_of_Anchor",
+          "importance": 0.2492
+        },
+        {
+          "feature": "web_traffic",
+          "importance": 0.0741
+        },
+        {
+          "feature": "having_Sub_Domain",
+          "importance": 0.0634
+        },
+        {
+          "feature": "Links_in_tags",
+          "importance": 0.0425
+        },
+        {
+          "feature": "Prefix_Suffix",
+          "importance": 0.0405
+        },
+        {
+          "feature": "SFH",
+          "importance": 0.0207
+        },
+        {
+          "feature": "Links_pointing_to_page",
+          "importance": 0.0184
+        },
+        {
+          "feature": "Request_URL",
+          "importance": 0.0182
+        },
+        {
+          "feature": "Domain_registeration_length",
+          "importance": 0.0164
+        }
+      ]
+    },
+    "Gradient Boosting": {
+      "accuracy": 96.02,
+      "precision": 96.27,
+      "recall": 94.69,
+      "f1": 95.47,
+      "roc_auc": 99.32,
+      "cv5_mean": 95.35,
+      "cv5_std": 0.29,
+      "tn": 1195,
+      "fp": 36,
+      "fn": 52,
+      "tp": 928,
+      "train_ms": 2854.01,
+      "infer_test_ms": 35.62,
+      "top_features": [
+        {
+          "feature": "SSLfinal_State",
+          "importance": 0.7126
+        },
+        {
+          "feature": "URL_of_Anchor",
+          "importance": 0.1448
+        },
+        {
+          "feature": "Prefix_Suffix",
+          "importance": 0.0364
+        },
+        {
+          "feature": "web_traffic",
+          "importance": 0.032
+        },
+        {
+          "feature": "Links_in_tags",
+          "importance": 0.0279
+        },
+        {
+          "feature": "having_Sub_Domain",
+          "importance": 0.0111
+        },
+        {
+          "feature": "SFH",
+          "importance": 0.0076
+        },
+        {
+          "feature": "Links_pointing_to_page",
+          "importance": 0.0044
+        },
+        {
+          "feature": "Google_Index",
+          "importance": 0.0034
+        },
+        {
+          "feature": "having_IP_Address",
+          "importance": 0.0029
+        }
+      ]
+    }
+  }
+}

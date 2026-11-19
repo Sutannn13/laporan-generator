@@ -1,21 +1,22 @@
 // =============================================================================
-// METADATA DOKUMEN PKL / PROPOSAL PKL UBSI
+// METADATA DOKUMEN PKL / PROPOSAL PKL / SKRIPSI UBSI
 // Program Studi: Teknologi Informasi (S1)
+// Seluruh identitas di bawah adalah data contoh teranonimisasi.
 // =============================================================================
 
 // Identitas Mahasiswa & Laporan
-#let judul = "SISTEM PEMANTAUAN INFRASTRUKTUR JARINGAN BERBASIS SNMP PADA LABORATORIUM KOMPUTER"
-#let jenis = "proposal" // Pilihan: "proposal" | "laporan"
-#let penulis = "Nama Mahasiswa"
-#let nim = "12200001"
+#let judul = "ANALISIS SISTEM PENGELOLAAN PUBLIKASI BERITA DAN USULAN OTOMATISASI PRESS RELEASE PADA DINAS KOMUNIKASI DAN INFORMATIKA KOTA CONTOH"
+#let jenis = "laporan" // Pilihan: "proposal" | "laporan"
+#let penulis = "Penulis Contoh"
+#let nim = "00000001"
 // Mahasiswa Kedua (Khusus outline skripsi kelompok: Outline 158 Aplikasi StartUp)
 #let penulis-2 = none // contoh: "Nama Mahasiswa Kedua"
-#let nim-2 = none     // contoh: "12200002"
+#let nim-2 = none     // contoh: "00000002"
 #let jenjang = "Sarjana (S1)" // "Sarjana (S1)" atau "Diploma Tiga (D3)"
 #let program-studi = "Teknologi Informasi"
 #let fakultas = "Teknik dan Informatika"
 #let universitas = "Universitas Bina Sarana Informatika"
-#let kota = "Jakarta"
+#let kota = "Kota Contoh"
 #let tahun = "2026"
 
 // Konfigurasi Kampus (Sesuai Lampiran 1 & 2):
@@ -25,21 +26,21 @@
 
 // Pembimbing & Penasehat Akademik (Sesuai Lampiran 5 & 6):
 #let semester = "Gasal" // "Gasal" atau "Genap"
-#let tahun-akademik = "2026"
+#let tahun-akademik = "2026/2027"
 #let kelas = "7A.01" // Kelas semester VII (S1) atau semester V (D3)
-#let dosen-pa = "Nama Dosen Penasehat Akademik, M.Kom"
-#let tanggal-persetujuan = "Jakarta, 15 Juli 2026"
+#let dosen-pa = "Dosen Penasehat Akademik Contoh, M.Kom"
+#let tanggal-persetujuan = "Kota Contoh, 18 November 2026"
 
-// Detail Rencana Instansi PKL (Untuk Bab II Proposal):
-#let nama-instansi = "PT. Telekomunikasi Indonesia Prima"
-#let divisi-instansi = "Divisi Information Technology & Infrastructure"
-#let alamat-instansi = "Jl. Gatot Subroto No. Kav 52, Jakarta Selatan"
-#let kontak-instansi = "(021) 5215123 / info@telkomprima.co.id"
+// Detail Rencana Instansi PKL (Untuk Bab II Proposal / Bab III):
+#let nama-instansi = "Dinas Komunikasi dan Informatika Kota Contoh"
+#let divisi-instansi = "Bidang Pengelolaan Informasi dan Komunikasi Publik (Humas)"
+#let alamat-instansi = "Jl. Raya Pemerintahan No. 1, Kota Contoh"
+#let kontak-instansi = "(021) 0000-0001 / diskominfo@kotacontoh.go.id"
 #let tanggal-mulai-pkl = "1 Agustus 2026"
 #let tanggal-selesai-pkl = "31 Oktober 2026"
 // Pembimbing Instansi / Perusahaan (Untuk Kata Pengantar Sesuai Lampiran 17):
-#let nama-pembimbing-instansi = "Nama Pembimbing Instansi, S.T."
-#let jabatan-pembimbing-instansi = "Kepala Divisi Teknologi Informasi"
+#let nama-pembimbing-instansi = "Pembimbing Instansi Contoh, S.Kom."
+#let jabatan-pembimbing-instansi = "Kepala Bidang Pengelolaan Informasi dan Komunikasi Publik"
 
 // Berkas Bukti Lampiran Perusahaan (Scan PNG/JPG):
 // Biarkan none jika ingin menggunakan template cetak resmi UBSI
@@ -50,7 +51,7 @@
 // Konfigurasi Catatan Petunjuk Pedoman:
 // true  = Menampilkan catatan petunjuk pedoman kampus (disertai peringatan wajib dihapus)
 // false = Otomatis menyembunyikan seluruh catatan petunjuk pedoman saat dijilid/dicetak
-#let tampilkan-catatan-pedoman = true
+#let tampilkan-catatan-pedoman = false
 
 // =============================================================================
 // KONFIGURASI SKRIPSI / TUGAS AKHIR SARJANA (S1)
@@ -79,5 +80,3 @@
 #let tingkat-kemiripan-plagiarisme = "14%"
 #let tanggal-cek-plagiarisme = "10 Januari 2026"
 #let file-bukti-plagiarisme = none // contoh: "gambar/scan-turnitin.png"
-
-

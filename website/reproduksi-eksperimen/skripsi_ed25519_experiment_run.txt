@@ -1,0 +1,103 @@
+COMMAND : uv run website/reproduksi-eksperimen/run_skripsi_ed25519_qr_experiment.py
+EXIT    : 0
+==============================================================================
+{
+  "timestamp_iso": "2026-11-18T20:51:07.643829",
+  "python_version": "3.14.0",
+  "os_platform": "Windows 10",
+  "rfc8032_tv1_verified": true,
+  "public_key_bytes": 32,
+  "signature_bytes": 64,
+  "sha256_hex_len": 64,
+  "sample_sha256": "0c770bf1db39d17221fbc3d7881f6dc8f5570aa6645e7900e42227fa8d21c5d9",
+  "token_char_len": 270,
+  "qr_url_char_len": 306,
+  "qr_version": 13,
+  "qr_modules_per_side": 69,
+  "sign_avg_ms_1000_runs": 0.0682,
+  "verify_avg_ms_1000_runs": 0.1641,
+  "blackbox_total": 10,
+  "blackbox_passed": 10,
+  "blackbox_cases": [
+    {
+      "id": "TC-01",
+      "partition": "Kelas Masukan Sah",
+      "scenario": "Unggah PDF sah (%PDF-1.4, 146 byte) dan terbitkan token Ed25519",
+      "expected": "Token terbentuk (tanda tangan 64 byte)",
+      "actual": "Token 270 karakter (sig 64 byte)",
+      "status": "Valid (Sesuai)"
+    },
+    {
+      "id": "TC-02",
+      "partition": "Kelas Masukan Sah",
+      "scenario": "Verifikasi token QR sah beserta berkas PDF asli tanpa perubahan",
+      "expected": "VALID_AUTHENTIC",
+      "actual": "VALID_AUTHENTIC",
+      "status": "Valid (Sesuai)"
+    },
+    {
+      "id": "TC-03",
+      "partition": "Kelas Masukan Sah",
+      "scenario": "Pindai kode QR tanpa unggah ulang berkas PDF",
+      "expected": "VALID_AUTHENTIC",
+      "actual": "VALID_AUTHENTIC",
+      "status": "Valid (Sesuai)"
+    },
+    {
+      "id": "TC-04",
+      "partition": "Kelas Tidak Sah (Integritas)",
+      "scenario": "Ubah 1 digit NIM pada berkas PDF lalu uji terhadap token QR asli",
+      "expected": "ERR_HASH_MISMATCH",
+      "actual": "ERR_HASH_MISMATCH",
+      "status": "Valid (Sesuai)"
+    },
+    {
+      "id": "TC-05",
+      "partition": "Kelas Tidak Sah (Kriptografi)",
+      "scenario": "Balik 1 bit pada komponen tanda tangan Ed25519 di dalam token",
+      "expected": "ERR_INVALID_SIGNATURE",
+      "actual": "ERR_INVALID_SIGNATURE",
+      "status": "Valid (Sesuai)"
+    },
+    {
+      "id": "TC-06",
+      "partition": "Kelas Tidak Sah (Otorisasi)",
+      "scenario": "Verifikasi token menggunakan kunci publik penanda tangan lain",
+      "expected": "ERR_INVALID_SIGNATURE",
+      "actual": "ERR_INVALID_SIGNATURE",
+      "status": "Valid (Sesuai)"
+    },
+    {
+      "id": "TC-07",
+      "partition": "Kelas Tidak Sah (Status)",
+      "scenario": "Verifikasi token dokumen berstatus DICABUT",
+      "expected": "ERR_DOC_REVOKED",
+      "actual": "ERR_DOC_REVOKED",
+      "status": "Valid (Sesuai)"
+    },
+    {
+      "id": "TC-08",
+      "partition": "Kelas Tidak Sah (Format)",
+      "scenario": "Masukan string QR rusak tanpa pemisah titik",
+      "expected": "ERR_TOKEN_FORMAT",
+      "actual": "ERR_TOKEN_FORMAT",
+      "status": "Valid (Sesuai)"
+    },
+    {
+      "id": "TC-09",
+      "partition": "Kelas Batas Kosong",
+      "scenario": "Unggah berkas 0 byte pada form penerbitan dokumen",
+      "expected": "ERR_EMPTY_FILE",
+      "actual": "ERR_EMPTY_FILE",
+      "status": "Valid (Sesuai)"
+    },
+    {
+      "id": "TC-10",
+      "partition": "Kelas Format Berkas",
+      "scenario": "Unggah berkas non-PDF (header ZIP/DOCX) ke modul penandatanganan PDF",
+      "expected": "ERR_NOT_PDF",
+      "actual": "ERR_NOT_PDF",
+      "status": "Valid (Sesuai)"
+    }
+  ]
+}

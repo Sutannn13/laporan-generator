@@ -1,0 +1,138 @@
+KANDIDAT REFERENSI ILMIAH TERVERIFIKASI (TERBITAN >= 2022 | CROSSREF DOI | PENULIS LENGKAP)
+Naskah Target : website/public/downloads/02_Sampel_Skripsi_TI_UBSI_Outline156.docx
+Judul Naskah  : Perancangan Sistem Informasi Verifikasi Keaslian Dokumen Akademik Digital Berbasis Tanda Tangan Kriptografi Ed25519 dan Kode QR
+Tanggal Riset : 2026-11-18
+Total Entri   : 12
+================================================================================
+
+[1] Zulkarnaim, Nuralamsah, & Mansyur, Muh. Fuad (2024) [Peringkat: SINTA 3 - Terverifikasi SINTA Kemdiktisaintek (ID 10336)]
+Judul Artikel : Penerapan Spiral Method untuk Pengembangan Sistem Pencegahan Pemalsuan Sertifikat dengan Penerapan Tanda Tangan Digital dan Verifikasi Online
+Nama Jurnal   : Jurnal Teknologi Sistem Informasi dan Aplikasi
+ISSN          : 2654-3788, 2654-4229
+Volume/No/Hal : Vol. 7, No. 1, hlm. 90-96
+DOI Aktif     : https://doi.org/10.32493/jtsi.v7i1.36905
+Download PDF  : https://openjournal.unpam.ac.id/index.php/JTSI/article/download/36905/17624
+Relevansi     : Artikel jurnal OJS terindeks SINTA 3 (Jurnal Teknologi Sistem Informasi dan Aplikasi).
+Format APA 7  : Zulkarnaim, Nuralamsah, & Mansyur, Muh. Fuad (2024). Penerapan Spiral Method untuk Pengembangan Sistem Pencegahan Pemalsuan Sertifikat dengan Penerapan Tanda Tangan Digital dan Verifikasi Online. Jurnal Teknologi Sistem Informasi dan Aplikasi, 7(1), 90-96. https://doi.org/10.32493/jtsi.v7i1.36905
+Format IEEE   : [1] N. Zulkarnaim and M. F. Mansyur, "Penerapan Spiral Method untuk Pengembangan Sistem Pencegahan Pemalsuan Sertifikat dengan Penerapan Tanda Tangan Digital dan Verifikasi Online," Jurnal Teknologi Sistem Informasi dan Aplikasi, vol. 7, no. 1, pp. 90-96, 2024, doi: 10.32493/jtsi.v7i1.36905.
+
+[2] Lubis, Yusmaniar, Rusydi, Ibnu, & Elyas, Ananda Hadi (2024) [Peringkat: SINTA 5 - Terverifikasi SINTA Kemdiktisaintek (ID 8579)]
+Judul Artikel : Implementasi Algoritma Kriptografi Tanda Tangan Digital Qrcode Pada Dokumen Dengan Menggunakan Metode Riverst Shamir Adleman  (RSA)
+Nama Jurnal   : Warta Dharmawangsa
+ISSN          : 1829-7463, 2716-3083
+Volume/No/Hal : Vol. 18, No. 4, hlm. 1429-1439
+DOI Aktif     : https://doi.org/10.46576/wdw.v18i4.5247
+Download PDF  : https://jurnal.dharmawangsa.ac.id/index.php/juwarta/article/viewFile/5247/pdf
+Relevansi     : Artikel jurnal OJS terindeks SINTA 5 (Majalah Ilmiah Warta Dharmawangsa).
+Format APA 7  : Lubis, Yusmaniar, Rusydi, Ibnu, & Elyas, Ananda Hadi (2024). Implementasi Algoritma Kriptografi Tanda Tangan Digital Qrcode Pada Dokumen Dengan Menggunakan Metode Riverst Shamir Adleman  (RSA). Warta Dharmawangsa, 18(4), 1429-1439. https://doi.org/10.46576/wdw.v18i4.5247
+Format IEEE   : [2] Y. Lubis, I. Rusydi, and A. H. Elyas, "Implementasi Algoritma Kriptografi Tanda Tangan Digital Qrcode Pada Dokumen Dengan Menggunakan Metode Riverst Shamir Adleman  (RSA)," Warta Dharmawangsa, vol. 18, no. 4, pp. 1429-1439, 2024, doi: 10.46576/wdw.v18i4.5247.
+
+[3] Fachrul, Muh, Sutardi, Sutardi, Tajidun, Laode Muhamad, & Aksara, LM Bahtiar (2022) [Peringkat: SINTA 3 - Terverifikasi SINTA Kemdiktisaintek (ID 3299)]
+Judul Artikel : PENERAPAN KONSEP DIGITAL SIGNATURE TERHADAP VERIFIKASI KEASLIAN DOKUMEN TRANSKRIP NILAI MAHASISWA MENGGUNAKAN ENKRIPSI RIVEST SHAMIR ADLEMAN
+Nama Jurnal   : semanTIK
+ISSN          : 2460-1446, 2502-8928
+Volume/No/Hal : Vol. 8, No. 1, hlm. 45
+DOI Aktif     : https://doi.org/10.55679/semantik.v8i1.21608
+Download PDF  : https://ojs.uho.ac.id/index.php/semantik/article/download/21608/pdf
+Relevansi     : Artikel jurnal OJS terindeks SINTA 3 (SemanTIK : Teknik Informasi).
+Format APA 7  : Fachrul, Muh, Sutardi, Sutardi, Tajidun, Laode Muhamad, & Aksara, LM Bahtiar (2022). PENERAPAN KONSEP DIGITAL SIGNATURE TERHADAP VERIFIKASI KEASLIAN DOKUMEN TRANSKRIP NILAI MAHASISWA MENGGUNAKAN ENKRIPSI RIVEST SHAMIR ADLEMAN. semanTIK, 8(1), 45. https://doi.org/10.55679/semantik.v8i1.21608
+Format IEEE   : [3] M. Fachrul, S. Sutardi, L. M. Tajidun, and L. B. Aksara, "PENERAPAN KONSEP DIGITAL SIGNATURE TERHADAP VERIFIKASI KEASLIAN DOKUMEN TRANSKRIP NILAI MAHASISWA MENGGUNAKAN ENKRIPSI RIVEST SHAMIR ADLEMAN," semanTIK, vol. 8, no. 1, pp. 45, 2022, doi: 10.55679/semantik.v8i1.21608.
+
+[4] Kusumahpraja, Reza Kautsar (2022) [Peringkat: SINTA 5 - Terverifikasi SINTA Kemdiktisaintek (ID 14647)]
+Judul Artikel : The Power of Digital Signature Evidence in Indonesian Civil Procedural Law
+Nama Jurnal   : Locus Journal of Academic Literature Review
+ISSN          : 2829-4262, 2829-3827
+Volume/No/Hal : Vol. -, No. -, hlm. 1-5
+DOI Aktif     : https://doi.org/10.56128/ljoalr.v1i1.46
+Download PDF  : https://jurnal.locusmedia.id/index.php/jalr/article/download/46/43
+Relevansi     : Artikel jurnal OJS terindeks SINTA 5 (Locus Journal of Academic Literature Review).
+Format APA 7  : Kusumahpraja, Reza Kautsar (2022). The Power of Digital Signature Evidence in Indonesian Civil Procedural Law. Locus Journal of Academic Literature Review, 1-5. https://doi.org/10.56128/ljoalr.v1i1.46
+Format IEEE   : [4] R. K. Kusumahpraja, "The Power of Digital Signature Evidence in Indonesian Civil Procedural Law," Locus Journal of Academic Literature Review, pp. 1-5, 2022, doi: 10.56128/ljoalr.v1i1.46.
+
+[5] Ramadani, Tamara Mutiara, & Nurliyantika, Rizka (2022) [Peringkat: SINTA 5 - Terverifikasi SINTA Kemdiktisaintek (ID 12568)]
+Judul Artikel : TANDA TANGAN ELEKTRONIK DALAM KONTRAK BISNIS INTERNASIONAL
+Nama Jurnal   : SOL JUSTICIA
+ISSN          : 2655-7622, 2655-7614
+Volume/No/Hal : Vol. 5, No. 1, hlm. 87-96
+DOI Aktif     : https://doi.org/10.54816/sj.v5i1.479
+Download PDF  : http://ojs.ukb.ac.id/index.php/sj/article/download/479/339
+Relevansi     : Artikel jurnal OJS terindeks SINTA 5 (SOL JUSTICIA).
+Format APA 7  : Ramadani, Tamara Mutiara, & Nurliyantika, Rizka (2022). TANDA TANGAN ELEKTRONIK DALAM KONTRAK BISNIS INTERNASIONAL. SOL JUSTICIA, 5(1), 87-96. https://doi.org/10.54816/sj.v5i1.479
+Format IEEE   : [5] T. M. Ramadani and R. Nurliyantika, "TANDA TANGAN ELEKTRONIK DALAM KONTRAK BISNIS INTERNASIONAL," SOL JUSTICIA, vol. 5, no. 1, pp. 87-96, 2022, doi: 10.54816/sj.v5i1.479.
+
+[6] Pratiwi, Julieta Adhellia, & Asmunin, Asmunin (2022) [Peringkat: SINTA 4 - Terverifikasi SINTA Kemdiktisaintek (ID 11381)]
+Judul Artikel : Penggunaan QR code Berbasis Kriptografi Menggunakan Algoritma Elliptic Curve Criptography
+Nama Jurnal   : Journal of Informatics and Computer Science (JINACS)
+ISSN          : 2686-2220
+Volume/No/Hal : Vol. 3, No. 04, hlm. 564-570
+DOI Aktif     : https://doi.org/10.26740/jinacs.v3n04.p564-570
+Download PDF  : https://ejournal.unesa.ac.id/index.php/jinacs/article/download/47940/40064
+Relevansi     : Artikel jurnal OJS terindeks SINTA 4 (Journal of Informatics and Computer Science (JINACS)).
+Format APA 7  : Pratiwi, Julieta Adhellia, & Asmunin, Asmunin (2022). Penggunaan QR code Berbasis Kriptografi Menggunakan Algoritma Elliptic Curve Criptography. Journal of Informatics and Computer Science (JINACS), 3(04), 564-570. https://doi.org/10.26740/jinacs.v3n04.p564-570
+Format IEEE   : [6] J. A. Pratiwi and A. Asmunin, "Penggunaan QR code Berbasis Kriptografi Menggunakan Algoritma Elliptic Curve Criptography," Journal of Informatics and Computer Science (JINACS), vol. 3, no. 04, pp. 564-570, 2022, doi: 10.26740/jinacs.v3n04.p564-570.
+
+[7] Azwar, Muhammad, Qulub, Mudawil, & Fatimatuzzahra, Fatimatuzzahra (2022) [Peringkat: SINTA 5 - Terverifikasi SINTA Kemdiktisaintek (ID 7015)]
+Judul Artikel : Kombinasi Metode Kriptografi Subsitusi Dalam Pengaman Pesan dan Informasi
+Nama Jurnal   : ICIT Journal
+ISSN          : 2356-5195, 2654-8704
+Volume/No/Hal : Vol. 8, No. 2, hlm. 172-180
+DOI Aktif     : https://doi.org/10.33050/icit.v8i2.2407
+Download PDF  : https://ejournal.raharja.ac.id/icit/article/download/2407/1462
+Relevansi     : Artikel jurnal OJS terindeks SINTA 5 (ICIT (Innovative Creative and Information Technology) Journal).
+Format APA 7  : Azwar, Muhammad, Qulub, Mudawil, & Fatimatuzzahra, Fatimatuzzahra (2022). Kombinasi Metode Kriptografi Subsitusi Dalam Pengaman Pesan dan Informasi. ICIT Journal, 8(2), 172-180. https://doi.org/10.33050/icit.v8i2.2407
+Format IEEE   : [7] M. Azwar, M. Qulub, and F. Fatimatuzzahra, "Kombinasi Metode Kriptografi Subsitusi Dalam Pengaman Pesan dan Informasi," ICIT Journal, vol. 8, no. 2, pp. 172-180, 2022, doi: 10.33050/icit.v8i2.2407.
+
+[8] Chafid, Nurul, & Soffiana, Herlina (2022) [Peringkat: SINTA 5 - Terverifikasi SINTA Kemdiktisaintek (ID 10111)]
+Judul Artikel : IMPELEMENTASI ALGORITMA KRIPTOGRAFI KLASIK CAESAR UNTUK RANCANG BANGUN APLIKASI E-VOTING BERBASIS WEB (STUDI KASUS : SMAN 10 TANGERANG)
+Nama Jurnal   : Jurnal Ilmiah Sains dan Teknologi
+ISSN          : 1907-1205, 2622-6391
+Volume/No/Hal : Vol. 6, No. 2, hlm. 133-145
+DOI Aktif     : https://doi.org/10.47080/saintek.v6i2.2249
+Download PDF  : https://ejournal.lppm-unbaja.ac.id/index.php/saintek/article/download/2249/1164
+Relevansi     : Artikel jurnal OJS terindeks SINTA 5 (Jurnal Ilmiah Sains dan Teknologi).
+Format APA 7  : Chafid, Nurul, & Soffiana, Herlina (2022). IMPELEMENTASI ALGORITMA KRIPTOGRAFI KLASIK CAESAR UNTUK RANCANG BANGUN APLIKASI E-VOTING BERBASIS WEB (STUDI KASUS : SMAN 10 TANGERANG). Jurnal Ilmiah Sains dan Teknologi, 6(2), 133-145. https://doi.org/10.47080/saintek.v6i2.2249
+Format IEEE   : [8] N. Chafid and H. Soffiana, "IMPELEMENTASI ALGORITMA KRIPTOGRAFI KLASIK CAESAR UNTUK RANCANG BANGUN APLIKASI E-VOTING BERBASIS WEB (STUDI KASUS : SMAN 10 TANGERANG)," Jurnal Ilmiah Sains dan Teknologi, vol. 6, no. 2, pp. 133-145, 2022, doi: 10.47080/saintek.v6i2.2249.
+
+[9] Faizah, Widya Nur, Khudzaifah, Muhammad, & Ismiarti, Dewi (2022) [Peringkat: SINTA 5 - Terverifikasi SINTA Kemdiktisaintek (ID 12958)]
+Judul Artikel : Analisis Frekuensi Ciphertext dengan Algoritma Kriptografi DNA dan Transformasi Digraf
+Nama Jurnal   : Jurnal Riset Mahasiswa Matematika
+ISSN          : 2808-1552, 2808-4926
+Volume/No/Hal : Vol. 1, No. 6, hlm. 283-287
+DOI Aktif     : https://doi.org/10.18860/jrmm.v1i6.14591
+Download PDF  : https://ejournal.uin-malang.ac.id/index.php/jrmm/article/download/14591/pdf
+Relevansi     : Artikel jurnal OJS terindeks SINTA 5 (Jurnal Riset Mahasiswa Matematika).
+Format APA 7  : Faizah, Widya Nur, Khudzaifah, Muhammad, & Ismiarti, Dewi (2022). Analisis Frekuensi Ciphertext dengan Algoritma Kriptografi DNA dan Transformasi Digraf. Jurnal Riset Mahasiswa Matematika, 1(6), 283-287. https://doi.org/10.18860/jrmm.v1i6.14591
+Format IEEE   : [9] W. N. Faizah, M. Khudzaifah, and D. Ismiarti, "Analisis Frekuensi Ciphertext dengan Algoritma Kriptografi DNA dan Transformasi Digraf," Jurnal Riset Mahasiswa Matematika, vol. 1, no. 6, pp. 283-287, 2022, doi: 10.18860/jrmm.v1i6.14591.
+
+[10] Hasibuan, Marzuki, & Elhanafi, Andi Marwan (2022) [Peringkat: SINTA 3 - Terverifikasi SINTA Kemdiktisaintek (ID 14660)]
+Judul Artikel : Penetration Testing Sistem Jaringan Komputer Menggunakan Kali Linux untuk Mengetahui Kerentanan Keamanan Server dengan Metode Black Box
+Nama Jurnal   : sudo Jurnal Teknik Informatika
+ISSN          : 2829-7342
+Volume/No/Hal : Vol. 1, No. 4, hlm. 171-177
+DOI Aktif     : https://doi.org/10.56211/sudo.v1i4.160
+Download PDF  : https://jurnal.ilmubersama.com/index.php/sudo/article/download/160/109
+Relevansi     : Artikel jurnal OJS terindeks SINTA 3 (sudo Jurnal Teknik Informatika).
+Format APA 7  : Hasibuan, Marzuki, & Elhanafi, Andi Marwan (2022). Penetration Testing Sistem Jaringan Komputer Menggunakan Kali Linux untuk Mengetahui Kerentanan Keamanan Server dengan Metode Black Box. sudo Jurnal Teknik Informatika, 1(4), 171-177. https://doi.org/10.56211/sudo.v1i4.160
+Format IEEE   : [10] M. Hasibuan and A. M. Elhanafi, "Penetration Testing Sistem Jaringan Komputer Menggunakan Kali Linux untuk Mengetahui Kerentanan Keamanan Server dengan Metode Black Box," sudo Jurnal Teknik Informatika, vol. 1, no. 4, pp. 171-177, 2022, doi: 10.56211/sudo.v1i4.160.
+
+[11] Saian, Septovan Dwi Suputra, Kakihary, Nestiara Lidya, & Wahyono, Teguh (2022) [Peringkat: SINTA 5 - Terverifikasi SINTA Kemdiktisaintek (ID 13389)]
+Judul Artikel : PENGUJIAN CONTENT MANAGEMENT SYSTEM (CMS) SEKOLAHKU MENGGUNAKAN METODE BLACK BOX TESTING DENGAN TEKNIK BOUNDARY VALUE ANALYSIS
+Nama Jurnal   : IT-Explore: Jurnal Penerapan Teknologi Informasi dan Komunikasi
+ISSN          : 2828-7940, 2829-1727
+Volume/No/Hal : Vol. 1, No. 2, hlm. 100-113
+DOI Aktif     : https://doi.org/10.24246/itexplore.v1i2.2022.pp100-113
+Download PDF  : https://ejournal.uksw.edu/itexplore/article/download/6656/2109
+Relevansi     : Artikel jurnal OJS terindeks SINTA 5 (IT-Explore: Jurnal Penerapan Teknologi Informasi dan Komunikasi).
+Format APA 7  : Saian, Septovan Dwi Suputra, Kakihary, Nestiara Lidya, & Wahyono, Teguh (2022). PENGUJIAN CONTENT MANAGEMENT SYSTEM (CMS) SEKOLAHKU MENGGUNAKAN METODE BLACK BOX TESTING DENGAN TEKNIK BOUNDARY VALUE ANALYSIS. IT-Explore: Jurnal Penerapan Teknologi Informasi dan Komunikasi, 1(2), 100-113. https://doi.org/10.24246/itexplore.v1i2.2022.pp100-113
+Format IEEE   : [11] S. D. S. Saian, N. L. Kakihary, and T. Wahyono, "PENGUJIAN CONTENT MANAGEMENT SYSTEM (CMS) SEKOLAHKU MENGGUNAKAN METODE BLACK BOX TESTING DENGAN TEKNIK BOUNDARY VALUE ANALYSIS," IT-Explore: Jurnal Penerapan Teknologi Informasi dan Komunikasi, vol. 1, no. 2, pp. 100-113, 2022, doi: 10.24246/itexplore.v1i2.2022.pp100-113.
+
+[12] Amani Bestari, Amira, & Voutama, Apriade (2024) [Peringkat: SINTA 4 - Terverifikasi SINTA Kemdiktisaintek (ID 8346)]
+Judul Artikel : PENERAPAN UML PADA SISTEM INFORMASI PENGADUAN  MASYARAKAT BERBASIS WEB
+Nama Jurnal   : JATI (Jurnal Mahasiswa Teknik Informatika)
+ISSN          : 2598-828X
+Volume/No/Hal : Vol. 8, No. 3, hlm. 2655-2662
+DOI Aktif     : https://doi.org/10.36040/jati.v8i3.9528
+Download PDF  : https://ejournal.itn.ac.id/index.php/jati/article/download/9528/5418
+Relevansi     : Artikel jurnal OJS terindeks SINTA 4 (JATI (Jurnal Mahasiswa Teknik Informatika)).
+Format APA 7  : Amani Bestari, Amira, & Voutama, Apriade (2024). PENERAPAN UML PADA SISTEM INFORMASI PENGADUAN  MASYARAKAT BERBASIS WEB. JATI (Jurnal Mahasiswa Teknik Informatika), 8(3), 2655-2662. https://doi.org/10.36040/jati.v8i3.9528
+Format IEEE   : [12] A. Amani Bestari and A. Voutama, "PENERAPAN UML PADA SISTEM INFORMASI PENGADUAN  MASYARAKAT BERBASIS WEB," JATI (Jurnal Mahasiswa Teknik Informatika), vol. 8, no. 3, pp. 2655-2662, 2024, doi: 10.36040/jati.v8i3.9528.

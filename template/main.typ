@@ -1,7 +1,7 @@
 // =============================================================================
 // ENTRYPOINT RESMI: LAPORAN PRAKTIK KERJA LAPANGAN (PKL) UBSI
 // Program Studi: Teknologi Informasi (S1)
-// Outline: Proyek Inovasi Perangkat Lunak (6 Bab)
+// Outline: Analisis Sistem (4 Bab - Pedoman PKL UBSI 2026)
 // =============================================================================
 
 #import "../lib.typ": *
@@ -62,13 +62,11 @@
   tahun: tahun,
 )
 
-// OUTLINE PKL: PROYEK INOVASI PERANGKAT LUNAK (6 BAB)
-#include "outlines/pkl-ti-inovasi/bab1.typ"
-#include "outlines/pkl-ti-inovasi/bab2.typ"
-#include "outlines/pkl-ti-inovasi/bab3.typ"
-#include "outlines/pkl-ti-inovasi/bab4.typ"
-#include "outlines/pkl-ti-inovasi/bab5.typ"
-#include "outlines/pkl-ti-inovasi/bab6.typ"
+// OUTLINE PKL: ANALISIS SISTEM (4 BAB)
+#include "outlines/pkl-ti-analisis-sistem/bab1.typ"
+#include "outlines/pkl-ti-analisis-sistem/bab2.typ"
+#include "outlines/pkl-ti-analisis-sistem/bab3.typ"
+#include "outlines/pkl-ti-analisis-sistem/bab4.typ"
 
 // 4. Bagian Akhir (Backmatter: Sesuai Poin 2.4.3 - Nomor Halaman Bawah Tengah)
 #show: backmatter-pkl

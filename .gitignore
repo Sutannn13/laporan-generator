@@ -1,8 +1,65 @@
-# Output kompilasi Typst lokal
+# Output kompilasi Typst & pengujian sementara (kecuali showcase & pratinjau resmi)
 *.pdf
+!contoh-template-ai/*.pdf
+!website/public/previews/*.pdf
 .typst/
+temp_test_output.pdf
+template/temp_test_runner.typ
+temp_test_cli_scaffold/
 
-# OS / Editor files
+# Dependensi Node.js & hasil build website
+node_modules/
+website/dist/
+
+# Python cache, virtual environments, & uv cache
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+.uv-cache/
+
+# Berkas sementara Office / Word, cadangan, & atomic replace
+~$*
+*.bak
+*.tmp
+*.tmp.docx
+
+# Environment & rahasia lokal
+.env
+.env.*
+!.env.example
+
+# Direktori kerja pribadi, tugas, & backup (bukan bagian distribusi repo)
+AUDIT TEKNOLOGI INFORMASI/
+dokumen-pkl/
+kerjaan jurnal/
+tutorial-sauran/
+website/_backup-sampel-lama/
+
+# Artefak riset sementara & skrip sekali pakai di root
+crossref_raw*.json
+crossref_verified.json
+crossref_more.json
+deep_probe_summary.json
+probe_summary.json
+verified_refs.json
+journals_list.json
+reconstruct_tables.py
+test.txt
+
+# Log sesi sementara & duplikat bundel skill hasil instalasi (dibangun ulang via npm run agent:install)
+.agents/teamwork/
+.mode-ilmiah/
+.mode-tim/
+.kilo/
+.opencode/skills/
+.freebuff/skills/
+.freebuff/sponsored-runtime/
+.freebuff/pdf-text/
+.serena/cache/
+.serena/project.local.yml
+
+# OS & Editor
 .DS_Store
 Thumbs.db
 .vscode/*

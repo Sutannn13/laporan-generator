@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "metadata": {
+    "title": "Preset Pedoman Resmi Penyusunan PKL, Tugas Akhir (D3), Skripsi (S1), & Artikel Ilmiah Universitas Bina Sarana Informatika (UBSI) 2026",
+    "version": "2026.1",
+    "sumber_verifikasi_resmi": [
+      "SK Rektor UBSI Nomor 165/2.01/UBSI/III/2026 tentang Pedoman Penyusunan Tugas Akhir Universitas Bina Sarana Informatika Tahun Akademik 2025/2026 (5 Maret 2026, Revisi 2026-1, BPMA, 148 hlm.)",
+      "Petunjuk Pemberian Watermark Tugas Akhir UBSI (4 hlm.)",
+      "Petunjuk Penggunaan E-Meterai Tugas Akhir UBSI (15 hlm.)",
+      "Petunjuk Tanda Tangan Digital Pengesahan Tugas Akhir DigiSAYS UBSI (SE Warek I No. 306/3.02/UBSI/WR1/IX/2024, 8 hlm.)",
+      "lib.typ & template/main.typ (Pedoman Resmi PKL Prodi Teknologi Informasi S1 UBSI)",
+      "presets/sinta-journals.json (Jurnal Khatulistiwa Informatika / JKI LPPM UBSI - SINTA 4)"
+    ]
+  },
+  "kampus": {
+    "ubsi": {
+      "nama": "Universitas Bina Sarana Informatika (UBSI)",
+      "pedoman": "SK Rektor UBSI Nomor 165/2.01/UBSI/III/2026 tentang Pedoman Penyusunan Tugas Akhir Tahun Akademik 2025/2026 (Revisi 2026-1, BPMA) & Pedoman PKL FTI UBSI 2026",
+      "kertas_dan_sistem_pengumpulan": "Kertas A4 (21.0 x 29.7 cm); sistem Paperless (tanpa cetak fisik hardcopy), diunggah dalam format PDF dan MS Word (.docx) ke https://repository.bsi.ac.id/ disertai bukti submit Artikel Ilmiah (khusus S1).",
+      "margin_cm": {
+        "atas": 3.0,
+        "bawah": 2.5,
+        "kiri": 4.0,
+        "kanan": 2.5,
+        "catatan_margin": "Bab II Poin 2.1 hlm. 4, 8, 11, 15 SK Rektor UBSI No. 165/2.01/UBSI/III/2026 menetapkan margin TA/Skripsi & PKL identik: Atas 3.0 cm, Kiri 4.0 cm, Bawah 2.5 cm, Kanan 2.5 cm. Untuk Template Artikel Ilmiah Jurnal UBSI (Lampiran 81 hlm. 127): Kiri 3.0 cm, Atas 3.0 cm, Kanan 2.0 cm, Bawah 2.0 cm, 2 kolom (lebar sama rata, jarak antar kolom 1.0 cm)."
+      },
+      "tipografi": {
+        "font_utama": "Times New Roman 12 pt (naskah TA/Skripsi/PKL); Times New Roman 10 pt spasi 1.0 (Template Artikel Ilmiah Lampiran 81)",
+        "cover_dan_judul": "Judul 14 pt Kapital Bold spasi 1.5; kata 'SKRIPSI' atau 'TUGAS AKHIR' 18 pt Bold; kalimat pengajuan 12 pt; Logo UBSI berwarna 5 cm x 5 cm; Nama & NIM 14 pt Bold spasi 1.5; Prodi/Fakultas/Universitas/Kota/Tahun 12 pt Bold spasi 1.5",
+        "judul_bab": "Times New Roman 14 pt, Bold, Huruf Kapital, Rata Tengah (Center)",
+        "sub_bab": "Times New Roman 12 pt, Bold, Rata Kiri (dengan titik penutup pada nomor sub-bab: 1.1., 1.2., 2.1.1.)",
+        "isi_tabel": "Times New Roman 9.5 - 10 pt (minimal 8 pt), spasi 1.0",
+        "spasi_teks": "2.0 spasi (Double Spacing) untuk badan teks utama dan Kata Pengantar; 1.0 spasi (Single Spacing) untuk Abstrak/Abstract, kutipan langsung >= 5 baris, Daftar Pustaka (jarak antar pustaka 2 spasi), Daftar Simbol, dan Daftar Riwayat Hidup",
+        "indentasi_alinea_cm": 1.2
+      },
+      "abstrak": {
+        "jumlah_kata_ta_skripsi": "150 - 200 kata (Bab II Poin 2.5 hlm. 7 & Lampiran 52-53 hlm. 92-93)",
+        "jumlah_kata_artikel_ilmiah": "150 - 250 kata, maksimal judul 14 kata Indonesia / 10 kata Inggris, panjang 5-10 halaman (Lampiran 81 hlm. 127)",
+        "format": "Bahasa Indonesia (ABSTRAK) dan Bahasa Inggris (ABSTRACT) pada halaman terpisah, 1 paragraf tunggal, jarak 1.0 spasi, wajib memuat 4 unsur: (a) Latar belakang, (b) Tujuan, (c) Metode yang digunakan, (d) Hasil, disertai Kata Kunci (Keywords)."
+      },
+      "watermark_dan_legalitas_digital": {
+        "watermark": "Wajib pada setiap halaman kecuali lembar judul (cover); menggunakan logo resmi UBSI ukuran 10 cm x 10 cm, posisi Middle Center (Behind Text), jarak atas 2 cm, bawah 2 cm, kiri 7 cm, kanan 7 cm dari batas margin (Bab II Poin 2.4 hlm. 6-7).",
+        "digisays": "Lembar Pengesahan menggunakan tanda tangan digital QR Code via https://saysv2.bsi.ac.id (SE Warek I No. 306/3.02/UBSI/WR1/IX/2024; batas unggah PDF maks. 5 MB).",
+        "emeterai": "Surat Pernyataan Keaslian, Persetujuan Publikasi, BAST, dan Keabsahan Data wajib dibubuhi e-Meterai Rp 10.000 resmi Peruri (diverifikasi di http://verification.peruri.co.id; dokumen PDF tidak boleh diedit lagi setelah pembubuhan e-Meterai)."
+      },
+      "gaya_sitasi_umum": "Mendeley APA Style V.7 (TA D3, Skripsi S1, PKL, & Template Artikel Ilmiah Lampiran 81) / IEEE [1], [2] (Jurnal Khatulistiwa Informatika - JKI LPPM UBSI SINTA 4)",
+      "aturan_khusus": [
+        "Kertas A4 dengan margin Atas 3.0 cm, Bawah 2.5 cm, Kiri 4.0 cm, Kanan 2.5 cm (Bab II Poin 2.1 hlm. 4 SK Rektor No. 165/2.01/UBSI/III/2026; identik antara PKL, TA D3, dan Skripsi S1).",
+        "Abstrak TA/Skripsi terdiri atas 150-200 kata dalam 1 paragraf dengan spasi 1.0, ditulis dalam Bahasa Indonesia dan Bahasa Inggris pada halaman terpisah, memuat Latar Belakang, Tujuan, Metode, dan Hasil (Bab II Poin 2.5 hlm. 7).",
+        "Isi pokok TA/Skripsi minimal 30 halaman (Bab I s.d. Bab Penutup, di luar bagian awal, daftar pustaka, dan lampiran) dengan batas maksimum similarity Turnitin 25% tanpa pengecualian (no exclude) (Bab V hlm. 35-37).",
+        "Sitasi wajib menggunakan Mendeley Style APA V.7; kuota minimal 5 paper jurnal OJS (TA D3) dan minimal 10 paper jurnal OJS (Skripsi S1), terbitan maksimal 5 tahun terakhir untuk jurnal dan 10 tahun terakhir untuk buku teks, serta dilarang mengutip dari Blogspot, Wordpress, atau Wikipedia (Bab II Poin 2.9 & 2.12 hlm. 12-19).",
+        "Pada Daftar Pustaka Pedoman TA UBSI (Bab II Poin 2.12 butir 5 hlm. 17), setiap pustaka diketik 1 spasi rata kiri-kanan dengan jarak antar pustaka 2 spasi, diurut abjad tanpa nomor urut, dan bila terdapat lebih dari dua pengarang maka semua nama ditulis lengkap tanpa disingkat dengan et al. atau dkk.",
+        "Larangan singkatan tidak resmi pada narasi: dilarang menggunakan singkatan dll, dst, ybs, dsb, yg, thd (wajib ditulis lengkap: dan lain-lain, dan seterusnya, yang bersangkutan, dan sebagainya, yang, terhadap) serta dilarang menulis kata ulang dengan angka seperti kata2 atau ber-ulang2 (Bab II Poin 2.10-2.11 hlm. 16-17).",
+        "Dilarang menggunakan garis miring (/) untuk arti 'atau' di dalam kalimat narasi dan hindari kata 'daripada' yang tidak menyatakan perbandingan (Bab II Poin 2.10 hlm. 16).",
+        "Sistematika rincian berjenjang wajib mengikuti urutan: 1. -> a. -> 1) -> a) -> (1) dengan indentasi 1.2 cm sejajar alinea baru.",
+        "Penomoran Tabel dan Gambar menggunakan angka Romawi bab diikuti nomor urut (contoh: Tabel IV.4., Gambar II.2.) dua baris di tengah (judul Tabel di atas tabel, judul Gambar di bawah gambar).",
+        "Penomoran halaman bagian awal menggunakan angka Romawi kecil (i, ii, iii) di tengah bawah; bagian pokok menggunakan angka Arab (1, 2, ...) di tengah bawah pada halaman awal BAB dan di kanan atas pada halaman lanjutan.",
+        "Kode Outline Reguler Prodi Teknologi Informasi S1 (Bab IV hlm. 30): 156 Perancangan Program (Individu), 138 Penelitian Ilmiah (Individu), 137 Jaringan Komputer (Individu), 158 Aplikasi StartUp (Kelompok maks. 2 mahasiswa); Outline PKL Prodi TI S1 memiliki 4 pilihan: Inovasi Perangkat Lunak (6 Bab), Analisa Program Mobile (4 Bab), Jaringan Komputer (4 Bab), dan Analisis Sistem (4 Bab).",
+        "Kelengkapan Wajib Laporan PKL UBSI (lib.typ & Lampiran 9-32 Pedoman PKL UBSI): Cover berlogo 4x4 cm bertuliskan 'Program Studi Teknologi Informasi' (bukan 'Teknologi Informatika'), Lembar Persetujuan Laporan PKL (Lampiran 15), Kata Pengantar (Lampiran 17), Daftar Isi/Simbol/Gambar/Tabel/Lampiran berspasi 1 (Lampiran 18-23), Bab I-IV dengan penomoran Gambar/Tabel Romawi Bab seragam (Gambar II.1., Gambar III.1., Tabel II.1., Tabel III.1.), Daftar Pustaka APA V.7 tanpa et al./dkk., Daftar Riwayat Hidup (Lampiran 25), Surat Keterangan PKL ber-kop & nomor surat min. 3 bulan (Lampiran 26), Formulir Penilaian PKL sesuai instansi (Lampiran 27), dan Bukti Kuesioner Pengguna (Lampiran 32).",
+        "Untuk Template Artikel Ilmiah UBSI (Lampiran 81 hlm. 127): 2 kolom (jarak 1 cm), margin Kiri 3 cm, Atas 3 cm, Kanan 2 cm, Bawah 2 cm, Times New Roman 10 pt spasi 1.0, panjang 5-10 halaman, abstrak 150-250 kata, min. 10 referensi APA. Untuk publikasi ke Jurnal Khatulistiwa Informatika (JKI - SINTA 4 LPPM UBSI): 2 kolom, sitasi IEEE [1], min. 15 referensi, similarity <= 20%."
+      ]
+    }
+  }
+}

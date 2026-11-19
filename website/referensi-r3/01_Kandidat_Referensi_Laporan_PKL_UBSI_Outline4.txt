@@ -1,0 +1,116 @@
+KANDIDAT REFERENSI ILMIAH TERVERIFIKASI (TERBITAN >= 2022 | CROSSREF DOI | PENULIS LENGKAP)
+Naskah Target : website/public/downloads/01_Sampel_Laporan_PKL_UBSI_Outline4.docx
+Judul Naskah  : Analisis Sistem Layanan Permohonan Informasi Publik dan Pengaduan Masyarakat Berbasis Web dengan Metode PIECES pada Dinas Komunikasi dan Informatika Kota Contoh
+Tanggal Riset : 2026-11-18
+Total Entri   : 10
+================================================================================
+
+[1] Zaenudin, Asep, & Syahidin, Yuda (2022) [Peringkat: SINTA 4 - Terverifikasi SINTA Kemdiktisaintek (ID 5073)]
+Judul Artikel : Rancangan Sistem Informasi Pengaduan Masyarakat Berbasis Web Pada Kantor Kecamatan Dengan Fitur Notifikasi Telegram
+Nama Jurnal   : Jutisi : Jurnal Ilmiah Teknik Informatika dan Sistem Informasi
+ISSN          : 2685-0893
+Volume/No/Hal : Vol. 11, No. 1, hlm. -
+DOI Aktif     : https://doi.org/10.35889/jutisi.v11i1.812
+Download PDF  : http://ojs.stmik-banjarbaru.ac.id/index.php/jutisi/article/download/812/532
+Relevansi     : Artikel Garuda terindeks SINTA 4 (Jutisi : Jurnal Ilmiah Teknik Informatika dan Sistem Informasi).
+Format APA 7  : Zaenudin, Asep, & Syahidin, Yuda (2022). Rancangan Sistem Informasi Pengaduan Masyarakat Berbasis Web Pada Kantor Kecamatan Dengan Fitur Notifikasi Telegram. Jutisi : Jurnal Ilmiah Teknik Informatika dan Sistem Informasi, 11(1). https://doi.org/10.35889/jutisi.v11i1.812
+Format IEEE   : [1] A. Zaenudin and Y. Syahidin, "Rancangan Sistem Informasi Pengaduan Masyarakat Berbasis Web Pada Kantor Kecamatan Dengan Fitur Notifikasi Telegram," Jutisi : Jurnal Ilmiah Teknik Informatika dan Sistem Informasi, vol. 11, no. 1, 2022, doi: 10.35889/jutisi.v11i1.812.
+
+[2] Lestari, Fika Ayu, Efrizoni, Lusiana, Ali, Edwar, & Rahmiati, Rahmiati (2022) [Peringkat: SINTA 3 - Terverifikasi SINTA Kemdiktisaintek (ID 7790)]
+Judul Artikel : Sistem Klasifikasi Pengaduan Masyarakat Pada BPJS Ketenagakerjaan Menggunakan Algoritma Naïve Bayes Berbasis Mobile
+Nama Jurnal   : Building of Informatics, Technology and Science (BITS)
+ISSN          : 2684-8910, 2685-3310
+Volume/No/Hal : Vol. 4, No. 1, hlm. -
+DOI Aktif     : https://doi.org/10.47065/bits.v4i1.1685
+Download PDF  : https://ejurnal.seminar-id.com/index.php/bits/article/download/1685/1107
+Relevansi     : Artikel Garuda terindeks SINTA 3 (Building of Informatics, Technology and Science (BITS)).
+Format APA 7  : Lestari, Fika Ayu, Efrizoni, Lusiana, Ali, Edwar, & Rahmiati, Rahmiati (2022). Sistem Klasifikasi Pengaduan Masyarakat Pada BPJS Ketenagakerjaan Menggunakan Algoritma Naïve Bayes Berbasis Mobile. Building of Informatics, Technology and Science (BITS), 4(1). https://doi.org/10.47065/bits.v4i1.1685
+Format IEEE   : [2] F. A. Lestari, L. Efrizoni, E. Ali, and R. Rahmiati, "Sistem Klasifikasi Pengaduan Masyarakat Pada BPJS Ketenagakerjaan Menggunakan Algoritma Naïve Bayes Berbasis Mobile," Building of Informatics, Technology and Science (BITS), vol. 4, no. 1, 2022, doi: 10.47065/bits.v4i1.1685.
+
+[3] Aprylianti, Ike, & Purwanti, Ari Retno (2022) [Peringkat: SINTA 5 - Terverifikasi SINTA Kemdiktisaintek (ID 11844)]
+Judul Artikel : Dampak Aplikasi Lapor Sleman Terhadap Penyaluran Pelayanan Pengaduan Masyarakat di Kabupaten Sleman ditinjau dari Undang-Undang Nomor 25 Tahun 2009 Tentang Pelayanan Publik
+Nama Jurnal   : AURELIA: Jurnal Penelitian dan Pengabdian Masyarakat Indonesia
+ISSN          : 2962-0430, 2964-2493
+Volume/No/Hal : Vol. 1, No. 1, hlm. -
+DOI Aktif     : https://doi.org/10.57235/aurelia.v1i1.85
+Download PDF  : https://rayyanjurnal.com/index.php/aurelia/article/download/85/pdf
+Relevansi     : Artikel Garuda terindeks SINTA 5 (AURELIA: Jurnal Penelitian dan Pengabdian Masyarakat Indonesia).
+Format APA 7  : Aprylianti, Ike, & Purwanti, Ari Retno (2022). Dampak Aplikasi Lapor Sleman Terhadap Penyaluran Pelayanan Pengaduan Masyarakat di Kabupaten Sleman ditinjau dari Undang-Undang Nomor 25 Tahun 2009 Tentang Pelayanan Publik. AURELIA: Jurnal Penelitian dan Pengabdian Masyarakat Indonesia, 1(1). https://doi.org/10.57235/aurelia.v1i1.85
+Format IEEE   : [3] I. Aprylianti and A. R. Purwanti, "Dampak Aplikasi Lapor Sleman Terhadap Penyaluran Pelayanan Pengaduan Masyarakat di Kabupaten Sleman ditinjau dari Undang-Undang Nomor 25 Tahun 2009 Tentang Pelayanan Publik," AURELIA: Jurnal Penelitian dan Pengabdian Masyarakat Indonesia, vol. 1, no. 1, 2022, doi: 10.57235/aurelia.v1i1.85.
+
+[4] Rizky, Nanda Fathi, & Triayudi, Agung (2022) [Peringkat: SINTA 4 - Terverifikasi SINTA Kemdiktisaintek (ID 207)]
+Judul Artikel : E-Commerce User Satisfaction Analysis Using Usability Scale System and Pieces Framework
+Nama Jurnal   : CESS (Journal of Computer Engineering, System and Science)
+ISSN          : 2502-7131, 2502-714X
+Volume/No/Hal : Vol. 7, No. 1, hlm. -
+DOI Aktif     : https://doi.org/10.24114/cess.v7i1.30752
+Download PDF  : https://jurnal.unimed.ac.id/2012/index.php/cess/article/download/30752/pdf
+Relevansi     : Artikel Garuda terindeks SINTA 4 (CESS (Journal of Computer Engineering, System and Science)).
+Format APA 7  : Rizky, Nanda Fathi, & Triayudi, Agung (2022). E-Commerce User Satisfaction Analysis Using Usability Scale System and Pieces Framework. CESS (Journal of Computer Engineering, System and Science), 7(1). https://doi.org/10.24114/cess.v7i1.30752
+Format IEEE   : [4] N. F. Rizky and A. Triayudi, "E-Commerce User Satisfaction Analysis Using Usability Scale System and Pieces Framework," CESS (Journal of Computer Engineering, System and Science), vol. 7, no. 1, 2022, doi: 10.24114/cess.v7i1.30752.
+
+[5] Wulandari, Ratna A. I., & Tambotoh, Johan J. C. (2022) [Peringkat: SINTA 3 - Terverifikasi SINTA Kemdiktisaintek (ID 3323)]
+Judul Artikel : Evaluation of Cloud Storage Services Using PIECES Method
+Nama Jurnal   : Sistemasi: Jurnal Sistem Informasi
+ISSN          : 2302-8149, 2540-9719
+Volume/No/Hal : Vol. 11, No. 1, hlm. -
+DOI Aktif     : https://doi.org/10.32520/stmsi.v11i1.1700
+Download PDF  : https://sistemasi.ftik.unisi.ac.id/index.php/stmsi/article/download/1700/434
+Relevansi     : Artikel Garuda terindeks SINTA 3 (Sistemasi: Jurnal Sistem Informasi).
+Format APA 7  : Wulandari, Ratna A. I., & Tambotoh, Johan J. C. (2022). Evaluation of Cloud Storage Services Using PIECES Method. Sistemasi: Jurnal Sistem Informasi, 11(1). https://doi.org/10.32520/stmsi.v11i1.1700
+Format IEEE   : [5] R. A. I. Wulandari and J. J. C. Tambotoh, "Evaluation of Cloud Storage Services Using PIECES Method," Sistemasi: Jurnal Sistem Informasi, vol. 11, no. 1, 2022, doi: 10.32520/stmsi.v11i1.1700.
+
+[6] Cahyono, Nur, & Jaya, Joy Nashar Utama (2022) [Peringkat: SINTA 4 - Terverifikasi SINTA Kemdiktisaintek (ID 8355)]
+Judul Artikel : Analisis Kepuasan Penggunaan Aplikasi Classroom Pada Pembelajaran di Masa Pandemic Covid-19 menggunakan Metode Pieces
+Nama Jurnal   : Journal of Information System Research (JOSH)
+ISSN          : 2686-228X
+Volume/No/Hal : Vol. 3, No. 3, hlm. -
+DOI Aktif     : https://doi.org/10.47065/josh.v3i3.1542
+Download PDF  : https://ejurnal.seminar-id.com/index.php/josh/article/download/1542/990
+Relevansi     : Artikel Garuda terindeks SINTA 4 (Journal of Information System Research (JOSH)).
+Format APA 7  : Cahyono, Nur, & Jaya, Joy Nashar Utama (2022). Analisis Kepuasan Penggunaan Aplikasi Classroom Pada Pembelajaran di Masa Pandemic Covid-19 menggunakan Metode Pieces. Journal of Information System Research (JOSH), 3(3). https://doi.org/10.47065/josh.v3i3.1542
+Format IEEE   : [6] N. Cahyono and J. N. U. Jaya, "Analisis Kepuasan Penggunaan Aplikasi Classroom Pada Pembelajaran di Masa Pandemic Covid-19 menggunakan Metode Pieces," Journal of Information System Research (JOSH), vol. 3, no. 3, 2022, doi: 10.47065/josh.v3i3.1542.
+
+[7] Harianto, Diva Putri, Jaya, Joy Nashar Utama, & Darmansyah, Darmansyah (2022) [Peringkat: SINTA 4 - Terverifikasi SINTA Kemdiktisaintek (ID 8355)]
+Judul Artikel : Analisis Tingkat Kepuasan Pengguna Whatsapp Sebagai Media Berbagi Informasi Menggunakan Metode Pieces Framework
+Nama Jurnal   : Journal of Information System Research (JOSH)
+ISSN          : 2686-228X
+Volume/No/Hal : Vol. 3, No. 3, hlm. -
+DOI Aktif     : https://doi.org/10.47065/josh.v3i3.1547
+Download PDF  : https://ejurnal.seminar-id.com/index.php/josh/article/download/1547/991
+Relevansi     : Artikel Garuda terindeks SINTA 4 (Journal of Information System Research (JOSH)).
+Format APA 7  : Harianto, Diva Putri, Jaya, Joy Nashar Utama, & Darmansyah, Darmansyah (2022). Analisis Tingkat Kepuasan Pengguna Whatsapp Sebagai Media Berbagi Informasi Menggunakan Metode Pieces Framework. Journal of Information System Research (JOSH), 3(3). https://doi.org/10.47065/josh.v3i3.1547
+Format IEEE   : [7] D. P. Harianto, J. N. U. Jaya, and D. Darmansyah, "Analisis Tingkat Kepuasan Pengguna Whatsapp Sebagai Media Berbagi Informasi Menggunakan Metode Pieces Framework," Journal of Information System Research (JOSH), vol. 3, no. 3, 2022, doi: 10.47065/josh.v3i3.1547.
+
+[8] Noor, Auliya (2022) [Peringkat: SINTA 4 - Terverifikasi SINTA Kemdiktisaintek (ID 8355)]
+Judul Artikel : Analisa Pengaruh Kualitas Aplikasi Terhadap Kepuasan Pelanggan Tokopedia Menggunakan Metode PIECES Framework
+Nama Jurnal   : Journal of Information System Research (JOSH)
+ISSN          : 2686-228X
+Volume/No/Hal : Vol. 3, No. 4, hlm. -
+DOI Aktif     : https://doi.org/10.47065/josh.v3i4.1937
+Download PDF  : https://ejurnal.seminar-id.com/index.php/josh/article/download/1937/1206
+Relevansi     : Artikel Garuda terindeks SINTA 4 (Journal of Information System Research (JOSH)).
+Format APA 7  : Noor, Auliya (2022). Analisa Pengaruh Kualitas Aplikasi Terhadap Kepuasan Pelanggan Tokopedia Menggunakan Metode PIECES Framework. Journal of Information System Research (JOSH), 3(4). https://doi.org/10.47065/josh.v3i4.1937
+Format IEEE   : [8] A. Noor, "Analisa Pengaruh Kualitas Aplikasi Terhadap Kepuasan Pelanggan Tokopedia Menggunakan Metode PIECES Framework," Journal of Information System Research (JOSH), vol. 3, no. 4, 2022, doi: 10.47065/josh.v3i4.1937.
+
+[9] Aldisa, Rima Tamara, & Rifqi, Muhammad Naufal (2022) [Peringkat: SINTA 4 - Terverifikasi SINTA Kemdiktisaintek (ID 8355)]
+Judul Artikel : Perancangan Aplikasi Task Management Untuk Asisten Laboratorium Dengan Metode PIECES Berbasis Android
+Nama Jurnal   : Journal of Information System Research (JOSH)
+ISSN          : 2686-228X
+Volume/No/Hal : Vol. 4, No. 1, hlm. -
+DOI Aktif     : https://doi.org/10.47065/josh.v4i1.2414
+Download PDF  : https://ejurnal.seminar-id.com/index.php/josh/article/download/2414/1457
+Relevansi     : Artikel Garuda terindeks SINTA 4 (Journal of Information System Research (JOSH)).
+Format APA 7  : Aldisa, Rima Tamara, & Rifqi, Muhammad Naufal (2022). Perancangan Aplikasi Task Management Untuk Asisten Laboratorium Dengan Metode PIECES Berbasis Android. Journal of Information System Research (JOSH), 4(1). https://doi.org/10.47065/josh.v4i1.2414
+Format IEEE   : [9] R. T. Aldisa and M. N. Rifqi, "Perancangan Aplikasi Task Management Untuk Asisten Laboratorium Dengan Metode PIECES Berbasis Android," Journal of Information System Research (JOSH), vol. 4, no. 1, 2022, doi: 10.47065/josh.v4i1.2414.
+
+[10] Maryanti, Sri, Neneng Komariah, & Saleha Rodiah (2022) [Peringkat: SINTA 4 - Terverifikasi SINTA Kemdiktisaintek (ID 5464)]
+Judul Artikel : DISEMINASI INFORMASI PUBLIK OLEH PEJABAT PENGELOLA INFORMASI DAN DOKUMENTASI KOTA BANJAR SEBAGAI UPAYA KETERBUKAAN INFORMASI PUBLIK
+Nama Jurnal   : Moderat : Jurnal Ilmiah Ilmu Pemerintahan
+ISSN          : 2442-3777, 2622-691X
+Volume/No/Hal : Vol. 8, No. 3, hlm. -
+DOI Aktif     : https://doi.org/10.25157/moderat.v8i3.2715
+Download PDF  : https://ojs.unigal.ac.id/index.php/modrat/article/download/2715/2088
+Relevansi     : Artikel Garuda terindeks SINTA 4 (Moderat : Jurnal Ilmiah Ilmu Pemerintahan).
+Format APA 7  : Maryanti, Sri, Neneng Komariah, & Saleha Rodiah (2022). DISEMINASI INFORMASI PUBLIK OLEH PEJABAT PENGELOLA INFORMASI DAN DOKUMENTASI KOTA BANJAR SEBAGAI UPAYA KETERBUKAAN INFORMASI PUBLIK. Moderat : Jurnal Ilmiah Ilmu Pemerintahan, 8(3). https://doi.org/10.25157/moderat.v8i3.2715
+Format IEEE   : [10] S. Maryanti, Neneng Komariah, and Saleha Rodiah, "DISEMINASI INFORMASI PUBLIK OLEH PEJABAT PENGELOLA INFORMASI DAN DOKUMENTASI KOTA BANJAR SEBAGAI UPAYA KETERBUKAAN INFORMASI PUBLIK," Moderat : Jurnal Ilmiah Ilmu Pemerintahan, vol. 8, no. 3, 2022, doi: 10.25157/moderat.v8i3.2715.

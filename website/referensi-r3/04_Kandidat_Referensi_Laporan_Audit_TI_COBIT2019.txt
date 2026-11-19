@@ -1,0 +1,116 @@
+KANDIDAT REFERENSI ILMIAH TERVERIFIKASI (TERBITAN >= 2022 | CROSSREF DOI | PENULIS LENGKAP)
+Naskah Target : website/public/downloads/04_Sampel_Laporan_Audit_TI_COBIT2019.docx
+Judul Naskah  : Laporan Audit Tata Kelola Keamanan Informasi dan Kepatuhan Pelindungan Data Pribadi Menggunakan Kerangka Kerja COBIT 2019 (Studi Kasus Simulasi pada Portal Akademik Perguruan Tinggi Contoh)
+Tanggal Riset : 2026-11-18
+Total Entri   : 10
+================================================================================
+
+[1] Sudjana (2022) [Peringkat: SINTA 3 - Terverifikasi SINTA Kemdiktisaintek (ID 424)]
+Judul Artikel : PEMBOCORAN RAHASIA BANK SEBAGAI PELANGGARAN HAK PRIVASI DAN DATA PRIBADI ELEKTRONIK NASABAH BANK
+Nama Jurnal   : Refleksi Hukum: Jurnal Ilmu Hukum
+ISSN          : 2541-4984, 2541-5417
+Volume/No/Hal : Vol. 6, No. 2, hlm. 247-266
+DOI Aktif     : https://doi.org/10.24246/jrh.2022.v6.i2.p247-266
+Download PDF  : https://ejournal.uksw.edu/refleksihukum/article/download/6107/2105
+Relevansi     : [Hukum Privasi & PDP] Artikel jurnal OJS terindeks SINTA 3 (Refleksi Hukum : Jurnal Ilmu Hukum).
+Format APA 7  : Sudjana (2022). PEMBOCORAN RAHASIA BANK SEBAGAI PELANGGARAN HAK PRIVASI DAN DATA PRIBADI ELEKTRONIK NASABAH BANK. Refleksi Hukum: Jurnal Ilmu Hukum, 6(2), 247-266. https://doi.org/10.24246/jrh.2022.v6.i2.p247-266
+Format IEEE   : [1] Sudjana, "PEMBOCORAN RAHASIA BANK SEBAGAI PELANGGARAN HAK PRIVASI DAN DATA PRIBADI ELEKTRONIK NASABAH BANK," Refleksi Hukum: Jurnal Ilmu Hukum, vol. 6, no. 2, pp. 247-266, 2022, doi: 10.24246/jrh.2022.v6.i2.p247-266.
+
+[2] Septianto, Yudhi, Hermadi, Irman, & Wahjuni, Sri (2024) [Peringkat: SINTA 4 - Terverifikasi SINTA Kemdiktisaintek (ID 4589)]
+Judul Artikel : Evaluasi Sistem E-Learning di Universitas Nasional menggunakan Cobit 2019
+Nama Jurnal   : Syntax Literate ; Jurnal Ilmiah Indonesia
+ISSN          : 2541-0849, 2548-1398
+Volume/No/Hal : Vol. 7, No. 12, hlm. 16885-16896
+DOI Aktif     : https://doi.org/10.36418/syntax-literate.v7i12.10415
+Download PDF  : https://jurnal.syntaxliterate.co.id/index.php/syntax-literate/article/download/10415/6184
+Relevansi     : [Studi COBIT 2019] Artikel jurnal OJS terindeks SINTA 4 (Syntax Literate : Jurnal Ilmiah Indonesia).
+Format APA 7  : Septianto, Yudhi, Hermadi, Irman, & Wahjuni, Sri (2024). Evaluasi Sistem E-Learning di Universitas Nasional menggunakan Cobit 2019. Syntax Literate ; Jurnal Ilmiah Indonesia, 7(12), 16885-16896. https://doi.org/10.36418/syntax-literate.v7i12.10415
+Format IEEE   : [2] Y. Septianto, I. Hermadi, and S. Wahjuni, "Evaluasi Sistem E-Learning di Universitas Nasional menggunakan Cobit 2019," Syntax Literate ; Jurnal Ilmiah Indonesia, vol. 7, no. 12, pp. 16885-16896, 2024, doi: 10.36418/syntax-literate.v7i12.10415.
+
+[3] Hermawan, Subhan Deni, Hermadi, Irman, & Nurhadryani, Yani (2023) [Peringkat: SINTA 4 - Terverifikasi SINTA Kemdiktisaintek (ID 4589)]
+Judul Artikel : Evaluasi Capability Level Infrastruktur Jaringan TI Bank XYZ Menggunakan Cobit 2019
+Nama Jurnal   : Syntax Literate ; Jurnal Ilmiah Indonesia
+ISSN          : 2541-0849, 2548-1398
+Volume/No/Hal : Vol. 7, No. 12, hlm. 18274
+DOI Aktif     : https://doi.org/10.36418/syntax-literate.v7i12.10851
+Download PDF  : https://jurnal.syntaxliterate.co.id/index.php/syntax-literate/article/download/10851/6406
+Relevansi     : [Studi COBIT 2019] Artikel jurnal OJS terindeks SINTA 4 (Syntax Literate : Jurnal Ilmiah Indonesia).
+Format APA 7  : Hermawan, Subhan Deni, Hermadi, Irman, & Nurhadryani, Yani (2023). Evaluasi Capability Level Infrastruktur Jaringan TI Bank XYZ Menggunakan Cobit 2019. Syntax Literate ; Jurnal Ilmiah Indonesia, 7(12), 18274. https://doi.org/10.36418/syntax-literate.v7i12.10851
+Format IEEE   : [3] S. D. Hermawan, I. Hermadi, and Y. Nurhadryani, "Evaluasi Capability Level Infrastruktur Jaringan TI Bank XYZ Menggunakan Cobit 2019," Syntax Literate ; Jurnal Ilmiah Indonesia, vol. 7, no. 12, pp. 18274, 2023, doi: 10.36418/syntax-literate.v7i12.10851.
+
+[4] Widayanti, Riya, & Bebi, Agustinus Teiretius (2023) [Peringkat: SINTA 5 - Terverifikasi SINTA Kemdiktisaintek (ID 7015)]
+Judul Artikel : Penilaian Capability Level Layanan Sistem Informasi  E-Library Perpustakaan Universitas Esa Unggul Dengan Menggunakan Cobit 2019
+Nama Jurnal   : ICIT Journal
+ISSN          : 2356-5195, 2654-8704
+Volume/No/Hal : Vol. 9, No. 1, hlm. 87-101
+DOI Aktif     : https://doi.org/10.33050/icit.v9i1.2647
+Download PDF  : https://ejournal.raharja.ac.id/index.php/icit/article/download/2647/1588
+Relevansi     : [Studi COBIT 2019] Artikel jurnal OJS terindeks SINTA 5 (ICIT (Innovative Creative and Information Technology) Journal).
+Format APA 7  : Widayanti, Riya, & Bebi, Agustinus Teiretius (2023). Penilaian Capability Level Layanan Sistem Informasi  E-Library Perpustakaan Universitas Esa Unggul Dengan Menggunakan Cobit 2019. ICIT Journal, 9(1), 87-101. https://doi.org/10.33050/icit.v9i1.2647
+Format IEEE   : [4] R. Widayanti and A. T. Bebi, "Penilaian Capability Level Layanan Sistem Informasi  E-Library Perpustakaan Universitas Esa Unggul Dengan Menggunakan Cobit 2019," ICIT Journal, vol. 9, no. 1, pp. 87-101, 2023, doi: 10.33050/icit.v9i1.2647.
+
+[5] Muhamad Sidik (2023) [Peringkat: SINTA 5 - Terverifikasi SINTA Kemdiktisaintek (ID 16216)]
+Judul Artikel : AUDIT SISTEM  INFORMASI BERBASIS COBIT 2019 MENGGUNAKAN STANDAR ISO 27001 : 2005
+Nama Jurnal   : JURNAL ILMIAH SAINS TEKNOLOGI DAN INFORMASI
+ISSN          : 2964-3090, 2964-3104
+Volume/No/Hal : Vol. 1, No. 3, hlm. 1-13
+DOI Aktif     : https://doi.org/10.59024/jiti.v1i3.192
+Download PDF  : https://jurnal.alimspublishing.co.id/index.php/JITI/article/download/192/168
+Relevansi     : [Studi COBIT 2019 + ISO 27001] Artikel jurnal OJS terindeks SINTA 5 (JURNAL ILMIAH SAINS TEKNOLOGI DAN INFORMASI).
+Format APA 7  : Muhamad Sidik (2023). AUDIT SISTEM  INFORMASI BERBASIS COBIT 2019 MENGGUNAKAN STANDAR ISO 27001 : 2005. JURNAL ILMIAH SAINS TEKNOLOGI DAN INFORMASI, 1(3), 1-13. https://doi.org/10.59024/jiti.v1i3.192
+Format IEEE   : [5] Muhamad Sidik, "AUDIT SISTEM  INFORMASI BERBASIS COBIT 2019 MENGGUNAKAN STANDAR ISO 27001 : 2005," JURNAL ILMIAH SAINS TEKNOLOGI DAN INFORMASI, vol. 1, no. 3, pp. 1-13, 2023, doi: 10.59024/jiti.v1i3.192.
+
+[6] Zuraidah, Eva (2022) [Peringkat: SINTA 5 - Terverifikasi SINTA Kemdiktisaintek (ID 10548)]
+Judul Artikel : Audit Sistem Informasi Perkreditan Pada  PT. Aneka Optimal  Menggunakan Framework Cobit 4.0
+Nama Jurnal   : PROSISKO: Jurnal Pengembangan Riset dan Observasi Sistem Komputer
+ISSN          : 2406-7733
+Volume/No/Hal : Vol. 9, No. 1, hlm. 67-75
+DOI Aktif     : https://doi.org/10.30656/prosisko.v9i1.4731
+Download PDF  : https://e-jurnal.lppmunsera.org/index.php/PROSISKO/article/download/4731/2036
+Relevansi     : [Rujukan Versi Pendahulu COBIT 4.0 - Bukan Studi COBIT 2019] Pembanding evolusi kerangka kendali audit sistem informasi (PROSISKO - SINTA 5).
+Format APA 7  : Zuraidah, Eva (2022). Audit Sistem Informasi Perkreditan Pada  PT. Aneka Optimal  Menggunakan Framework Cobit 4.0. PROSISKO: Jurnal Pengembangan Riset dan Observasi Sistem Komputer, 9(1), 67-75. https://doi.org/10.30656/prosisko.v9i1.4731
+Format IEEE   : [6] E. Zuraidah, "Audit Sistem Informasi Perkreditan Pada  PT. Aneka Optimal  Menggunakan Framework Cobit 4.0," PROSISKO: Jurnal Pengembangan Riset dan Observasi Sistem Komputer, vol. 9, no. 1, pp. 67-75, 2022, doi: 10.30656/prosisko.v9i1.4731.
+
+[7] Elviana, Elok, Miffatul Jannah, Auralia, & Mukaromah, Siti (2022) [Peringkat: SINTA 5 - Terverifikasi SINTA Kemdiktisaintek (ID 11907)]
+Judul Artikel : Audit Sistem Informasi Pada Ts Beauty Center Menggunakan Framework Cobit 4.1
+Nama Jurnal   : Journal Of Information System And Artificial Intelligence
+ISSN          : 2797-6777
+Volume/No/Hal : Vol. 2, No. 2, hlm. 104-109
+DOI Aktif     : https://doi.org/10.26486/jisai.v2i2.78
+Download PDF  : https://jisai.mercubuana-yogya.ac.id/index.php/jisai/article/download/78/31
+Relevansi     : [Rujukan Versi Pendahulu COBIT 4.1 - Bukan Studi COBIT 2019] Pembanding pemeriksaan kendali operasional dan akses menggunakan COBIT 4.1 (Journal Of Information System And Artificial Intelligence - SINTA 5).
+Format APA 7  : Elviana, Elok, Miffatul Jannah, Auralia, & Mukaromah, Siti (2022). Audit Sistem Informasi Pada Ts Beauty Center Menggunakan Framework Cobit 4.1. Journal Of Information System And Artificial Intelligence, 2(2), 104-109. https://doi.org/10.26486/jisai.v2i2.78
+Format IEEE   : [7] E. Elviana, A. Miffatul Jannah, and S. Mukaromah, "Audit Sistem Informasi Pada Ts Beauty Center Menggunakan Framework Cobit 4.1," Journal Of Information System And Artificial Intelligence, vol. 2, no. 2, pp. 104-109, 2022, doi: 10.26486/jisai.v2i2.78.
+
+[8] Nurholis, Nurholis, & Jaya, Joy Nashar Utama (2022) [Peringkat: SINTA 4 - Terverifikasi SINTA Kemdiktisaintek (ID 8355)]
+Judul Artikel : Audit Sistem Informasi Absensi Menggunakan Cobit 5
+Nama Jurnal   : Journal of Information System Research (JOSH)
+ISSN          : 2686-228X
+Volume/No/Hal : Vol. 3, No. 4, hlm. 404-409
+DOI Aktif     : https://doi.org/10.47065/josh.v3i4.1787
+Download PDF  : https://ejurnal.seminar-id.com/index.php/josh/article/download/1787/1172
+Relevansi     : [Rujukan Versi Pendahulu COBIT 5 - Bukan Studi COBIT 2019] Rujukan transisi domain proses dari COBIT 5 ke COBIT 2019 (JOSH - SINTA 4).
+Format APA 7  : Nurholis, Nurholis, & Jaya, Joy Nashar Utama (2022). Audit Sistem Informasi Absensi Menggunakan Cobit 5. Journal of Information System Research (JOSH), 3(4), 404-409. https://doi.org/10.47065/josh.v3i4.1787
+Format IEEE   : [8] N. Nurholis and J. N. U. Jaya, "Audit Sistem Informasi Absensi Menggunakan Cobit 5," Journal of Information System Research (JOSH), vol. 3, no. 4, pp. 404-409, 2022, doi: 10.47065/josh.v3i4.1787.
+
+[9] Nia, Krisniawati, Wahyudi, Farid, & Hamdhana, Raka Anugrah (2022) [Peringkat: SINTA 4 - Terverifikasi SINTA Kemdiktisaintek (ID 15228)]
+Judul Artikel : Audit Sistem Informasi E-Rapor Menggunakan Framework COBIT 4.1 Domain ME (Monitor and Evaluate) pada SMA Muhammadiyah 1 Kepanjen Malang
+Nama Jurnal   : Jurnal Sistem Informasi dan Informatika (JUSIFOR)
+ISSN          : 2830-3393, 2830-2443
+Volume/No/Hal : Vol. 1, No. 1, hlm. 27-32
+DOI Aktif     : https://doi.org/10.33379/jusifor.v1i1.1281
+Download PDF  : https://ejournal.uniramalang.ac.id/jusifor/article/download/1281/805
+Relevansi     : [Rujukan Versi Pendahulu COBIT 4.1 Domain ME - Bukan Studi COBIT 2019] Pembanding evolusi domain pemantauan ME COBIT 4.1 sebelum MEA03 pada COBIT 2019 (JUSIFOR - SINTA 4).
+Format APA 7  : Nia, Krisniawati, Wahyudi, Farid, & Hamdhana, Raka Anugrah (2022). Audit Sistem Informasi E-Rapor Menggunakan Framework COBIT 4.1 Domain ME (Monitor and Evaluate) pada SMA Muhammadiyah 1 Kepanjen Malang. Jurnal Sistem Informasi dan Informatika (JUSIFOR), 1(1), 27-32. https://doi.org/10.33379/jusifor.v1i1.1281
+Format IEEE   : [9] K. Nia, F. Wahyudi, and R. A. Hamdhana, "Audit Sistem Informasi E-Rapor Menggunakan Framework COBIT 4.1 Domain ME (Monitor and Evaluate) pada SMA Muhammadiyah 1 Kepanjen Malang," Jurnal Sistem Informasi dan Informatika (JUSIFOR), vol. 1, no. 1, pp. 27-32, 2022, doi: 10.33379/jusifor.v1i1.1281.
+
+[10] Rohmah, Nur, Wahyudi, Farid, Mudhifatul Jannah, Urnika, & Nyndia Rahmawati, Zurriat (2022) [Peringkat: SINTA 4 - Terverifikasi SINTA Kemdiktisaintek (ID 15228)]
+Judul Artikel : Audit Sistem Informasi Manajemen Akademik (SIMA) Menggunakan Framework COBIT 5.0 Domain Align, Plan and Organise (APO) Studi Kasus : Universitas Islam Raden Rahmat Malang
+Nama Jurnal   : Jurnal Sistem Informasi dan Informatika (JUSIFOR)
+ISSN          : 2830-3393, 2830-2443
+Volume/No/Hal : Vol. 1, No. 2, hlm. 98-103
+DOI Aktif     : https://doi.org/10.33379/jusifor.v1i2.1598
+Download PDF  : https://ejournal.uniramalang.ac.id/index.php/jusifor/article/download/1598/1277
+Relevansi     : [Rujukan Versi Pendahulu COBIT 5.0 Domain APO - Bukan Studi COBIT 2019] Pembanding konteks objek sistem informasi akademik perguruan tinggi pada versi COBIT 5.0 (JUSIFOR - SINTA 4).
+Format APA 7  : Rohmah, Nur, Wahyudi, Farid, Mudhifatul Jannah, Urnika, & Nyndia Rahmawati, Zurriat (2022). Audit Sistem Informasi Manajemen Akademik (SIMA) Menggunakan Framework COBIT 5.0 Domain Align, Plan and Organise (APO) Studi Kasus : Universitas Islam Raden Rahmat Malang. Jurnal Sistem Informasi dan Informatika (JUSIFOR), 1(2), 98-103. https://doi.org/10.33379/jusifor.v1i2.1598
+Format IEEE   : [10] N. Rohmah, F. Wahyudi, U. Mudhifatul Jannah, and Z. Nyndia Rahmawati, "Audit Sistem Informasi Manajemen Akademik (SIMA) Menggunakan Framework COBIT 5.0 Domain Align, Plan and Organise (APO) Studi Kasus : Universitas Islam Raden Rahmat Malang," Jurnal Sistem Informasi dan Informatika (JUSIFOR), vol. 1, no. 2, pp. 98-103, 2022, doi: 10.33379/jusifor.v1i2.1598.

@@ -1,21 +1,38 @@
 {
   "name": "templatebsi",
-  "version": "1.0.0",
-  "description": "Template Typst Laporan PKL & Proposal UBSI Prodi Teknologi Informasi (S1)",
+  "version": "1.2.0",
+  "description": "Template & Generator Otomatis Jurnal Ilmiah SINTA 1-6 (Word & Typst) + Laporan/Proposal PKL UBSI Prodi Teknologi Informasi (S1)",
   "main": "lib.typ",
   "bin": {
     "create-templatebsi": "./bin/cli.js",
-    "templatebsi": "./bin/cli.js"
+    "templatebsi": "./bin/cli.js",
+    "sinta-agent": "./bin/sinta-agent.js",
+    "jurnal-sinta": "./bin/sinta-agent.js"
   },
   "scripts": {
     "test": "node scripts/test.js",
-    "create": "node bin/cli.js"
+    "test:sinta": "uv run scripts/test_sinta.py",
+    "test:all": "node scripts/test.js && uv run scripts/test_sinta.py",
+    "create": "node bin/cli.js",
+    "sinta": "uv run generate_sinta_journal_docx.py",
+    "sinta:showcase": "uv run generate_sinta_journal_docx.py --generate-showcase contoh-template-ai",
+    "sinta:inspect": "uv run generate_sinta_journal_docx.py --inspect-docx",
+    "agent:install": "uv run scripts/install_agent_skills.py",
+    "agent:status": "uv run scripts/install_agent_skills.py --status",
+    "diagrams": "uv run scripts/generate_diagrams.py",
+    "pkl:update": "uv run --with python-docx python scripts/update_docx_script.py"
   },
   "keywords": [
     "typst",
     "ubsi",
     "pkl",
     "proposal",
+    "sinta",
+    "jurnal-ilmiah",
+    "kilocode",
+    "opencode",
+    "freebuff",
+    "antigravity",
     "template",
     "skripsi",
     "teknologi-informasi"
@@ -24,6 +41,6 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/fatidaprilian/templatebsi.git"
+    "url": "https://github.com/Sutannn13/laporan-generator.git"
   }
 }

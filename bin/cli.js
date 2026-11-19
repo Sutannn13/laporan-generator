@@ -113,7 +113,7 @@ function printHelp() {
 Program Studi: Teknologi Informasi (S1)
 
 Penggunaan:
-  npx github:fatidaprilian/templatebsi [nama-folder] [opsi]
+  npx github:Sutannn13/laporan-generator [nama-folder] [opsi]
 
 Opsi:
   -t, --type <proposal|laporan|skripsi>  Pilih jenis naskah:
@@ -136,10 +136,10 @@ Opsi:
   -h, --help                             Tampilkan bantuan ini
 
 Contoh:
-  npx github:fatidaprilian/templatebsi my-laporan
-  npx github:fatidaprilian/templatebsi skripsi-ku --type skripsi --outline 156 --yes
-  npx github:fatidaprilian/templatebsi proposal-pkl --type proposal --yes
-  npx github:fatidaprilian/templatebsi laporan-jaringan --type laporan --outline 3 --yes
+  npx github:Sutannn13/laporan-generator my-laporan
+  npx github:Sutannn13/laporan-generator skripsi-ku --type skripsi --outline 156 --yes
+  npx github:Sutannn13/laporan-generator proposal-pkl --type proposal --yes
+  npx github:Sutannn13/laporan-generator laporan-jaringan --type laporan --outline 3 --yes
 `);
 }
 
@@ -359,9 +359,9 @@ async function main() {
     copyFileSync(path.join(pkgRoot, 'lib.typ'), path.join(targetDir, 'lib.typ'));
     copyFileSync(path.join(pkgRoot, 'template/metadata.typ'), path.join(targetDir, 'metadata.typ'));
     copyFileSync(path.join(pkgRoot, 'template/pustaka.bib'), path.join(targetDir, 'pustaka.bib'));
-    copyFileSync(
-      path.join(pkgRoot, 'template/gambar/logo-ubsi.png'),
-      path.join(targetDir, 'gambar/logo-ubsi.png')
+    copyDirSync(
+      path.join(pkgRoot, 'template/gambar'),
+      path.join(targetDir, 'gambar')
     );
 
     // 2. Adjust and copy sections
@@ -417,6 +417,7 @@ async function main() {
         let c = fs.readFileSync(srcFile, 'utf8');
         c = c.replace(/\.\.\/\.\.\/\.\.\/lib\.typ/g, '../lib.typ');
         c = c.replace(/\.\.\/\.\.\/\.\.\/metadata\.typ/g, '../metadata.typ');
+        c = c.replace(/\.\.\/\.\.\/gambar\//g, '../gambar/');
         fs.writeFileSync(path.join(targetDir, 'bab', `${b}.typ`), c, 'utf8');
       }
 
@@ -461,6 +462,7 @@ async function main() {
         let c = fs.readFileSync(srcFile, 'utf8');
         c = c.replace(/\.\.\/\.\.\/\.\.\/lib\.typ/g, '../lib.typ');
         c = c.replace(/\.\.\/\.\.\/\.\.\/metadata\.typ/g, '../metadata.typ');
+        c = c.replace(/\.\.\/\.\.\/gambar\//g, '../gambar/');
         fs.writeFileSync(path.join(targetDir, 'bab', `${b}.typ`), c, 'utf8');
       }
 
@@ -469,7 +471,7 @@ async function main() {
       mainContent = mainContent.replace(/logo-path: "public\/logo-ubsi\.png"/g, 'logo-path: "gambar/logo-ubsi.png"');
 
       const babIncludes = selectedOutline.babs.map(b => `#include "bab/${b}.typ"`).join('\n');
-      const startMarker = '// OUTLINE PKL: PROYEK INOVASI PERANGKAT LUNAK (6 BAB)';
+      const startMarker = '// OUTLINE PKL:';
       const endMarker = '// 4. Bagian Akhir';
       const sIdx = mainContent.indexOf(startMarker);
       const eIdx = mainContent.indexOf(endMarker);

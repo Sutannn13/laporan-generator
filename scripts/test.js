@@ -72,6 +72,10 @@ const testCases = [
     },
   },
   {
+    name: 'Jurnal Ilmiah SINTA 1-6 (Typst Engine)',
+    entry: path.join(repoRoot, 'template/jurnal-sinta.typ'),
+  },
+  {
     name: 'Skripsi S1 - Outline 156: Perancangan Program Science (5 Bab)',
     entry: path.join(repoRoot, 'template/skripsi.typ'),
   },
@@ -123,7 +127,7 @@ for (const tc of testCases) {
       .join('\n');
     const pattern = tc.isSkripsi
       ? /\/\/ OUTLINE SKRIPSI: KODE 156[\s\S]*?\/\/ 4\. Bagian Akhir/
-      : /\/\/ OUTLINE PKL: PROYEK INOVASI PERANGKAT LUNAK \(6 BAB\)[\s\S]*?\/\/ 4\. Bagian Akhir/;
+      : /\/\/ OUTLINE PKL:[\s\S]*?\/\/ 4\. Bagian Akhir/;
     const headerTitle = tc.isSkripsi
       ? `// OUTLINE SKRIPSI: ${tc.customOutline.name.toUpperCase()}`
       : `// OUTLINE PKL: ${tc.customOutline.name}`;
