@@ -3,9 +3,9 @@ import { FAQS, QUICK_INSTALL_CMD, REPO_URL, UPSTREAM_REPO_URL } from "../data/si
 import {
   ArrowIcon,
   AutumnCanopy,
+  ChargeInstallButton,
   Kicker,
   LockGlyph,
-  MagneticLink,
   SplitHeading,
 } from "./OverstoryVisuals";
 
@@ -163,17 +163,18 @@ export default function InstallAndFaqSection({
               Pasang skill ke coding agent lokal Anda, jalankan audit bahasa baku UBSI, dan hasilkan berkas Word (.docx) yang tetap bersih bagi Mendeley.
             </p>
             <div className="ovs-fin-actions">
-              <MagneticLink
+              <ChargeInstallButton
                 href="#pasang-skill"
                 onClick={(e) => {
-                  e.preventDefault();
+                  if (e?.preventDefault) e.preventDefault();
                   onInstallClick();
                 }}
-                className="ovs-btn ovs-btn-dark ovs-btn-xl"
+                variant="dark"
+                className="ovs-btn-xl"
               >
                 <span>Install Skill</span>
                 <ArrowIcon />
-              </MagneticLink>
+              </ChargeInstallButton>
               <a
                 href="#hasil-output"
                 onClick={onNavigate("#hasil-output")}

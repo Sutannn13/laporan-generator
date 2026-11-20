@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import { Fragment, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import gsap from "gsap";
 
 // Verbatim official SVG paths from Simple Icons (simple-icons@11 / simple-icons@latest)
@@ -120,52 +120,206 @@ export function MagneticLink({ href, onClick, className, children, target, rel }
 }
 
 /*
- * Cursor-Directed Charge-to-White CTA Button (top-right Install Skill)
- * Starts subtly muted/faded yet readable; hovering charges a crisp pure-white (#ffffff)
- * energy fill directly from the cursor entry point with deep ink (#10150d) label.
+ * Tactile 1.5-Second Split-Inversion Hover-Charge CTA ("Install Skill")
+ * - Desktop hover (mouse/pen): solid editorial ink/amber curtain sweeps left-to-right over
+ *   exact 1500ms via GPU clip-path, inverting every glyph pixel-accurately mid-letter.
+ * - Early pointer leave (< 1.5s): shifts to warm burnt-terracotta and snaps/drains back to 0
+ *   with a tight physical recoil and a discreet floating whisper cue ("Gagal charge · tahan 1,5 dtk").
+ * - Sustained 1.5s hover: locks solid amber with a single perimeter pulse ring and activates onClick.
+ * - Touchscreens & keyboard: direct tap / Enter activates immediately without hover-trapping.
  */
-export function ChargeInstallButton({ href = "#pasang-skill", onClick, className = "", children }) {
+const CHARGE_DURATION_MS = 1500;
+const DRAIN_DURATION_MS = 340;
+
+export function ChargeInstallButton({
+  href = "#pasang-skill",
+  onClick,
+  className = "",
+  variant = "nav",
+  children,
+}) {
+  const wrapRef = useRef(null);
   const btnRef = useRef(null);
+  const rafRef = useRef(0);
+  const resetTimerRef = useRef(0);
+  const phaseRef = useRef("idle");
+  const progressRef = useRef(0);
+  const startAtRef = useRef(0);
+  const [phase, setPhase] = useState("idle"); // idle | charging | failed | charged
 
-  const updateOrigin = (e) => {
-    const el = btnRef.current;
+  const setChargeProgress = useCallback((val) => {
+    const clamped = Math.max(0, Math.min(1, val));
+    progressRef.current = clamped;
+    if (btnRef.current) {
+      btnRef.current.style.setProperty("--charge", clamped.toFixed(4));
+    }
+  }, []);
+
+  const clearTimers = useCallback(() => {
+    if (rafRef.current) {
+      cancelAnimationFrame(rafRef.current);
+      rafRef.current = 0;
+    }
+    if (resetTimerRef.current) {
+      window.clearTimeout(resetTimerRef.current);
+      resetTimerRef.current = 0;
+    }
+  }, []);
+
+  useEffect(() => {
+    return () => clearTimers();
+  }, [clearTimers]);
+
+  const updatePointerMagnetic = useCallback((e) => {
+    const el = wrapRef.current;
     if (!el) return;
-    const rect = el.getBoundingClientRect();
-    const cx = Math.round(e.clientX - rect.left);
-    const cy = Math.round(e.clientY - rect.top);
-    el.style.setProperty("--cx", `${cx}px`);
-    el.style.setProperty("--cy", `${cy}px`);
+    if (
+      e.pointerType === "mouse" &&
+      !window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    ) {
+      const rect = el.getBoundingClientRect();
+      const dx = (e.clientX - rect.left - rect.width / 2) * 0.09;
+      const dy = (e.clientY - rect.top - rect.height / 2) * 0.14;
+      gsap.to(el, { x: dx, y: dy, duration: 0.34, ease: "power3.out" });
+    }
+  }, []);
 
-    if (e.pointerType === "mouse" && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      const dx = (e.clientX - rect.left - rect.width / 2) * 0.16;
-      const dy = (e.clientY - rect.top - rect.height / 2) * 0.24;
-      gsap.to(el, { x: dx, y: dy, duration: 0.32, ease: "power3.out" });
+  const completeCharge = useCallback(
+    (eventLike) => {
+      clearTimers();
+      setChargeProgress(1);
+      phaseRef.current = "charged";
+      setPhase("charged");
+      if (onClick) {
+        onClick(eventLike);
+      }
+      resetTimerRef.current = window.setTimeout(() => {
+        phaseRef.current = "idle";
+        setPhase("idle");
+        setChargeProgress(0);
+      }, 950);
+    },
+    [clearTimers, onClick, setChargeProgress]
+  );
+
+  const handlePointerEnter = (e) => {
+    updatePointerMagnetic(e);
+    if (e.pointerType === "touch") return;
+
+    clearTimers();
+    phaseRef.current = "charging";
+    setPhase("charging");
+    startAtRef.current = performance.now();
+    setChargeProgress(0);
+
+    const tick = (now) => {
+      if (phaseRef.current !== "charging") return;
+      const raw = Math.min(1, (now - startAtRef.current) / CHARGE_DURATION_MS);
+      // Subtle physical momentum curve (starts weighted, accelerates into final 1.5s lock)
+      const shaped = Math.pow(raw, 1.14);
+      setChargeProgress(shaped);
+
+      if (raw >= 1) {
+        rafRef.current = 0;
+        completeCharge({
+          preventDefault() {},
+          currentTarget: btnRef.current,
+          target: btnRef.current,
+          isChargeComplete: true,
+        });
+        return;
+      }
+      rafRef.current = requestAnimationFrame(tick);
+    };
+
+    rafRef.current = requestAnimationFrame(tick);
+  };
+
+  const handlePointerLeave = () => {
+    const el = wrapRef.current;
+    if (el) {
+      gsap.to(el, { x: 0, y: 0, duration: 0.52, ease: "power3.out" });
+    }
+
+    if (phaseRef.current === "charging" && progressRef.current < 1) {
+      clearTimers();
+      phaseRef.current = "failed";
+      setPhase("failed");
+
+      const drainFrom = progressRef.current;
+      const drainStart = performance.now();
+      const drainTick = (now) => {
+        if (phaseRef.current !== "failed") return;
+        const t = Math.min(1, (now - drainStart) / DRAIN_DURATION_MS);
+        const eased = 1 - Math.pow(1 - t, 3);
+        const nextVal = drainFrom * (1 - eased);
+        progressRef.current = nextVal;
+        if (btnRef.current) {
+          btnRef.current.style.setProperty("--charge", nextVal.toFixed(4));
+        }
+        if (t < 1) {
+          rafRef.current = requestAnimationFrame(drainTick);
+        } else {
+          rafRef.current = 0;
+        }
+      };
+      rafRef.current = requestAnimationFrame(drainTick);
+
+      resetTimerRef.current = window.setTimeout(() => {
+        phaseRef.current = "idle";
+        setPhase("idle");
+        setChargeProgress(0);
+      }, 950);
     }
   };
 
-  const handleLeave = (e) => {
-    const el = btnRef.current;
-    if (!el) return;
-    const rect = el.getBoundingClientRect();
-    el.style.setProperty("--cx", `${Math.round(e.clientX - rect.left)}px`);
-    el.style.setProperty("--cy", `${Math.round(e.clientY - rect.top)}px`);
-    gsap.to(el, { x: 0, y: 0, duration: 0.68, ease: "elastic.out(1, 0.5)" });
+  const handleClick = (e) => {
+    if (onClick) e.preventDefault();
+    if (phaseRef.current === "charged") return;
+    completeCharge(e);
   };
 
+  const isNavCta = className.includes("ovs-nav-cta");
+
   return (
-    <a
-      ref={btnRef}
-      href={href}
-      onClick={onClick}
-      onPointerEnter={updateOrigin}
-      onPointerMove={updateOrigin}
-      onPointerLeave={handleLeave}
-      className={`ovs-btn ovs-charge-btn ${className}`.trim()}
+    <span
+      ref={wrapRef}
+      className={`ovs-charge-wrap${isNavCta ? " ovs-nav-cta" : ""}`}
+      data-charge-state={phase}
+      data-charge-variant={variant}
     >
-      <span className="ovs-charge-fill" aria-hidden="true" />
-      <span className="ovs-charge-meter" aria-hidden="true" />
-      <span className="ovs-charge-content">{children}</span>
-    </a>
+      <span className="ovs-charge-burst-ring" aria-hidden="true" />
+      <a
+        ref={btnRef}
+        href={href}
+        onClick={handleClick}
+        onPointerEnter={handlePointerEnter}
+        onPointerMove={updatePointerMagnetic}
+        onPointerLeave={handlePointerLeave}
+        data-charge-state={phase}
+        data-charge-variant={variant}
+        className={`ovs-btn ovs-charge-btn ${className}`.trim()}
+        title="Tahan kursor 1,5 detik untuk charge penuh, atau klik langsung"
+      >
+        <span className="ovs-charge-base">{children}</span>
+        <span className="ovs-charge-overlay" aria-hidden="true">
+          <span className="ovs-charge-overlay-inner">{children}</span>
+        </span>
+        <span className="ovs-charge-edge" aria-hidden="true" />
+        <span className="ovs-sr" aria-live="polite">
+          {phase === "charging"
+            ? "Mengisi charge tombol Install Skill selama 1,5 detik"
+            : phase === "failed"
+              ? "Gagal charge karena kursor dilepas sebelum 1,5 detik"
+              : phase === "charged"
+                ? "Charge selesai, membuka bagian pemasangan skill"
+                : ""}
+        </span>
+      </a>
+      <span className="ovs-charge-whisper" aria-hidden={phase !== "failed"}>
+        Gagal charge · tahan 1,5 dtk
+      </span>
+    </span>
   );
 }
 

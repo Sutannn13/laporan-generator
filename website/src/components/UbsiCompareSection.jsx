@@ -14,6 +14,11 @@ export default function UbsiCompareSection() {
     if (nextIdx === activeIdx) return;
     setSlideDir(explicitDir || (nextIdx > activeIdx ? "next" : "prev"));
     setActiveIdx(nextIdx);
+    tabRefs.current[nextIdx]?.scrollIntoView({
+      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
+      block: "nearest",
+      inline: "center",
+    });
   };
 
   const handlePrev = () => {
@@ -98,39 +103,41 @@ export default function UbsiCompareSection() {
             </svg>
           </button>
 
-          <div
-            ref={dotsContainerRef}
-            className="ovs-dots"
-            role="tablist"
-            aria-label="Pilih spesifikasi pedoman UBSI"
-          >
-            <span
-              className="ovs-sliding-pill ovs-sliding-pill-amber"
-              aria-hidden="true"
-              style={{
-                width: `${pillBox.w}px`,
-                height: `${pillBox.h}px`,
-                opacity: pillBox.ready ? 1 : 0,
-                transform: `translate3d(${pillBox.x}px, ${pillBox.y}px, 0)`,
-              }}
-            />
-            {COMPARE_ROWS.map((row, idx) => (
-              <button
-                key={row.shortTab}
-                ref={(el) => {
-                  tabRefs.current[idx] = el;
+          <div className="ovs-dots-scroll">
+            <div
+              ref={dotsContainerRef}
+              className="ovs-dots"
+              role="tablist"
+              aria-label="Pilih spesifikasi pedoman UBSI"
+            >
+              <span
+                className="ovs-sliding-pill ovs-sliding-pill-amber"
+                aria-hidden="true"
+                style={{
+                  width: `${pillBox.w}px`,
+                  height: `${pillBox.h}px`,
+                  opacity: pillBox.ready ? 1 : 0,
+                  transform: `translate3d(${pillBox.x}px, ${pillBox.y}px, 0)`,
                 }}
-                type="button"
-                role="tab"
-                tabIndex={idx === activeIdx ? 0 : -1}
-                aria-selected={idx === activeIdx}
-                aria-current={idx === activeIdx ? "true" : undefined}
-                onClick={() => selectIndex(idx)}
-                onKeyDown={(e) => handleTabKeyDown(idx, e)}
-              >
-                {row.shortTab}
-              </button>
-            ))}
+              />
+              {COMPARE_ROWS.map((row, idx) => (
+                <button
+                  key={row.shortTab}
+                  ref={(el) => {
+                    tabRefs.current[idx] = el;
+                  }}
+                  type="button"
+                  role="tab"
+                  tabIndex={idx === activeIdx ? 0 : -1}
+                  aria-selected={idx === activeIdx}
+                  aria-current={idx === activeIdx ? "true" : undefined}
+                  onClick={() => selectIndex(idx)}
+                  onKeyDown={(e) => handleTabKeyDown(idx, e)}
+                >
+                  {row.shortTab}
+                </button>
+              ))}
+            </div>
           </div>
 
           <button

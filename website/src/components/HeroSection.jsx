@@ -3,7 +3,7 @@ import {
   ArrowIcon,
   AutumnCanopy,
   BrandMarqueeItem,
-  MagneticLink,
+  ChargeInstallButton,
   MorphWord,
 } from "./OverstoryVisuals";
 
@@ -47,14 +47,15 @@ export default function HeroSection({ scheme, onInstallClick, onNavigate }) {
         <p className="ovs-hero-sub">{HERO_CONTENT.subtitle}</p>
 
         <div className="ovs-hero-actions">
-          <MagneticLink
+          <ChargeInstallButton
             href="#pasang-skill"
             onClick={handleInstall}
-            className="ovs-btn ovs-btn-dark ovs-btn-xl"
+            variant="dark"
+            className="ovs-btn-xl"
           >
             <span>Install Skill</span>
             <ArrowIcon />
-          </MagneticLink>
+          </ChargeInstallButton>
           <a
             href="#hasil-output"
             onClick={onNavigate("#hasil-output")}

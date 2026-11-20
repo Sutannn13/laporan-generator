@@ -11,6 +11,7 @@ import InstallAndFaqSection from "./components/InstallAndFaqSection";
 import FooterSection from "./components/FooterSection";
 import { DiagramLightboxModal, PdfPreviewModal } from "./components/PreviewModals";
 import { useStarGate } from "./components/useStarGate";
+import WelcomeIntro from "./components/WelcomeIntro";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -40,6 +41,18 @@ export default function App() {
   const [showcaseFilter, setShowcaseFilter] = useState("all");
   const [pdfModalItem, setPdfModalItem] = useState(null);
   const [diagramModalItem, setDiagramModalItem] = useState(null);
+  const [introDone, setIntroDone] = useState(false);
+  const heroTlRef = useRef(null);
+  const heroRevealQueuedRef = useRef(false);
+
+  const handleIntroRevealStart = useCallback(() => {
+    heroRevealQueuedRef.current = true;
+    heroTlRef.current?.play(0);
+  }, []);
+
+  const handleIntroComplete = useCallback(() => {
+    setIntroDone(true);
+  }, []);
 
   useEffect(() => {
     document.documentElement.setAttribute("data-scheme", scheme);
@@ -204,21 +217,31 @@ export default function App() {
       mm.add("(prefers-reduced-motion: no-preference)", () => {
         const q = gsap.utils.selector(root);
 
-        // 1. Subtle Hero entrance + canopy depth scrub
-        gsap
-          .timeline({ defaults: { ease: "expo.out" } })
+        // 1. Subtle Hero entrance (synced to WelcomeIntro curtain lift) + canopy depth scrub
+        const heroTl = gsap
+          .timeline({ paused: true, defaults: { ease: "expo.out" } })
+          .fromTo(
+            q("[data-hero] .ovs-canopy"),
+            { scale: 1.045 },
+            { scale: 1, duration: 1.15, ease: "expo.out", clearProps: "scale" },
+            0
+          )
           .fromTo(
             q("[data-hero] [data-hline]"),
             { yPercent: 108, rotate: 1.8 },
-            { yPercent: 0, rotate: 0, duration: 1.25, stagger: 0.1 },
-            0.08
+            { yPercent: 0, rotate: 0, duration: 1.15, stagger: 0.09 },
+            0.06
           )
           .fromTo(
             q("[data-hero] .ovs-hero-sub, [data-hero] .ovs-hero-actions"),
             { y: 16, opacity: 0 },
-            { y: 0, opacity: 1, duration: 0.9, stagger: 0.08 },
-            0.32
+            { y: 0, opacity: 1, duration: 0.85, stagger: 0.08 },
+            0.24
           );
+        heroTlRef.current = heroTl;
+        if (heroRevealQueuedRef.current) {
+          heroTl.play(0);
+        }
 
         const heroCanopy = q("[data-hero] .ovs-canopy")[0];
         if (heroCanopy) {
@@ -256,8 +279,8 @@ export default function App() {
           );
         });
 
-        // 2b. Batched smooth card & ledger entrance (clears inline props on completion)
-        const batchTargets = q(".ovs-rule-cell, .ovs-card, .ovs-diag-card");
+        // 2b. Batched smooth ledger & diagram entrance (gallery specimen cards use Motion AnimatePresence)
+        const batchTargets = q(".ovs-rule-cell, .ovs-diag-card");
         if (batchTargets.length) {
           gsap.set(batchTargets, { opacity: 0, y: 22 });
           ScrollTrigger.batch(batchTargets, {
@@ -585,6 +608,13 @@ export default function App() {
 
   return (
     <div ref={rootRef} className="ovs-root" data-scheme={scheme} data-season="autumn">
+      {!introDone ? (
+        <WelcomeIntro
+          onRevealStart={handleIntroRevealStart}
+          onComplete={handleIntroComplete}
+        />
+      ) : null}
+
       <div className="ovs-scroll-progress" aria-hidden="true">
         <i ref={progressBarRef} />
       </div>

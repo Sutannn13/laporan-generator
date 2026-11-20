@@ -1,4 +1,6 @@
 import { useEffect, useRef, useState } from "react";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { ChevronLeft, ChevronRight, Download, ExternalLink, Maximize2, Minimize2, X } from "lucide-react";
 
 function useModalLifecycle(isOpen, onClose, panelRef, closeBtnRef) {
   const prevFocusRef = useRef(null);
@@ -11,7 +13,7 @@ function useModalLifecycle(isOpen, onClose, panelRef, closeBtnRef) {
 
     const focusTimer = window.setTimeout(() => {
       closeBtnRef.current?.focus();
-    }, 25);
+    }, 35);
 
     const onKey = (e) => {
       if (e.key === "Escape") {
@@ -51,6 +53,7 @@ export function PdfPreviewModal({ item, onClose }) {
   const panelRef = useRef(null);
   const closeBtnRef = useRef(null);
   const [iframeLoaded, setIframeLoaded] = useState(false);
+  const prefersReducedMotion = useReducedMotion();
 
   useEffect(() => {
     if (item) setIframeLoaded(false);
@@ -58,142 +61,114 @@ export function PdfPreviewModal({ item, onClose }) {
 
   useModalLifecycle(Boolean(item), onClose, panelRef, closeBtnRef);
 
-  if (!item) return null;
-  const pdfHref = `${baseUrl}${item.previewUrl}`;
+  const pdfHref = item ? `${baseUrl}${item.previewUrl}` : "";
 
   return (
-    <div
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="pdf-modal-title"
-      className="ovs-modal-backdrop"
-      onClick={onClose}
-      style={{
-        position: "fixed",
-        inset: 0,
-        zIndex: 80,
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        padding: "16px",
-        background: "rgba(14, 26, 16, 0.78)",
-        backdropFilter: "blur(8px)",
-      }}
-    >
-      <div
-        ref={panelRef}
-        className="ovs-modal-panel"
-        onClick={(e) => e.stopPropagation()}
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          width: "100%",
-          maxWidth: "1040px",
-          height: "88dvh",
-          borderRadius: "28px",
-          overflow: "hidden",
-          background: "var(--ovs-card)",
-          border: "1px solid var(--ovs-line)",
-          boxShadow: "0 40px 90px -24px rgba(0, 0, 0, 0.55)",
-        }}
-      >
-        <div
-          style={{
-            display: "flex",
-            flexWrap: "wrap",
-            alignItems: "center",
-            justifyContent: "space-between",
-            gap: "12px",
-            padding: "16px 22px",
-            borderBottom: "1px solid var(--ovs-line)",
-            background: "var(--ovs-paper)",
-          }}
+    <AnimatePresence>
+      {item ? (
+        <motion.div
+          key={`pdf-modal-${item.id}`}
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="pdf-modal-title"
+          className="ovs-modal-backdrop"
+          onClick={onClose}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: prefersReducedMotion ? 0.08 : 0.22, ease: "easeOut" }}
         >
-          <div style={{ minWidth: 0 }}>
-            <h3
-              id="pdf-modal-title"
-              style={{
-                fontSize: "17px",
-                fontWeight: 600,
-                letterSpacing: "-0.02em",
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-                whiteSpace: "nowrap",
-              }}
-            >
-              {item.title}
-            </h3>
-            <p style={{ fontSize: "13px", color: "var(--ovs-ink2)" }}>
-              Pratinjau PDF lokal · Sampel Teranonimisasi Opsi A
-            </p>
-          </div>
+          <motion.div
+            ref={panelRef}
+            className="ovs-modal-panel ovs-modal-panel-pdf"
+            onClick={(e) => e.stopPropagation()}
+            initial={
+              prefersReducedMotion
+                ? { opacity: 0 }
+                : { opacity: 0, y: 24, scale: 0.965 }
+            }
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={
+              prefersReducedMotion
+                ? { opacity: 0 }
+                : { opacity: 0, y: 18, scale: 0.97 }
+            }
+            transition={{
+              duration: prefersReducedMotion ? 0.08 : 0.3,
+              ease: [0.22, 1, 0.36, 1],
+            }}
+          >
+            <div className="ovs-modal-head">
+              <div className="ovs-modal-title-wrap">
+                <h3 id="pdf-modal-title" className="ovs-modal-title">
+                  {item.title}
+                </h3>
+                <p className="ovs-modal-sub">
+                  Pratinjau PDF lokal · {item.outlineOrPreset} · Sampel Teranonimisasi Opsi A
+                </p>
+              </div>
 
-          <div style={{ display: "flex", alignItems: "center", gap: "8px", flexWrap: "wrap" }}>
-            <a
-              href={pdfHref}
-              target="_blank"
-              rel="noreferrer"
-              className="ovs-btn ovs-btn-line ovs-btn-sm"
-            >
-              <span>Tab Baru</span>
-            </a>
-            <a
-              href={pdfHref}
-              download
-              className="ovs-btn ovs-btn-dark ovs-btn-sm"
-            >
-              <span>Unduh PDF</span>
-            </a>
-            <button
-              ref={closeBtnRef}
-              type="button"
-              onClick={onClose}
-              aria-label="Tutup pratinjau PDF"
-              className="ovs-icon-btn"
-              style={{ border: "1px solid var(--ovs-line)", background: "var(--ovs-card)" }}
-            >
-              <svg className="ovs-svg" viewBox="0 0 16 16" aria-hidden="true">
-                <path
-                  d="M4 4l8 8M12 4l-8 8"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.7"
-                  strokeLinecap="round"
-                />
-              </svg>
-            </button>
-          </div>
-        </div>
-
-        <div style={{ position: "relative", flex: 1, background: "var(--ovs-paper)" }}>
-          {!iframeLoaded && (
-            <div
-              style={{
-                position: "absolute",
-                inset: 0,
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: "10px",
-                padding: "24px",
-                textAlign: "center",
-              }}
-            >
-              <p style={{ fontSize: "14px", color: "var(--ovs-ink2)" }}>
-                Memuat dokumen PDF lokal ({item.title})...
-              </p>
+              <div className="ovs-modal-actions">
+                <a
+                  href={pdfHref}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="ovs-btn ovs-btn-line ovs-btn-sm"
+                >
+                  <ExternalLink size={14} aria-hidden="true" />
+                  <span>Tab Baru</span>
+                </a>
+                <a
+                  href={pdfHref}
+                  download
+                  className="ovs-btn ovs-btn-dark ovs-btn-sm"
+                >
+                  <Download size={14} aria-hidden="true" />
+                  <span>Unduh PDF</span>
+                </a>
+                <button
+                  ref={closeBtnRef}
+                  type="button"
+                  onClick={onClose}
+                  aria-label="Tutup pratinjau PDF"
+                  className="ovs-icon-btn ovs-modal-close"
+                >
+                  <X size={18} aria-hidden="true" />
+                </button>
+              </div>
             </div>
-          )}
-          <iframe
-            src={pdfHref}
-            onLoad={() => setIframeLoaded(true)}
-            title={`Pratinjau PDF ${item.title}`}
-            style={{ position: "relative", zIndex: 2, width: "100%", height: "100%", border: 0 }}
-          />
-        </div>
-      </div>
-    </div>
+
+            <div className="ovs-modal-pdf-body">
+              {!iframeLoaded ? (
+                <div className="ovs-modal-loading">
+                  <span className="ovs-modal-spinner" aria-hidden="true" />
+                  <p>Memuat dokumen PDF lokal ({item.title})...</p>
+                </div>
+              ) : null}
+              <iframe
+                src={pdfHref}
+                onLoad={() => setIframeLoaded(true)}
+                title={`Pratinjau PDF ${item.title}`}
+                className="ovs-modal-iframe"
+              />
+            </div>
+
+            <div className="ovs-modal-mobile-bar">
+              <span>Tampilan PDF seluler terbatas?</span>
+              <a
+                href={pdfHref}
+                target="_blank"
+                rel="noreferrer"
+                className="ovs-btn ovs-btn-dark ovs-btn-sm"
+              >
+                <ExternalLink size={14} aria-hidden="true" />
+                <span>Buka PDF Penuh</span>
+              </a>
+            </div>
+          </motion.div>
+        </motion.div>
+      ) : null}
+    </AnimatePresence>
   );
 }
 
@@ -201,108 +176,172 @@ export function DiagramLightboxModal({ diagram, onClose }) {
   const baseUrl = import.meta.env.BASE_URL;
   const panelRef = useRef(null);
   const closeBtnRef = useRef(null);
+  const prefersReducedMotion = useReducedMotion();
+  const [zoomed, setZoomed] = useState(false);
+  const [activeIdx, setActiveIdx] = useState(0);
+
+  const galleryList =
+    diagram && Array.isArray(diagram.galleryList) && diagram.galleryList.length > 1
+      ? diagram.galleryList
+      : null;
+
+  useEffect(() => {
+    if (!diagram) return;
+    setZoomed(false);
+    setActiveIdx(typeof diagram.galleryIndex === "number" ? diagram.galleryIndex : 0);
+  }, [diagram]);
 
   useModalLifecycle(Boolean(diagram), onClose, panelRef, closeBtnRef);
 
-  if (!diagram) return null;
+  const activeItem = galleryList ? galleryList[activeIdx] || diagram : diagram;
+
+  useEffect(() => {
+    if (!diagram || !galleryList) return undefined;
+    const onArrow = (e) => {
+      if (e.key === "ArrowRight") {
+        e.preventDefault();
+        setZoomed(false);
+        setActiveIdx((prev) => (prev + 1) % galleryList.length);
+      } else if (e.key === "ArrowLeft") {
+        e.preventDefault();
+        setZoomed(false);
+        setActiveIdx((prev) => (prev - 1 + galleryList.length) % galleryList.length);
+      }
+    };
+    window.addEventListener("keydown", onArrow);
+    return () => window.removeEventListener("keydown", onArrow);
+  }, [diagram, galleryList]);
+
+  const handleStep = (delta) => {
+    if (!galleryList) return;
+    setZoomed(false);
+    setActiveIdx((prev) => (prev + delta + galleryList.length) % galleryList.length);
+  };
 
   return (
-    <div
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="diagram-modal-title"
-      className="ovs-modal-backdrop"
-      onClick={onClose}
-      style={{
-        position: "fixed",
-        inset: 0,
-        zIndex: 80,
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        padding: "16px",
-        background: "rgba(14, 26, 16, 0.8)",
-        backdropFilter: "blur(8px)",
-      }}
-    >
-      <div
-        ref={panelRef}
-        className="ovs-modal-panel"
-        onClick={(e) => e.stopPropagation()}
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          width: "100%",
-          maxWidth: "1020px",
-          maxHeight: "90dvh",
-          borderRadius: "28px",
-          overflow: "hidden",
-          background: "var(--ovs-card)",
-          border: "1px solid var(--ovs-line)",
-          padding: "20px 24px 24px",
-          boxShadow: "0 40px 90px -24px rgba(0, 0, 0, 0.55)",
-        }}
-      >
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            gap: "14px",
-            paddingBottom: "14px",
-          }}
+    <AnimatePresence>
+      {diagram && activeItem ? (
+        <motion.div
+          key="diagram-lightbox-backdrop"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="diagram-modal-title"
+          className="ovs-modal-backdrop"
+          onClick={onClose}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: prefersReducedMotion ? 0.08 : 0.22, ease: "easeOut" }}
         >
-          <div>
-            <h3
-              id="diagram-modal-title"
-              style={{ fontSize: "18px", fontWeight: 600, letterSpacing: "-0.02em" }}
-            >
-              {diagram.title}
-            </h3>
-            <p style={{ fontSize: "13.5px", color: "var(--ovs-ink2)" }}>{diagram.caption}</p>
-          </div>
-          <button
-            ref={closeBtnRef}
-            type="button"
-            onClick={onClose}
-            aria-label="Tutup pratinjau diagram"
-            className="ovs-icon-btn"
-            style={{ border: "1px solid var(--ovs-line)", background: "var(--ovs-paper)" }}
-          >
-            <svg className="ovs-svg" viewBox="0 0 16 16" aria-hidden="true">
-              <path
-                d="M4 4l8 8M12 4l-8 8"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.7"
-                strokeLinecap="round"
-              />
-            </svg>
-          </button>
-        </div>
-
-        <div
-          style={{
-            overflow: "auto",
-            borderRadius: "18px",
-            border: "1px solid var(--ovs-line)",
-            background: "#ffffff",
-            padding: "16px",
-          }}
-        >
-          <img
-            src={`${baseUrl}${diagram.src}`}
-            alt={diagram.title}
-            style={{
-              display: "block",
-              margin: "0 auto",
-              maxHeight: "72dvh",
-              width: "auto",
-              objectFit: "contain",
+          <motion.div
+            ref={panelRef}
+            className="ovs-modal-panel ovs-modal-panel-img"
+            onClick={(e) => e.stopPropagation()}
+            initial={
+              prefersReducedMotion
+                ? { opacity: 0 }
+                : { opacity: 0, y: 24, scale: 0.96 }
+            }
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={
+              prefersReducedMotion
+                ? { opacity: 0 }
+                : { opacity: 0, y: 18, scale: 0.965 }
+            }
+            transition={{
+              duration: prefersReducedMotion ? 0.08 : 0.3,
+              ease: [0.22, 1, 0.36, 1],
             }}
-          />
-        </div>
-      </div>
-    </div>
+          >
+            <div className="ovs-modal-head">
+              <div className="ovs-modal-title-wrap">
+                {activeItem.tag ? (
+                  <span className="ovs-modal-tag">
+                    {activeItem.tag}
+                    {galleryList ? ` · ${activeIdx + 1} / ${galleryList.length}` : ""}
+                  </span>
+                ) : null}
+                <h3 id="diagram-modal-title" className="ovs-modal-title">
+                  {activeItem.title}
+                </h3>
+                <p className="ovs-modal-sub">{activeItem.caption}</p>
+              </div>
+
+              <div className="ovs-modal-actions">
+                <button
+                  type="button"
+                  onClick={() => setZoomed((z) => !z)}
+                  className="ovs-btn ovs-btn-line ovs-btn-sm"
+                  aria-pressed={zoomed}
+                >
+                  {zoomed ? (
+                    <Minimize2 size={14} aria-hidden="true" />
+                  ) : (
+                    <Maximize2 size={14} aria-hidden="true" />
+                  )}
+                  <span>{zoomed ? "Pas Layar" : "Perbesar"}</span>
+                </button>
+                <a
+                  href={`${baseUrl}${activeItem.src}`}
+                  download
+                  className="ovs-btn ovs-btn-dark ovs-btn-sm"
+                >
+                  <Download size={14} aria-hidden="true" />
+                  <span>Unduh PNG</span>
+                </a>
+                <button
+                  ref={closeBtnRef}
+                  type="button"
+                  onClick={onClose}
+                  aria-label="Tutup pratinjau gambar"
+                  className="ovs-icon-btn ovs-modal-close"
+                >
+                  <X size={18} aria-hidden="true" />
+                </button>
+              </div>
+            </div>
+
+            <div className="ovs-modal-img-stage" data-zoomed={zoomed ? "" : undefined}>
+              <AnimatePresence mode="wait" initial={false}>
+                <motion.img
+                  key={activeItem.src}
+                  src={`${baseUrl}${activeItem.src}`}
+                  alt={activeItem.title}
+                  className="ovs-modal-img"
+                  initial={prefersReducedMotion ? false : { opacity: 0, scale: 0.985 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, scale: 0.985 }}
+                  transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
+                />
+              </AnimatePresence>
+            </div>
+
+            {galleryList ? (
+              <div className="ovs-modal-nav-bar">
+                <button
+                  type="button"
+                  className="ovs-btn ovs-btn-line ovs-btn-sm"
+                  onClick={() => handleStep(-1)}
+                >
+                  <ChevronLeft size={15} aria-hidden="true" />
+                  <span>Sebelumnya</span>
+                </button>
+                <span className="ovs-modal-counter">
+                  Diagram {activeIdx + 1} dari {galleryList.length}
+                </span>
+                <button
+                  type="button"
+                  className="ovs-btn ovs-btn-line ovs-btn-sm"
+                  onClick={() => handleStep(1)}
+                >
+                  <span>Berikutnya</span>
+                  <ChevronRight size={15} aria-hidden="true" />
+                </button>
+              </div>
+            ) : null}
+          </motion.div>
+        </motion.div>
+      ) : null}
+    </AnimatePresence>
   );
 }

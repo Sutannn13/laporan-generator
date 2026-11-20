@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
+import { AnimatePresence, motion } from "motion/react";
 import { NAV_LINKS } from "../data/siteContent";
 import { ArrowIcon, ChargeInstallButton, LockGlyph, useSlidingPill } from "./OverstoryVisuals";
 
@@ -154,6 +155,7 @@ export default function Navbar({
             <ChargeInstallButton
               href="#pasang-skill"
               onClick={handleInstall}
+              variant="nav"
               className="ovs-nav-cta"
             >
               {!unlocked && <LockGlyph unlocked={false} size={14} />}
@@ -177,37 +179,82 @@ export default function Navbar({
         </div>
       </header>
 
-      <div
-        id="ovs-mobile-sheet"
-        ref={sheetRef}
-        className="ovs-sheet"
-        role="dialog"
-        aria-modal="true"
-        aria-label="Menu navigasi seluler"
-        hidden={!menuOpen}
-      >
-        {NAV_LINKS.map((link, idx) => (
-          <a
-            key={link.href}
-            href={link.href}
-            onClick={handleLinkClick(link.href)}
-            className="ovs-sheet-link"
-            style={{ "--i": idx }}
+      <AnimatePresence>
+        {menuOpen ? (
+          <motion.div
+            key="mobile-sheet-backdrop"
+            className="ovs-sheet-backdrop"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.24, ease: [0.22, 1, 0.36, 1] }}
+            onClick={() => setMenuOpen(false)}
           >
-            <span>0{idx + 1}</span>
-            {link.label}
-          </a>
-        ))}
-        <a
-          href="#pasang-skill"
-          onClick={handleInstall}
-          className="ovs-btn ovs-btn-dark ovs-btn-xl"
-          style={{ marginTop: "24px", alignSelf: "flex-start" }}
-        >
-          <span>Install Skill</span>
-          <ArrowIcon />
-        </a>
-      </div>
+            <motion.div
+              id="ovs-mobile-sheet"
+              ref={sheetRef}
+              className="ovs-sheet"
+              role="dialog"
+              aria-modal="true"
+              aria-label="Menu navigasi seluler"
+              initial={{ opacity: 0, y: -18, scale: 0.985 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -14, scale: 0.985 }}
+              transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <nav className="ovs-sheet-nav" aria-label="Tautan navigasi seluler">
+                {NAV_LINKS.map((link, idx) => (
+                  <motion.a
+                    key={link.href}
+                    href={link.href}
+                    onClick={handleLinkClick(link.href)}
+                    className="ovs-sheet-link"
+                    data-on={activeSection === link.href.slice(1) ? "" : undefined}
+                    initial={{ opacity: 0, x: -12 }}
+                    animate={{
+                      opacity: 1,
+                      x: 0,
+                      transition: {
+                        duration: 0.26,
+                        delay: 0.04 + idx * 0.03,
+                        ease: [0.22, 1, 0.36, 1],
+                      },
+                    }}
+                    exit={{
+                      opacity: 0,
+                      x: -6,
+                      transition: { duration: 0.14, delay: 0 },
+                    }}
+                  >
+                    <span>0{idx + 1}</span>
+                    <b>{link.label}</b>
+                  </motion.a>
+                ))}
+              </nav>
+
+              <div className="ovs-sheet-foot">
+                <a
+                  href="#pasang-skill"
+                  onClick={handleInstall}
+                  className="ovs-btn ovs-btn-dark ovs-btn-xl ovs-sheet-cta"
+                >
+                  {!unlocked && <LockGlyph unlocked={false} size={15} />}
+                  <span>Install Skill</span>
+                  <ArrowIcon />
+                </a>
+                <button
+                  type="button"
+                  className="ovs-btn ovs-btn-line ovs-sheet-theme"
+                  onClick={onToggleScheme}
+                >
+                  <span>{scheme === "dark" ? "Mode Terang" : "Mode Gelap"}</span>
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
     </>
   );
 }

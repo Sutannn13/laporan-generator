@@ -1,5 +1,7 @@
 import { Fragment, useEffect, useMemo, useRef, useState } from "react";
 import gsap from "gsap";
+import { AnimatePresence, motion } from "motion/react";
+import { Check, Copy, Terminal } from "lucide-react";
 import {
   INSTALL_TABS,
   MANIFESTO_CONTENT,
@@ -106,15 +108,21 @@ export default function EcosystemAndRules({
     if (!prevEl) return;
     if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    if (showPrevRef.current === visible) return;
+    if (showPrevRef.current === visible && visible) return;
     showPrevRef.current = visible;
+    gsap.killTweensOf(prevEl, "autoAlpha,opacity,scale");
     gsap.to(prevEl, {
       autoAlpha: visible ? 1 : 0,
       scale: visible ? 1 : 0.86,
-      duration: visible ? 0.42 : 0.28,
+      duration: visible ? 0.34 : 0.16,
       ease: visible ? "expo.out" : "power2.in",
+      overwrite: "auto",
     });
   };
+
+  useEffect(() => {
+    setFloatingVisible(false);
+  }, [openSkillIdx]);
 
   const handleHeaderEnter = (idx) => {
     setHoveredIdx(idx);
@@ -131,6 +139,14 @@ export default function EcosystemAndRules({
     } else {
       markDone();
     }
+  };
+
+  const handleCliTabKeyDown = (idx, e) => {
+    if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;
+    e.preventDefault();
+    const next = (idx + (e.key === "ArrowRight" ? 1 : -1) + INSTALL_TABS.length) % INSTALL_TABS.length;
+    setCliTabIdx(next);
+    cliTabItemRefs.current[next]?.focus();
   };
 
   return (
@@ -273,14 +289,17 @@ export default function EcosystemAndRules({
                       type="button"
                       aria-expanded={isOpen}
                       aria-controls={`ovs-skill-panel-${row.id}`}
+                      onPointerDown={() => setFloatingVisible(false)}
                       onClick={() => {
                         setFloatingVisible(false);
                         onToggleSkillIdx(isOpen ? -1 : idx);
                       }}
-                      onFocus={() => handleHeaderEnter(idx)}
                     >
                       <span className="ovs-svc-n">0{idx + 1}</span>
-                      <span className="ovs-svc-t">{row.title}</span>
+                      <span className="ovs-svc-title-wrap">
+                        <span className="ovs-svc-t">{row.title}</span>
+                        <span className="ovs-svc-sub-mobile">{rowMeta}</span>
+                      </span>
                       <span className="ovs-svc-time">{rowMeta}</span>
                       <span className="ovs-plus" aria-hidden="true" />
                     </button>
@@ -300,42 +319,14 @@ export default function EcosystemAndRules({
                         {row.isCliRow ? (
                           starGate.unlocked ? (
                             <div ref={cliBoxRef} className="ovs-cli-box" data-unlocked="">
-                              <div className="ovs-cli-top">
-                                <div
-                                  ref={cliTabsRef}
-                                  className="ovs-cli-tabs"
-                                  role="tablist"
-                                  aria-label="Skenario perintah terminal"
-                                >
-                                  <span
-                                    className="ovs-sliding-pill ovs-sliding-pill-amber"
-                                    aria-hidden="true"
-                                    style={{
-                                      width: `${cliPillBox.w}px`,
-                                      height: `${cliPillBox.h}px`,
-                                      opacity: cliPillBox.ready ? 1 : 0,
-                                      transform: `translate3d(${cliPillBox.x}px, ${cliPillBox.y}px, 0)`,
-                                    }}
-                                  />
-                                  {INSTALL_TABS.map((tab, tIdx) => (
-                                    <button
-                                      key={tab.id}
-                                      ref={(el) => {
-                                        cliTabItemRefs.current[tIdx] = el;
-                                      }}
-                                      type="button"
-                                      role="tab"
-                                      aria-selected={cliTabIdx === tIdx}
-                                      className="ovs-cli-tab"
-                                      onClick={() => setCliTabIdx(tIdx)}
-                                    >
-                                      {tab.label}
-                                    </button>
-                                  ))}
-                                </div>
+                              <div className="ovs-cli-headbar">
+                                <span className="ovs-cli-env">
+                                  <Terminal size={14} aria-hidden="true" />
+                                  <span>Terminal Lokal · Git / Node / uv</span>
+                                </span>
 
                                 <span className="ovs-unlocked-pill">
-                                  <LockGlyph unlocked size={13} />
+                                  <LockGlyph unlocked size={12} />
                                   <span>
                                     Terbuka
                                     {typeof starGate.starCount === "number"
@@ -345,28 +336,90 @@ export default function EcosystemAndRules({
                                 </span>
                               </div>
 
-                              <div className="ovs-cli-cmd-row">
-                                <code className="ovs-cli-cmd">
-                                  <span className="ovs-cli-prompt" aria-hidden="true">
-                                    &gt;
-                                  </span>
-                                  {activeCliTab.command}
-                                </code>
-                                <button
-                                  type="button"
-                                  className="ovs-btn ovs-btn-lime ovs-btn-sm"
-                                  style={{ minWidth: "136px" }}
-                                  onClick={() =>
-                                    handleCopyText(activeCliTab.id, activeCliTab.command)
-                                  }
-                                >
-                                  <span aria-live="polite">
-                                    {copiedId === activeCliTab.id ? "Tersalin" : "Salin Perintah"}
-                                  </span>
-                                </button>
+                              <div
+                                ref={cliTabsRef}
+                                className="ovs-cli-tabs"
+                                role="tablist"
+                                aria-label="Skenario perintah terminal"
+                              >
+                                <span
+                                  className="ovs-sliding-pill ovs-sliding-pill-cli"
+                                  aria-hidden="true"
+                                  style={{
+                                    width: `${cliPillBox.w}px`,
+                                    height: `${cliPillBox.h}px`,
+                                    opacity: cliPillBox.ready ? 1 : 0,
+                                    transform: `translate3d(${cliPillBox.x}px, ${cliPillBox.y}px, 0)`,
+                                  }}
+                                />
+                                {INSTALL_TABS.map((tab, tIdx) => (
+                                  <button
+                                    key={tab.id}
+                                    ref={(el) => {
+                                      cliTabItemRefs.current[tIdx] = el;
+                                    }}
+                                    type="button"
+                                    role="tab"
+                                    tabIndex={cliTabIdx === tIdx ? 0 : -1}
+                                    aria-selected={cliTabIdx === tIdx}
+                                    className="ovs-cli-tab"
+                                    onClick={() => setCliTabIdx(tIdx)}
+                                    onKeyDown={(e) => handleCliTabKeyDown(tIdx, e)}
+                                  >
+                                    <span className="ovs-cli-tab-idx">0{tIdx + 1}</span>
+                                    <span>{tab.label}</span>
+                                  </button>
+                                ))}
                               </div>
 
-                              <p className="ovs-cli-hint">{activeCliTab.hint}</p>
+                              <div className="ovs-cli-stage">
+                                <div className="ovs-cli-stage-bar">
+                                  <span className="ovs-cli-stage-meta">
+                                    <i className="ovs-cli-live-dot" aria-hidden="true" />
+                                    <span>{activeCliTab.label}</span>
+                                    <span className="ovs-cli-shell-tag">powershell / bash</span>
+                                  </span>
+
+                                  <button
+                                    type="button"
+                                    className="ovs-cli-copy-btn"
+                                    data-copied={copiedId === activeCliTab.id ? "" : undefined}
+                                    onClick={() =>
+                                      handleCopyText(activeCliTab.id, activeCliTab.command)
+                                    }
+                                  >
+                                    {copiedId === activeCliTab.id ? (
+                                      <Check size={14} aria-hidden="true" />
+                                    ) : (
+                                      <Copy size={14} aria-hidden="true" />
+                                    )}
+                                    <span aria-live="polite">
+                                      {copiedId === activeCliTab.id ? "Tersalin" : "Salin Perintah"}
+                                    </span>
+                                  </button>
+                                </div>
+
+                                <AnimatePresence mode="wait" initial={false}>
+                                  <motion.div
+                                    key={activeCliTab.id}
+                                    initial={{ opacity: 0, y: 6 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    exit={{ opacity: 0, y: -4 }}
+                                    transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
+                                    className="ovs-cli-code-panel"
+                                  >
+                                    <pre className="ovs-cli-pre">
+                                      <code className="ovs-cli-cmd">
+                                        <span className="ovs-cli-prompt" aria-hidden="true">
+                                          $
+                                        </span>
+                                        {activeCliTab.command}
+                                      </code>
+                                    </pre>
+                                    <p className="ovs-cli-hint">{activeCliTab.hint}</p>
+                                  </motion.div>
+                                </AnimatePresence>
+                              </div>
 
                               <div className="ovs-fork-note">
                                 <GitHubMark size={15} />
@@ -404,32 +457,18 @@ export default function EcosystemAndRules({
                                 </span>
                               </div>
 
-                              <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
-                                <h4
-                                  style={{
-                                    fontSize: "clamp(19px, 1.8vw, 24px)",
-                                    fontWeight: 500,
-                                    letterSpacing: "-0.03em",
-                                    lineHeight: 1.2,
-                                  }}
-                                >
+                              <div className="ovs-star-copy">
+                                <h4>
                                   Beri bintang pada repositori untuk membuka akses instalasi skill.
                                 </h4>
-                                <p
-                                  style={{
-                                    fontSize: "14.5px",
-                                    lineHeight: 1.55,
-                                    color: "rgba(237, 241, 230, 0.78)",
-                                    maxWidth: "46em",
-                                  }}
-                                >
+                                <p>
                                   Untuk memasang dan menjalankan skill di dalam Laporan Generator UBSI, silakan kunjungi repositori GitHub proyek ini dan klik tombol Star di pojok kanan atas. Tidak perlu mengunggah bukti apa pun: panel perintah CLI akan terbuka otomatis begitu bintang terdeteksi.
                                 </p>
                               </div>
 
                               <div className="ovs-star-redacted" aria-hidden="true">
                                 <code>
-                                  &gt; git clone https://github.com/Sutannn13/laporan-generator.git &amp;&amp; npm run agent:install
+                                  $ git clone https://github.com/Sutannn13/laporan-generator.git &amp;&amp; npm run agent:install
                                 </code>
                                 <span className="ovs-star-lock-tag">
                                   <LockGlyph unlocked={false} size={13} />
@@ -451,12 +490,7 @@ export default function EcosystemAndRules({
 
                                 <button
                                   type="button"
-                                  className="ovs-btn ovs-btn-glass"
-                                  style={{
-                                    background: "rgba(237, 241, 230, 0.1)",
-                                    borderColor: "rgba(237, 241, 230, 0.24)",
-                                    color: "#edf1e6",
-                                  }}
+                                  className="ovs-btn ovs-btn-vault-ghost"
                                   disabled={starGate.gatePhase === "checking"}
                                   onClick={() =>
                                     starGate.verifyStarsNow({
@@ -506,31 +540,47 @@ export default function EcosystemAndRules({
                           )
                         ) : null}
 
-                        <ul className="ovs-svc-tags">
-                          {row.tags.map((tag) =>
-                            row.isCliRow && tag.startsWith("/") ? (
-                              <li key={tag} style={{ padding: 0, border: 0, background: "none" }}>
-                                {starGate.unlocked ? (
-                                  <button
-                                    type="button"
-                                    className="ovs-slash-chip"
-                                    onClick={() => handleCopyText(tag, tag)}
-                                    title={`Salin perintah ${tag}`}
-                                  >
-                                    <span>{copiedId === tag ? `${tag} tersalin` : tag}</span>
-                                  </button>
-                                ) : (
-                                  <span
-                                    className="ovs-slash-chip"
-                                    style={{ opacity: 0.55, cursor: "not-allowed" }}
-                                    title="Beri bintang di GitHub untuk mengaktifkan perintah"
-                                  >
-                                    <LockGlyph unlocked={false} size={12} />
-                                    <span>{tag}</span>
-                                  </span>
-                                )}
-                              </li>
-                            ) : (
+                        {row.isCliRow ? (
+                          <div className="ovs-slash-dock">
+                            <span className="ovs-slash-label">
+                              {starGate.unlocked
+                                ? "Perintah slash agent (klik untuk salin):"
+                                : "Perintah slash agent (terbuka setelah Star GitHub):"}
+                            </span>
+                            <ul className="ovs-slash-list">
+                              {row.tags.map((tag) => (
+                                <li key={tag}>
+                                  {starGate.unlocked ? (
+                                    <button
+                                      type="button"
+                                      className="ovs-slash-chip"
+                                      data-copied={copiedId === tag ? "" : undefined}
+                                      onClick={() => handleCopyText(tag, tag)}
+                                      title={`Salin perintah ${tag}`}
+                                    >
+                                      <span>{copiedId === tag ? `${tag} tersalin` : tag}</span>
+                                      {copiedId === tag ? (
+                                        <Check size={12} aria-hidden="true" />
+                                      ) : (
+                                        <Copy size={12} className="ovs-slash-ico" aria-hidden="true" />
+                                      )}
+                                    </button>
+                                  ) : (
+                                    <span
+                                      className="ovs-slash-chip ovs-slash-chip-locked"
+                                      title="Beri bintang di GitHub untuk mengaktifkan perintah"
+                                    >
+                                      <LockGlyph unlocked={false} size={12} />
+                                      <span>{tag}</span>
+                                    </span>
+                                  )}
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        ) : (
+                          <ul className="ovs-svc-tags">
+                            {row.tags.map((tag) => (
                               <li key={tag}>
                                 {tag.endsWith(".py") || tag.startsWith("--") ? (
                                   <code className="ovs-code" style={{ fontSize: "12.5px" }}>
@@ -540,9 +590,9 @@ export default function EcosystemAndRules({
                                   tag
                                 )}
                               </li>
-                            )
-                          )}
-                        </ul>
+                            ))}
+                          </ul>
+                        )}
                       </div>
                     </div>
                   </div>
