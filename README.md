@@ -92,9 +92,9 @@ Disediakan draf bab sesuai 4 outline resmi peminatan TI S1 serta Proposal PKL:
 
 ```text
 project-laporan-ai/
-├── .agents/                          # Kustomisasi AI Agent (Always-on Rules & Skill jurnal-sinta)
+├── .agents/                          # Kustomisasi AI Agent (1 Skill Terpadu laporan-generator & Always-on Rule)
 │   ├── rules/sinta-journal-prompt.md # Protokol wajib SINTA 1-6, OJS, DOI Crossref, & Anti-Slop
-│   └── skills/jurnal-sinta/SKILL.md  # Skill pembuatan jurnal baru, edit dokumen existing, & showcase
+│   └── skills/laporan-generator/     # 1 Skill Terpadu (SKILL.md, references/, scripts/, presets/, humanizer_id/, data/)
 ├── bin/
 │   └── cli.js                        # Interactive CLI Scaffolder (npx create-templatebsi)
 ├── contoh-template-ai/               # Katalog hasil jadi Jurnal SINTA 1-6 (.docx/.pdf) & Laporan PKL
@@ -199,11 +199,15 @@ npx github:Sutannn13/laporan-generator my-proposal --type proposal --yes
 npx github:Sutannn13/laporan-generator . --force
 ```
 
-#### Pemasangan Skill AI Agent & Scaffolder Word (.docx) SK Rektor UBSI 2026
-Untuk menyinkronkan 4 skill (`laporan-generator`, `mode-ilmiah`, `jurnal-sinta`, dan `humanizer-id` ber-preset UBSI 2026) ke Antigravity, KiloCode, OpenCode, Freebuff, Claude Code, dan Cursor:
+#### Pemasangan 1 Skill AI Agent Tanpa Clone & Scaffolder Word (.docx) SK Rektor UBSI 2026
+Pasang **1 skill terpadu (`laporan-generator`)** yang sudah mencakup modul `mode-ilmiah`, `jurnal-sinta`, `humanizer-id` preset UBSI 2026, serta seluruh skrip OpenXML & katalog 16.617 jurnal SINTA ke Antigravity, Claude Code, Cursor, OpenCode, Freebuff, dan KiloCode **tanpa perlu `git clone`**:
 ```powershell
-npm run agent:install
-npm run agent:status
+# Opsi 1 (Standar skills.sh - paling ringkas):
+npx skills add Sutannn13/laporan-generator
+
+# Opsi 2 (Installer CLI bawaan tanpa clone - ikut memasang 5 slash command & cek runtime uv):
+npx -y github:Sutannn13/laporan-generator install
+npx -y github:Sutannn13/laporan-generator status
 
 # Buat kerangka Word (.docx) Skripsi / TA / PKL UBSI 2026:
 uv run scripts/update_docx_script.py --scaffold --type skripsi --outline 156 --title "JUDUL SKRIPSI" --author "Penulis Contoh" --nim "00000001" --output "Skripsi_UBSI.docx"

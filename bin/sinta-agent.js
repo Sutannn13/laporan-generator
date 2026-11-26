@@ -2,6 +2,7 @@
 
 const { spawnSync } = require('child_process');
 const path = require('path');
+const { checkRuntimes, runCli } = require('./install-skill');
 
 const ROOT_DIR = path.resolve(__dirname, '..');
 const args = process.argv.slice(2);
@@ -9,19 +10,32 @@ const sub = (args[0] || 'help').toLowerCase();
 const rest = args.slice(1);
 
 function runUv(scriptRelPath, scriptArgs = []) {
+  const runtimes = checkRuntimes();
+  if (!runtimes.uv.available) {
+    console.error(
+      '[GAGAL] Runtime `uv` tidak ditemukan di PATH.\n' +
+      'Pasang `uv` terlebih dahulu agar generator Word (.docx) dapat berjalan:\n' +
+      '  Windows (PowerShell): powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"\n' +
+      '  macOS / Linux       : curl -LsSf https://astral.sh/uv/install.sh | sh'
+    );
+    process.exit(1);
+  }
+
   const scriptAbs = path.join(ROOT_DIR, scriptRelPath);
   const res = spawnSync('uv', ['run', scriptAbs, ...scriptArgs], {
-    cwd: ROOT_DIR,
+    cwd: process.cwd(),
     stdio: 'inherit',
     shell: process.platform === 'win32',
   });
-  process.exit(res.status || 0);
+  if (res.error) {
+    console.error(`[GAGAL] Tidak dapat menjalankan uv: ${res.error.message}`);
+    process.exit(1);
+  }
+  process.exit(typeof res.status === 'number' ? res.status : 1);
 }
 
-if (sub === 'install' || sub === 'setup') {
-  runUv('scripts/install_agent_skills.py', rest);
-} else if (sub === 'status') {
-  runUv('scripts/install_agent_skills.py', ['--status', ...rest]);
+if (sub === 'install' || sub === 'setup' || sub === 'status' || sub === 'uninstall' || sub === 'remove') {
+  process.exit(runCli([sub, ...rest]));
 } else if (sub === 'buat' || sub === 'generate') {
   runUv('generate_sinta_journal_docx.py', rest);
 } else if (sub === 'cek' || sub === 'inspect') {
@@ -33,19 +47,23 @@ if (sub === 'install' || sub === 'setup') {
 } else if (sub === 'showcase') {
   runUv('generate_sinta_journal_docx.py', ['--generate-showcase', rest[0] || 'contoh-template-ai']);
 } else {
-  console.log(`SINTA 1-6 & Laporan PKL Universal AI Agent CLI (sinta-agent)
-Mendukung: Antigravity, KiloCode, OpenCode, Freebuff/Codebuff, Claude Code, Cursor, Windsurf, Cline, & Roo Code
+  console.log(`Laporan Generator & SINTA 1-6 Universal AI Agent CLI (sinta-agent)
+Mendukung: Antigravity, Claude Code, Cursor, OpenCode, Freebuff, KiloCode, Windsurf, Cline, & Roo Code
 
-Perintah:
-  npx sinta-agent install [--target <folder>]  Pasang Skill & Slash Commands (/jurnal-sinta, /sinta-buat, /sinta-cek) ke semua AI Agent & CLI
-  npx sinta-agent status                       Cek status instalasi di seluruh AI Agent (Workspace & Global)
-  npx sinta-agent buat [opsi]                  Jalankan generator Jurnal SINTA 1-6 (.docx)
-  npx sinta-agent cek "<file.docx>"            Inspeksi DNA template .docx dari jurnal kampus lain / draf existing
-  npx sinta-agent showcase                     Generate ulang 12 contoh di folder contoh-template-ai/
+Perintah (Tanpa git clone):
+  npx skills add Sutannn13/laporan-generator      Pasang 1 skill terpadu via skills.sh
+  npx sinta-agent install [--workspace [dir]]     Pasang 1 skill terpadu + slash commands (pure Node, tanpa clone)
+  npx sinta-agent status [--json]                 Cek status pemasangan skill & kesiapan runtime uv/Python
+  npx sinta-agent uninstall                       Hapus berkas terkelola milik skill laporan-generator
+  npx sinta-agent buat [opsi]                     Jalankan generator Jurnal SINTA 1-6 (.docx)
+  npx sinta-agent cek "<file.docx>"               Inspeksi DNA template .docx eksternal / draf existing
+  npx sinta-agent showcase                        Generate ulang contoh di folder contoh-template-ai/
 
-Slash Commands di dalam Chat AI Agent (KiloCode / OpenCode / Freebuff / Antigravity / Claude):
-  /jurnal-sinta   Mode interaktif pembuatan Jurnal SINTA 1-6 baru atau pengerjaan dokumen existing
-  /sinta-buat     Generate cepat file Word (.docx) Jurnal SINTA 1-6
-  /sinta-cek      Inspeksi template .docx eksternal & verifikasi kualitas SINTA
+Slash Commands di dalam Chat AI Agent:
+  /laporan-generator   Pintu utama semua dokumen (PKL, Skripsi UBSI, Audit COBIT, Jurnal SINTA)
+  /mode-ilmiah         Alur tim akademik 6 fase + rubrik Peer Reviewer >= 85/100
+  /jurnal-sinta        Mode Jurnal SINTA 1-6 (1/2 kolom, DOI Crossref, patuh R1-R4 Mendeley)
+  /sinta-buat          Generate cepat Word (.docx) mode Mendeley
+  /sinta-cek           Inspeksi XML & audit Anti-Slop + Burstiness
 `);
 }

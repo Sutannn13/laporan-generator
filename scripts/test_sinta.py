@@ -157,11 +157,21 @@ def verify_sinta_system():
         assert res["passed"], f"Antislop failed on showcase {fname}: {res['critical_issues']}"
         assert not res["warnings"], f"Antislop warnings on showcase {fname}: {res['warnings']}"
 
-    examples_dir = os.path.join(".agents", "skills", "laporan-generator", "examples")
-    for ex_name in os.listdir(examples_dir):
-        if ex_name.endswith(".docx"):
-            res = audit_manuscript(os.path.join(examples_dir, ex_name), min_std=5.5, mendeley_mode=False)
-            assert res["passed"], f"Antislop failed on bundled example {ex_name}: {res['critical_issues']}"
+    # Verify unified 1-skill bundle contract under .agents/skills/ (1 SKILL.md, lean size < 3.5 MB)
+    skills_root = os.path.join(".agents", "skills")
+    top_skill_dirs = [d for d in os.listdir(skills_root) if os.path.isdir(os.path.join(skills_root, d))]
+    assert top_skill_dirs == ["laporan-generator"], f"Expected single unified skill 'laporan-generator', got {top_skill_dirs}"
+    hub_dir = os.path.join(skills_root, "laporan-generator")
+    nested_skill_mds = []
+    hub_bytes = 0
+    for cur_root, _, files in os.walk(hub_dir):
+        for fn in files:
+            fp = os.path.join(cur_root, fn)
+            hub_bytes += os.path.getsize(fp)
+            if fn.lower() == "skill.md":
+                nested_skill_mds.append(fp)
+    assert len(nested_skill_mds) == 1, f"Expected exactly 1 SKILL.md inside unified bundle, got {nested_skill_mds}"
+    assert hub_bytes < 3.5 * 1024 * 1024, f"Unified skill bundle too large ({hub_bytes / (1024*1024):.2f} MB)"
 
     # 6. Verify failure-mode & happy-path checks in check_antislop_academic & verify_sinta_refs
     assert extract_doi("https://doi.org/10.31294/jki.v14i1.21890") == "10.31294/jki.v14i1.21890"
@@ -334,7 +344,7 @@ def verify_sinta_system():
         from unittest.mock import patch
         from scripts.docx_io import atomic_save_docx
         assert os.path.exists(os.path.join(global_scripts_dir, "docx_io.py"))
-        assert os.path.exists(os.path.join(os.path.expanduser("~"), ".gemini", "config", "skills", "jurnal-sinta", "scripts", "docx_io.py"))
+        assert os.path.exists(os.path.join(global_scripts_dir, "audit_humanizer.py"))
         with open(".vscode/extensions.json", "r", encoding="utf-8") as ext_f:
             import json as _json
             ext_cfg = _json.load(ext_f)
@@ -351,10 +361,27 @@ def verify_sinta_system():
                 assert "[TERKUNCI]" in str(lock_exc)
                 assert os.path.exists(out_skripsi + ".tmp.docx"), "Expected staged .tmp.docx preserved on lock error"
 
-        # Verify global humanizer-id UBSI 2026 preset + pre-filter + no BRN-002 collision
-        global_hum_dir = os.path.join(os.path.expanduser("~"), ".gemini", "config", "skills", "humanizer-id")
-        assert os.path.exists(os.path.join(global_hum_dir, "data", "pedoman-kampus-ubsi.json"))
-        sys.path.insert(0, global_hum_dir)
+        # Verify unified skill non-destructive guard on external workspace (does not overwrite user AGENTS.md)
+        ext_ws = os.path.join(tmp_iso, "external_user_ws")
+        os.makedirs(ext_ws, exist_ok=True)
+        sentinel_agents = "# User Own AGENTS\nKeep intact.\n"
+        with open(os.path.join(ext_ws, "AGENTS.md"), "w", encoding="utf-8") as af:
+            af.write(sentinel_agents)
+        install_all(target_workspace=ext_ws, install_global=False)
+        with open(os.path.join(ext_ws, "AGENTS.md"), "r", encoding="utf-8") as af:
+            assert af.read() == sentinel_agents, "install_all() destructively overwrote external workspace AGENTS.md"
+
+        # Verify unified global skill humanizer-id UBSI 2026 preset + out-of-repo CLI execution
+        global_skill_root = os.path.join(os.path.expanduser("~"), ".gemini", "config", "skills", "laporan-generator")
+        assert os.path.exists(os.path.join(global_skill_root, "data", "pedoman-kampus-ubsi.json"))
+        cp_hum = subprocess.run(
+            [sys.executable, os.path.join(global_scripts_dir, "audit_humanizer.py"), "--demo"],
+            cwd=tmp_iso,
+            capture_output=True,
+            text=True,
+        )
+        assert cp_hum.returncode == 0, f"Isolated bundled audit_humanizer.py failed:\n{cp_hum.stdout}\n{cp_hum.stderr}"
+        sys.path.insert(0, global_skill_root)
         from humanizer_id.engine import _read_text_file_safely, audit_text, load_data
         k_dict, g_dict, c_dict = load_data("ubsi")
         sample_id = (
@@ -440,13 +467,14 @@ def verify_sinta_system():
         except RuntimeError as rte:
             assert "garuda:" in str(rte)
 
-    # Verify skill, rule, and multi-agent command files exist and have no forbidden em-dashes
+    # Verify unified skill, references, rule, and multi-agent command files exist and have no forbidden em-dashes
     skill_paths = [
         ".agents/skills/laporan-generator/SKILL.md",
-        ".agents/skills/laporan-generator/resources/matriks-metodologi-ilmiah.md",
-        ".agents/skills/laporan-generator/resources/antislop-akademik-id.md",
-        ".agents/skills/jurnal-sinta/SKILL.md",
-        ".agents/skills/mode-ilmiah/SKILL.md",
+        ".agents/skills/laporan-generator/references/mode-ilmiah.md",
+        ".agents/skills/laporan-generator/references/jurnal-sinta.md",
+        ".agents/skills/laporan-generator/references/humanizer-id.md",
+        ".agents/skills/laporan-generator/references/matriks-metodologi-ilmiah.md",
+        ".agents/skills/laporan-generator/references/antislop-akademik-id.md",
         ".agents/rules/sinta-journal-prompt.md",
         ".kilocode/workflows/laporan-generator.md",
         ".kilocode/workflows/jurnal-sinta.md",
@@ -463,6 +491,7 @@ def verify_sinta_system():
         with open(sp, "r", encoding="utf-8") as f:
             txt = f.read()
         assert "\u2014" not in txt, f"Forbidden em dash found in {sp}"
+        assert "Sutan Arlie Johan" not in txt and "Sutan%20Arlie%20Johan" not in txt, f"Hardcoded personal path in {sp}"
 
     print("PASS: All 6 SINTA presets, 9 SINTA showcase manuscripts, 2022-2026 refs, antislop/Burstiness linter, isolated global bundle execution (Mendeley R1/R3 + PKL), and multi-agent skills verified.")
 

@@ -54,8 +54,8 @@ export default function InstallAndFaqSection({
             <div className="ovs-faq-card">
               <p>
                 {unlocked
-                  ? "Akses CLI sudah terbuka. Salin perintah pemasangan satu langkah atau periksa kode sumbernya di GitHub."
-                  : "Siap memasang keempat skill mandiri ke komputer lokal Anda? Beri bintang terlebih dahulu pada repositori GitHub kami untuk membuka perintah instalasi."}
+                  ? "Akses CLI sudah terbuka. Salin perintah pemasangan satu baris tanpa git clone atau periksa kode sumbernya di GitHub."
+                  : "Siap memasang 1 skill terpadu tanpa git clone ke komputer lokal Anda? Beri bintang terlebih dahulu pada repositori GitHub kami untuk membuka perintah instalasi."}
               </p>
               <div style={{ display: "flex", flexWrap: "wrap", gap: "10px" }}>
                 <button
@@ -69,7 +69,7 @@ export default function InstallAndFaqSection({
                       ? "Buka Kunci CLI (Star GitHub)"
                       : copied
                         ? "Perintah Tersalin"
-                        : "Salin npm run agent:install"}
+                        : "Salin npx skills add"}
                   </span>
                 </button>
                 <a

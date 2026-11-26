@@ -231,7 +231,7 @@ export default function EcosystemAndRules({
         </div>
       </section>
 
-      {/* ( 02 ) 5 Horizontal Accordion Rows: 4 Skills + 1 Star-Gated CLI Studio */}
+      {/* ( 02 ) 5 Horizontal Accordion Rows: 1 Unified Hub Skill + 3 Modules + 1 Zero-Clone CLI Studio */}
       <section
         id="skill"
         className="ovs-sec ovs-services"
@@ -244,11 +244,11 @@ export default function EcosystemAndRules({
               <Kicker n="02" text="Ekosistem Skill & Perintah" />
               <SplitHeading
                 id="ovs-skill-heading"
-                text="Empat skill terpadu dan satu baris perintah untuk seluruh format akademik."
+                text="Satu skill terpadu dengan empat modul akademik dan pemasangan tanpa clone."
               />
             </div>
             <p className="ovs-lede">
-              Dipasang sekali ke coding agent lokal Anda. Setiap skill bekerja di atas berkas Word (.docx) dan Typst (.pdf) di komputer sendiri.
+              Dipasang sekali tanpa git clone ke coding agent lokal Anda. AI memuat modul rujukan on-demand di atas berkas Word (.docx) dan Typst (.pdf).
             </p>
           </div>
 
@@ -322,7 +322,7 @@ export default function EcosystemAndRules({
                               <div className="ovs-cli-headbar">
                                 <span className="ovs-cli-env">
                                   <Terminal size={14} aria-hidden="true" />
-                                  <span>Terminal Lokal · Git / Node / uv</span>
+                                  <span>Terminal Lokal · Tanpa Clone (npx / uv)</span>
                                 </span>
 
                                 <span className="ovs-unlocked-pill">
@@ -468,7 +468,7 @@ export default function EcosystemAndRules({
 
                               <div className="ovs-star-redacted" aria-hidden="true">
                                 <code>
-                                  $ git clone https://github.com/Sutannn13/laporan-generator.git &amp;&amp; npm run agent:install
+                                  $ npx skills add Sutannn13/laporan-generator
                                 </code>
                                 <span className="ovs-star-lock-tag">
                                   <LockGlyph unlocked={false} size={13} />

@@ -62,19 +62,14 @@ def norm_title(val):
 
 
 def _find_catalog_path():
+    home = os.path.expanduser("~")
     candidates = [
         os.path.join(_PARENT_DIR, "presets", "sinta-catalog.json.gz"),
         os.path.join(_THIS_DIR, "presets", "sinta-catalog.json.gz"),
         os.path.join(_PARENT_DIR, ".agents", "skills", "laporan-generator", "presets", "sinta-catalog.json.gz"),
-        os.path.join(
-            os.path.expanduser("~"),
-            ".gemini",
-            "config",
-            "skills",
-            "laporan-generator",
-            "presets",
-            "sinta-catalog.json.gz",
-        ),
+        os.path.join(home, ".gemini", "config", "skills", "laporan-generator", "presets", "sinta-catalog.json.gz"),
+        os.path.join(home, ".agents", "skills", "laporan-generator", "presets", "sinta-catalog.json.gz"),
+        os.path.join(home, ".claude", "skills", "laporan-generator", "presets", "sinta-catalog.json.gz"),
     ]
     for path in candidates:
         if os.path.exists(path):

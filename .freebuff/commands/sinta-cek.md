@@ -7,7 +7,7 @@ description: Inspeksi struktur template .docx (--inspect-docx), audit Anti-Slop 
 1. Inspeksi struktur internal & audit anti-slop pada dokumen target (`$ARGUMENTS`):
    ```powershell
    uv run "<skill_dir>/scripts/generate_sinta_journal_docx.py" --inspect-docx "$ARGUMENTS"
-   uv run "<skill_dir>/scripts/check_antislop_academic.py" --input "$ARGUMENTS"
+   uv run "<skill_dir>/scripts/check_antislop_academic.py" --input "$ARGUMENTS" --mendeley-mode
    ```
 2. Audit penuh repositori:
    ```powershell

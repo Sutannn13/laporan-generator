@@ -109,13 +109,19 @@ function parseArgs(args) {
 }
 
 function printHelp() {
-  console.log(`Template Typst PKL, Proposal & Skripsi UBSI Scaffolder CLI
-Program Studi: Teknologi Informasi (S1)
+  console.log(`Laporan Generator & Template UBSI CLI (Zero-Clone)
+Program Studi: Teknologi Informasi (S1) | Jurnal SINTA 1-6 | Audit TI
 
-Penggunaan:
-  npx github:Sutannn13/laporan-generator [nama-folder] [opsi]
+1. Pemasangan 1 Skill AI Agent Terpadu (Tanpa git clone):
+  npx skills add Sutannn13/laporan-generator
+  npx -y github:Sutannn13/laporan-generator install [--workspace [dir]] [--require-uv]
+  npx -y github:Sutannn13/laporan-generator status [--json]
+  npx -y github:Sutannn13/laporan-generator uninstall
 
-Opsi:
+2. Scaffold Proyek Typst PKL, Proposal & Skripsi UBSI:
+  npx -y github:Sutannn13/laporan-generator [nama-folder] [opsi]
+
+Opsi Scaffold:
   -t, --type <proposal|laporan|skripsi>  Pilih jenis naskah:
                                            proposal : Proposal PKL (3 Bab)
                                            laporan  : Laporan Akhir PKL (default)
@@ -136,10 +142,9 @@ Opsi:
   -h, --help                             Tampilkan bantuan ini
 
 Contoh:
-  npx github:Sutannn13/laporan-generator my-laporan
-  npx github:Sutannn13/laporan-generator skripsi-ku --type skripsi --outline 156 --yes
-  npx github:Sutannn13/laporan-generator proposal-pkl --type proposal --yes
-  npx github:Sutannn13/laporan-generator laporan-jaringan --type laporan --outline 3 --yes
+  npx -y github:Sutannn13/laporan-generator install
+  npx -y github:Sutannn13/laporan-generator my-laporan --type laporan --outline 4 --yes
+  npx -y github:Sutannn13/laporan-generator skripsi-ku --type skripsi --outline 156 --yes
 `);
 }
 
@@ -253,7 +258,20 @@ function resolveDocType(typeArg) {
 }
 
 async function main() {
-  const parsed = parseArgs(process.argv.slice(2));
+  const rawArgs = process.argv.slice(2);
+  const firstArg = (rawArgs[0] || '').toLowerCase();
+  const hasScaffoldFlags = rawArgs.some(a =>
+    a === '-t' || a === '--type' || a.startsWith('--type=') ||
+    a === '-o' || a === '--outline' || a.startsWith('--outline=')
+  );
+
+  if (!hasScaffoldFlags && ['install', 'install-skill', 'skill', 'setup', 'status', 'uninstall'].includes(firstArg)) {
+    const { runCli } = require('./install-skill');
+    const code = runCli(rawArgs);
+    process.exit(code);
+  }
+
+  const parsed = parseArgs(rawArgs);
 
   if (parsed.help) {
     printHelp();

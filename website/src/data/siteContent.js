@@ -6,7 +6,7 @@ export const GITHUB_API_REPO_URL = "https://api.github.com/repos/Sutannn13/lapor
 export const SHIELDS_STARS_URL =
   "https://img.shields.io/github/stars/Sutannn13/laporan-generator.json";
 export const QUICK_INSTALL_CMD =
-  "git clone https://github.com/Sutannn13/laporan-generator.git && cd \"laporan-generator\" && npm run agent:install";
+  "npx skills add Sutannn13/laporan-generator";
 
 export const NAV_LINKS = [
   { label: "Prinsip R1-R4", href: "#aturan-r1-r4" },
@@ -59,8 +59,8 @@ export const MANIFESTO_STATS = [
     label: "entri Daftar Pustaka yang ditulis AI ke berkas .docx jurnal (aturan R1 Mendeley)",
   },
   {
-    value: "4",
-    label: "skill mandiri terintegrasi di folder .agents/skills/ untuk seluruh alur naskah",
+    value: "1",
+    label: "skill terpadu (laporan-generator) memuat 4 modul kerja tanpa duplikasi & tanpa clone",
   },
   {
     value: "6",
@@ -103,16 +103,17 @@ export const R1_R4_PRINCIPLES = [
   },
 ];
 
-// 5 Horizontal Accordion Rows: 4 core skills + 1 CLI & usage studio
+// 5 Horizontal Accordion Rows: 1 unified hub skill + 3 on-demand modules + 1 zero-clone CLI studio
 export const SKILL_ROWS = [
   {
     id: "laporan-generator",
     title: "laporan-generator",
-    meta: "Engine .docx OpenXML",
+    meta: "Hub Skill Tunggal · Engine .docx",
     art: "docx",
     description:
-      "Generator, editor in-place, dan auditor otomatis berbasis Python OpenXML (.docx) serta Typst (.pdf) untuk Proposal & 4 Outline PKL Prodi TI UBSI, Skripsi FTI 2026 (Outline 156, 138, 137, 158), serta Laporan Audit TI COBIT 2019 berformat temuan CCCE.",
+      "Satu skill mandiri terpadu (~2,4 MB) yang menyatukan seluruh modul akademik tanpa perlu memasang banyak skill terpisah. Memuat generator, editor in-place, dan auditor Python OpenXML (.docx) untuk Proposal & 4 Outline PKL Prodi TI UBSI, Skripsi FTI 2026 (Outline 156, 138, 137, 158), serta Audit TI COBIT 2019 CCCE.",
     tags: [
+      "1 Skill Terpadu (Progressive)",
       "Proposal & 4 Outline PKL UBSI",
       "Skripsi 156 / 138 / 137 / 158",
       "Audit TI COBIT 2019 CCCE",
@@ -122,11 +123,11 @@ export const SKILL_ROWS = [
   },
   {
     id: "jurnal-sinta",
-    title: "jurnal-sinta",
-    meta: "Preset SINTA 1-6 & DOI",
+    title: "Modul jurnal-sinta",
+    meta: "references/jurnal-sinta.md",
     art: "sinta",
     description:
-      "Menyediakan DNA tata letak OJS 1 kolom maupun 2 kolom untuk 6 peringkat SINTA lintas kampus (IJAIN UAD, PJIH Unpad, JTIIK UB, JISKA UIN Suka, JKI LPPM UBSI, TEKNOIF ITP, METIK), inspektor --inspect-docx, dan pencari referensi terverifikasi pada katalog 16.617 jurnal SINTA.",
+      "Dimuat otomatis oleh AI saat mengerjakan artikel jurnal. Menyediakan DNA tata letak OJS 1 kolom maupun 2 kolom untuk 6 peringkat SINTA lintas kampus (IJAIN UAD, PJIH Unpad, JTIIK UB, JISKA UIN Suka, JKI LPPM UBSI, TEKNOIF ITP, METIK), inspektor --inspect-docx, dan katalog lokal 16.617 jurnal SINTA.",
     tags: [
       "IJAIN & PJIH (SINTA 1)",
       "JTIIK (S2) & JISKA (S3)",
@@ -138,11 +139,11 @@ export const SKILL_ROWS = [
   },
   {
     id: "mode-ilmiah",
-    title: "mode-ilmiah",
-    meta: "Alur 7 Tahap (Fase 0-6)",
+    title: "Modul mode-ilmiah",
+    meta: "references/mode-ilmiah.md",
     art: "workflow",
     description:
-      "Sistem operasi kerja akademik 6 peran berurutan: Editor Kepala mengunci anggaran kata (F0), Peneliti memetakan template & DOI (F1), Arsitek menyusun benang merah metode (F2), Penulis menyunting live in-place (F3), Mitra Bestari menguji rubrik >= 85/100 (F4), dan Inspektur memvalidasi XML (F5-F6).",
+      "Sistem operasi kerja akademik 6 fase & 6 peran di dalam skill utama: Editor Kepala mengunci anggaran kata (F0), Peneliti memetakan template & DOI (F1), Arsitek menyusun benang merah metode (F2), Penulis menyunting live in-place (F3), Mitra Bestari menguji rubrik >= 85/100 (F4), dan Inspektur memvalidasi XML (F5-F6).",
     tags: [
       "Fase 0: Anggaran Kata",
       "Fase 1: Inspeksi & Riset DOI",
@@ -154,11 +155,11 @@ export const SKILL_ROWS = [
   },
   {
     id: "humanizer-id",
-    title: "humanizer-id",
-    meta: "Preset Akademik UBSI",
+    title: "Modul humanizer-id",
+    meta: "references/humanizer-id.md",
     art: "humanizer",
     description:
-      "Penyunting bahasa Indonesia baku sesuai EYD Edisi V dan TBBBI Edisi IV yang dilengkapi preset khusus SK Rektor UBSI 2026 (--preset akademik --kampus ubsi). Memangkas kalimat terjemahan kaku, verba ringan berlebih, singkatan nonbaku, serta menjaga variasi panjang kalimat alami.",
+      "Modul penyuntingan Bahasa Indonesia baku EYD Edisi V dan TBBBI Edisi IV lengkap dengan preset SK Rektor UBSI 2026 (--preset akademik --kampus ubsi) dan skrip pure-stdlib audit_humanizer.py. Otomatis aktif untuk naskah Indonesia dan dinonaktifkan pada naskah 100% Academic English.",
     tags: [
       "--preset akademik --kampus ubsi",
       "EYD V & TBBBI IV",
@@ -169,12 +170,12 @@ export const SKILL_ROWS = [
   },
   {
     id: "pasang-skill",
-    title: "Cara Pakai & CLI Scaffolder",
+    title: "Cara Pakai & Installer Tanpa Clone",
     meta: "Salin Perintah 1-Klik",
     art: "cli",
     isCliRow: true,
     description:
-      "Pasang seluruh bundel skill mandiri sekali ke komputer lokal atau langsung buat kerangka dokumen baru dari terminal. Pilih skenario di bawah untuk menyalin perintahnya.",
+      "Pasang 1 skill terpadu langsung ke coding agent lokal tanpa git clone dan tanpa meninggalkan folder repo sampah. Pilih skenario di bawah untuk menyalin perintahnya.",
     tags: [
       "/laporan-generator",
       "/mode-ilmiah",
@@ -188,31 +189,28 @@ export const SKILL_ROWS = [
 export const INSTALL_TABS = [
   {
     id: "agent",
-    label: "Pasang Skill Agent",
-    command:
-      "git clone https://github.com/Sutannn13/laporan-generator.git && cd \"laporan-generator\" && npm run agent:install",
-    hint: "Menyinkronkan laporan-generator, mode-ilmiah, jurnal-sinta, dan humanizer-id ke Antigravity, Claude Code, Cursor, KiloCode, OpenCode, & Freebuff.",
+    label: "Pasang 1 Skill (Tanpa Clone)",
+    command: "npx skills add Sutannn13/laporan-generator",
+    hint: "Standar skills.sh: memasang 1 skill terpadu (laporan-generator) berisi mode-ilmiah, jurnal-sinta, humanizer-id UBSI, & skrip OpenXML ke Antigravity, Claude Code, Cursor, OpenCode, atau Codex tanpa git clone.",
+  },
+  {
+    id: "installer",
+    label: "Installer CLI + Slash Cmd",
+    command: "npx -y github:Sutannn13/laporan-generator install",
+    hint: "Installer bawaan tanpa clone (pure Node.js): memasang 1 skill terpadu, 5 slash command, aturan scoped, serta cek runtime uv tanpa menimpa AGENTS.md atau CLAUDE.md proyek Anda.",
   },
   {
     id: "cli",
-    label: "Scaffold PKL (npx)",
+    label: "Scaffold PKL / Skripsi (npx)",
     command:
-      "npx github:Sutannn13/laporan-generator my-laporan --type laporan --outline 4 --yes",
-    hint: "Membuat folder kerja PKL Prodi TI bersih sesuai outline pilihan (1: Inovasi, 2: Mobile, 3: Jaringan, 4: Analisis Sistem) atau --type proposal.",
+      "npx -y github:Sutannn13/laporan-generator my-laporan --type laporan --outline 4 --yes",
+    hint: "Membuat folder kerja Typst PKL Prodi TI (outline 1-4 / proposal) atau Skripsi UBSI (--type skripsi --outline 156/138/137/158) tanpa clone repo.",
   },
   {
-    id: "skripsi",
-    label: "Skripsi Word (.docx)",
-    command:
-      "uv run scripts/update_docx_script.py --scaffold --type skripsi --outline 156 --title \"JUDUL SKRIPSI\" --author \"Penulis Contoh\" --nim \"00000001\" --output \"Skripsi_UBSI.docx\"",
-    hint: "Mendukung Kode Outline Skripsi FTI UBSI 2026: 156 (Perancangan), 138 (Penelitian), 137 (Jaringan), 158 (StartUp).",
-  },
-  {
-    id: "sinta",
-    label: "Generator SINTA",
-    command:
-      "uv run generate_sinta_journal_docx.py --sinta 4 --layout 2col --citation ieee --mendeley-mode --output \"Naskah_JKI.docx\" --yes && npm run test:all",
-    hint: "Mengaktifkan --mendeley-mode (R1) agar Daftar Pustaka .docx tetap kosong untuk Mendeley serta memvalidasi XML & Anti-Slop.",
+    id: "status",
+    label: "Cek Status & Runtime",
+    command: "npx -y github:Sutannn13/laporan-generator status",
+    hint: "Memverifikasi lokasi 1 skill terpadu di seluruh agent, kesiapan runtime uv/Python, serta kelengkapan katalog SINTA 1-6 dan preset UBSI.",
   },
 ];
 
@@ -408,10 +406,10 @@ export const PROCESS_STEPS = [
   {
     name: "Pasang",
     when: "Langkah Awal",
-    title: "Sinkronisasi Skill & Pilih Outline",
+    title: "Pasang 1 Skill Tanpa Clone & Pilih Outline",
     text:
-      "Pasang keempat skill mandiri ke IDE Anda dengan satu perintah, lalu tentukan target dokumen: Proposal/Laporan PKL UBSI, Skripsi FTI 2026, Audit COBIT, atau Jurnal SINTA 1-6.",
-    command: "npm run agent:install",
+      "Pasang 1 skill terpadu (laporan-generator) ke IDE Anda tanpa git clone, lalu tentukan target dokumen: Proposal/Laporan PKL UBSI, Skripsi FTI 2026, Audit COBIT, atau Jurnal SINTA 1-6.",
+    command: "npx skills add Sutannn13/laporan-generator",
   },
   {
     name: "Susun",

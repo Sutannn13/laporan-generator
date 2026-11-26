@@ -140,7 +140,7 @@ export default function FooterSection({
             </div>
 
             <div>
-              <p className="ovs-col-title">Bundel Skill</p>
+              <p className="ovs-col-title">Modul dalam 1 Skill</p>
               <ul>
                 {SKILL_ROWS.slice(0, 4).map((skill, idx) => (
                   <li key={skill.id}>

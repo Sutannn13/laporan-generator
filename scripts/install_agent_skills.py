@@ -2,14 +2,13 @@
 # requires-python = ">=3.10"
 # ///
 """
-Universal Multi-Agent Self-Contained Skill, Bundled Assets, & Slash Command Installer:
-- Antigravity IDE (.agents/skills, .agents/rules, ~/.gemini/config/...)
-- KiloCode (.kilocode/rules, .kilocode/workflows, ~/.kilocode/...)
-- OpenCode CLI (.opencode/commands, .opencode/skills, AGENTS.md, ~/.config/opencode/...)
-- Freebuff / Codebuff CLI (.freebuff/commands, .freebuff/skills, knowledge.md, ~/.config/freebuff/...)
-- Claude Code CLI (.claude/commands, CLAUDE.md, ~/.claude/commands/...)
-- Roo Code & Cline (.roo/rules, .roo/commands, .clinerules)
-- Cursor, Windsurf, & GitHub Copilot (.cursor/rules, .windsurfrules, .github/copilot-instructions.md)
+Maintainer & Multi-Agent Sync Installer for the Unified Single Skill (`laporan-generator`):
+- Keeps `.agents/skills/laporan-generator/` as the single source of truth (1 SKILL.md across the repo,
+  ready for `npx skills add Sutannn13/laporan-generator` and zero-clone `npx` installs).
+- Syncs runtime Python scripts, SINTA presets, minimal template assets (`logo-ubsi.png` + `simbol_*.png`),
+  `references/` (mode-ilmiah, jurnal-sinta, humanizer-id, methodology, anti-slop), `humanizer_id/`, & `data/`.
+- Non-destructive by default on external workspaces: NEVER overwrites user-owned AGENTS.md/CLAUDE.md unless
+  syncing the repository root itself or `--sync-repo-docs` is explicitly requested.
 """
 import argparse
 import json
@@ -17,10 +16,13 @@ import os
 import shutil
 
 ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+SKILL_NAME = "laporan-generator"
 SKILLS_ROOT = os.path.join(ROOT_DIR, ".agents", "skills")
+SOURCE_SKILL_DIR = os.path.join(SKILLS_ROOT, SKILL_NAME)
 RULE_SRC = os.path.join(ROOT_DIR, ".agents", "rules", "sinta-journal-prompt.md")
+LEGACY_SKILL_NAMES = ("jurnal-sinta", "mode-ilmiah", "humanizer-id")
 
-LAPORAN_SCRIPTS = [
+RUNTIME_SCRIPTS = [
     ("generate_sinta_journal_docx.py", "generate_sinta_journal_docx.py"),
     ("scripts/__init__.py", "__init__.py"),
     ("scripts/docx_io.py", "docx_io.py"),
@@ -36,29 +38,20 @@ LAPORAN_SCRIPTS = [
     ("scripts/sinta_garuda_mcp.py", "sinta_garuda_mcp.py"),
 ]
 
-JURNAL_SCRIPTS = [
-    ("generate_sinta_journal_docx.py", "generate_sinta_journal_docx.py"),
-    ("scripts/__init__.py", "__init__.py"),
-    ("scripts/docx_io.py", "docx_io.py"),
-    ("scripts/sinta_content_data.py", "sinta_content_data.py"),
-    ("scripts/check_antislop_academic.py", "check_antislop_academic.py"),
-    ("scripts/verify_sinta_refs.py", "verify_sinta_refs.py"),
-    ("scripts/sinta_garuda_mcp.py", "sinta_garuda_mcp.py"),
-]
-
 CMD_LAPORAN_GENERATOR = """---
 description: Buat atau edit in-place Laporan/Proposal PKL UBSI, Skripsi/TA, Laporan Tugas/Audit TI/Analitik, Jurnal SINTA 1-6, atau Dosir Referensi Mendeley dalam Word (.docx OpenXML)
 ---
 
 # Perintah /laporan-generator
 
-Aktifkan skill `laporan-generator` bersama `mode-ilmiah`, `jurnal-sinta`, dan `humanizer-id` (khusus teks Bahasa Indonesia):
-1. Prioritaskan **Word (`.docx`) Python OpenXML** memakai script ter-bundle di `<skill_dir>/scripts/`.
-2. Tanyakan/klasifikasikan jenis dokumen (`Laporan/Proposal PKL UBSI`, `Skripsi/TA UBSI`, `Laporan Tugas/Audit/Analitik`, `Jurnal SINTA 1-6`, atau `Dosir Referensi Mendeley`).
-3. Terapkan `resources/matriks-metodologi-ilmiah.md`, `resources/antislop-akademik-id.md`, `--preset akademik --kampus ubsi` (`humanizer-id` untuk teks Indonesia), dan patuhi hukum **R1-R4** (R1-R4 menang atas aturan sub-skill lain).
+Aktifkan skill terpadu `laporan-generator` (`SKILL.md`) dan muat hanya berkas rujukan yang relevan di `references/`:
+1. Prioritaskan **Word (`.docx`) Python OpenXML** memakai skrip ter-bundle di `<skill_dir>/scripts/`.
+2. Klasifikasikan jenis dokumen (`Laporan/Proposal PKL UBSI`, `Skripsi/TA UBSI 2026`, `Laporan Tugas/Audit/Analitik`, `Jurnal SINTA 1-6`, atau `Dosir Referensi Mendeley`).
+3. Terapkan `references/mode-ilmiah.md`, `references/matriks-metodologi-ilmiah.md`, `references/antislop-akademik-id.md`, serta `references/humanizer-id.md` (`--preset akademik --kampus ubsi` khusus naskah Bahasa Indonesia), dan patuhi hukum **R1-R4**.
 4. Verifikasi akhir wajib:
+   - `python "<skill_dir>/scripts/audit_humanizer.py" "<draf_teks.md>" --preset akademik --kampus ubsi`
    - `uv run "<skill_dir>/scripts/generate_sinta_journal_docx.py" --inspect-docx "<target.docx>"`
-   - `uv run "<skill_dir>/scripts/check_antislop_academic.py" --input "<target.docx>"`
+   - `uv run "<skill_dir>/scripts/check_antislop_academic.py" --input "<target.docx>" --mendeley-mode`
 """
 
 CMD_MODE_ILMIAH = """---
@@ -67,7 +60,7 @@ description: Jalankan Sistem Operasi Tim Akademik 6 Fase & 6 Peran (Editor Kepal
 
 # Perintah /mode-ilmiah
 
-Jalankan alur lengkap 6 fase skill `mode-ilmiah` secara berurutan dengan mode reasoning tinggi, penyuntingan `humanizer-id` (`--preset akademik --kampus ubsi`) untuk naskah Bahasa Indonesia, kepatuhan **R1-R4** Mendeley, bebas halusinasi, serta pemeriksaan otomatis `check_antislop_academic.py` dan `verify_sinta_refs.py`.
+Aktifkan skill terpadu `laporan-generator` dan baca `references/mode-ilmiah.md`. Jalankan alur lengkap 6 fase secara berurutan dengan penyuntingan `references/humanizer-id.md` (`--preset akademik --kampus ubsi`) untuk naskah Bahasa Indonesia, kepatuhan **R1-R4** Mendeley, bebas halusinasi, serta pemeriksaan otomatis `check_antislop_academic.py` dan `verify_sinta_refs.py`.
 """
 
 CMD_JURNAL_SINTA = """---
@@ -76,24 +69,10 @@ description: Buat Jurnal Ilmiah SINTA 1-6 (2 Kolom / 1 Kolom, DOI Crossref 2022-
 
 # Perintah /jurnal-sinta (Multi-Agent Command)
 
-Jalankan protokol penuh **Jurnal Ilmiah SINTA 1-6 & Laporan PKL**:
-
-1. **Jika membuat Jurnal SINTA 1-6 baru dari nol**:
-   - Tanyakan 3 pilihan (jika belum disebutkan pengguna):
-     a) **Peringkat SINTA (1-6 dari Instansi Berbeda)**: `1` IJAIN/PJIH, `2` JTIIK, `3` JISKA, `4` JKI UBSI, `5` TEKNOIF, `6` METIK.
-     b) **Tata Letak Kolom**: `2col` (Layout Terbagi 2) atau `1col` (1 Kolom Penuh).
-     c) **Gaya Sitasi**: `ieee` (`[1]`, `[2]`) atau `apa` (`(Penulis, Tahun)`).
-   - Untuk draf naskah pengguna (R1 Mendeley), tambahkan `--mendeley-mode` agar Daftar Pustaka di `.docx` bersih dan referensi diekspor ke `.txt` (`R3`):
-     ```powershell
-     uv run "<skill_dir>/scripts/generate_sinta_journal_docx.py" --sinta <1..6> --layout <2col|1col> --citation <ieee|apa> --mendeley-mode --output "<Naskah.docx>" --yes
-     ```
-
-2. **Jika melanjutkan / mengedit file `.docx` milik pengguna**:
-   - Inspeksi DNA template terlebih dahulu (`--inspect-docx`) dan bekerja *live in-place* (R2) tanpa menulis Daftar Pustaka ke `.docx` (R1).
-
-3. **Standar Kualitas, R3 (5 Tahun + Direct PDF), & Anti-Slop**:
-   - Referensi kandidat di `.txt`/`.docx` terpisah wajib terbitan **2022-2026** (maks. 5 tahun terakhir), DOI Crossref HTTP 200, dan tautan **Download PDF Langsung HTTP 200**.
-   - Verifikasi akhir menggunakan `check_antislop_academic.py` (0 *em dash*, bebas klise `antislop-copywriting`, simpangan baku panjang kalimat *Burstiness* `>= 5.5` kata).
+Aktifkan skill terpadu `laporan-generator` dan baca `references/jurnal-sinta.md` bersama `references/mode-ilmiah.md`:
+1. **Jika membuat Jurnal SINTA 1-6 baru dari nol**: tanyakan 3 opsi (peringkat SINTA `1-6`, tata letak `2col`/`1col`, gaya sitasi `ieee`/`apa`) lalu jalankan generator dengan `--mendeley-mode` (R1).
+2. **Jika menyunting berkas `.docx` milik pengguna**: inspeksi DNA template dahulu (`--inspect-docx`) dan sunting *live in-place* (R2) tanpa menulis Daftar Pustaka ke `.docx` (R1).
+3. **Standar R3 & Anti-Slop**: rujukan `.txt` terpisah wajib terbitan `2022-2026`, DOI Crossref HTTP 200, dan link PDF langsung HTTP 200; lulus `check_antislop_academic.py` (`std >= 5.5` kata, 0 em-dash).
 """
 
 CMD_SINTA_BUAT = """---
@@ -121,7 +100,7 @@ description: Inspeksi struktur template .docx (--inspect-docx), audit Anti-Slop 
 1. Inspeksi struktur internal & audit anti-slop pada dokumen target (`$ARGUMENTS`):
    ```powershell
    uv run "<skill_dir>/scripts/generate_sinta_journal_docx.py" --inspect-docx "$ARGUMENTS"
-   uv run "<skill_dir>/scripts/check_antislop_academic.py" --input "$ARGUMENTS"
+   uv run "<skill_dir>/scripts/check_antislop_academic.py" --input "$ARGUMENTS" --mendeley-mode
    ```
 2. Audit penuh repositori:
    ```powershell
@@ -154,97 +133,118 @@ def copy_if_different(src, dst):
     return True
 
 
-def install_skill_bundle(target_skill_dir, skill_name, script_pairs=(), include_full_assets=False):
-    """Install SKILL.md and optionally bundle self-contained scripts, presets, images, resources, and examples."""
-    installed = []
-    src_skill_dir = os.path.join(SKILLS_ROOT, skill_name)
-    src_skill_md = os.path.join(src_skill_dir, "SKILL.md")
-    dst_skill_md = os.path.join(target_skill_dir, "SKILL.md")
-    if copy_if_different(src_skill_md, dst_skill_md):
-        installed.append(dst_skill_md)
+def _is_runtime_image(fname):
+    low = fname.lower()
+    return low == "logo-ubsi.png" or (low.startswith("simbol_") and low.endswith(".png"))
 
-    for src_rel, dst_name in script_pairs:
+
+def sync_source_skill_assets():
+    """Keep `.agents/skills/laporan-generator/` synced with root runtime scripts, presets, and minimal images."""
+    synced = []
+    for src_rel, dst_name in RUNTIME_SCRIPTS:
         src_p = os.path.join(ROOT_DIR, src_rel.replace("/", os.sep))
-        dst_p = os.path.join(target_skill_dir, "scripts", dst_name)
+        dst_p = os.path.join(SOURCE_SKILL_DIR, "scripts", dst_name)
         if copy_if_different(src_p, dst_p):
-            installed.append(dst_p)
+            synced.append(dst_p)
 
-    if script_pairs:
-        for preset_file in ("sinta-journals.json", "sinta-catalog.json.gz"):
-            preset_src = os.path.join(ROOT_DIR, "presets", preset_file)
-            preset_dst = os.path.join(target_skill_dir, "presets", preset_file)
-            if copy_if_different(preset_src, preset_dst):
-                installed.append(preset_dst)
+    for preset_file in ("sinta-journals.json", "sinta-catalog.json.gz"):
+        src_p = os.path.join(ROOT_DIR, "presets", preset_file)
+        dst_p = os.path.join(SOURCE_SKILL_DIR, "presets", preset_file)
+        if copy_if_different(src_p, dst_p):
+            synced.append(dst_p)
 
-        gambar_src_dir = os.path.join(ROOT_DIR, "template", "gambar")
-        if os.path.isdir(gambar_src_dir):
-            for fname in os.listdir(gambar_src_dir):
-                if fname.lower().endswith((".png", ".jpg", ".jpeg")):
-                    src_img = os.path.join(gambar_src_dir, fname)
-                    dst_img = os.path.join(target_skill_dir, "template", "gambar", fname)
-                    if copy_if_different(src_img, dst_img):
-                        installed.append(dst_img)
-
-    if include_full_assets:
-        for sub_dir in ("resources", "examples"):
-            src_sub = os.path.join(src_skill_dir, sub_dir)
-            if os.path.isdir(src_sub):
-                for fname in os.listdir(src_sub):
-                    src_item = os.path.join(src_sub, fname)
-                    if os.path.isfile(src_item):
-                        dst_item = os.path.join(target_skill_dir, sub_dir, fname)
-                        if copy_if_different(src_item, dst_item):
-                            installed.append(dst_item)
-
-    return installed
+    gambar_src_dir = os.path.join(ROOT_DIR, "template", "gambar")
+    gambar_dst_dir = os.path.join(SOURCE_SKILL_DIR, "template", "gambar")
+    os.makedirs(gambar_dst_dir, exist_ok=True)
+    if os.path.isdir(gambar_src_dir):
+        for fname in os.listdir(gambar_src_dir):
+            if _is_runtime_image(fname):
+                if copy_if_different(os.path.join(gambar_src_dir, fname), os.path.join(gambar_dst_dir, fname)):
+                    synced.append(os.path.join(gambar_dst_dir, fname))
+    # Prune non-runtime sample images and legacy examples dir from the skill bundle
+    for fname in os.listdir(gambar_dst_dir):
+        if not _is_runtime_image(fname):
+            os.remove(os.path.join(gambar_dst_dir, fname))
+    legacy_ex = os.path.join(SOURCE_SKILL_DIR, "examples")
+    if os.path.isdir(legacy_ex):
+        shutil.rmtree(legacy_ex, ignore_errors=True)
+    return synced
 
 
-def install_humanizer_bundle(target_skill_dir):
-    """Salin skill humanizer-id beserta dataset, sub-skill, modul jurnal, & skrip (tanpa __pycache__)."""
-    src_root = os.path.join(SKILLS_ROOT, "humanizer-id")
-    if not os.path.isdir(src_root):
-        return []
+def copy_unified_skill_bundle(target_skill_dir):
+    """Copy the single unified `laporan-generator` bundle into target_skill_dir (excluding __pycache__ & bloat)."""
+    src_abs = os.path.abspath(SOURCE_SKILL_DIR)
+    dst_abs = os.path.abspath(target_skill_dir)
     installed = []
-    allowed_roots = ("SKILL.md", "LICENSE")
-    for fname in allowed_roots:
-        if copy_if_different(os.path.join(src_root, fname), os.path.join(target_skill_dir, fname)):
-            installed.append(os.path.join(target_skill_dir, fname))
-    for sub in ("data", "humanizer_id", "scripts", "skills", "jurnal"):
-        src_sub = os.path.join(src_root, sub)
-        if not os.path.isdir(src_sub):
-            continue
-        for cur_root, dirs, files in os.walk(src_sub):
+
+    if src_abs == dst_abs:
+        for cur_root, dirs, files in os.walk(src_abs):
             dirs[:] = [d for d in dirs if d != "__pycache__"]
-            rel = os.path.relpath(cur_root, src_root)
             for fname in files:
                 if fname.endswith((".pyc", ".pyo")):
                     continue
-                src_f = os.path.join(cur_root, fname)
-                dst_f = os.path.join(target_skill_dir, rel, fname)
-                if copy_if_different(src_f, dst_f):
-                    installed.append(dst_f)
+                installed.append(os.path.join(cur_root, fname))
+        return installed
+
+    parent = os.path.dirname(dst_abs)
+    os.makedirs(parent, exist_ok=True)
+    stage_dir = os.path.join(parent, f".{SKILL_NAME}.stage-{os.getpid()}")
+    if os.path.exists(stage_dir):
+        shutil.rmtree(stage_dir, ignore_errors=True)
+
+    try:
+        for cur_root, dirs, files in os.walk(src_abs):
+            dirs[:] = [d for d in dirs if d not in ("__pycache__", "examples")]
+            rel_dir = os.path.relpath(cur_root, src_abs)
+            for fname in files:
+                if fname.endswith((".pyc", ".pyo", ".bak")) or fname in (".DS_Store", "Thumbs.db"):
+                    continue
+                rel_file = fname if rel_dir == "." else os.path.join(rel_dir, fname)
+                norm_rel = rel_file.replace("\\", "/")
+                if norm_rel.startswith("template/gambar/") and not _is_runtime_image(fname):
+                    continue
+                dst_stage = os.path.join(stage_dir, rel_file)
+                os.makedirs(os.path.dirname(dst_stage), exist_ok=True)
+                shutil.copy2(os.path.join(cur_root, fname), dst_stage)
+                installed.append(os.path.join(dst_abs, rel_file))
+
+        if os.path.exists(dst_abs):
+            shutil.rmtree(dst_abs)
+        os.replace(stage_dir, dst_abs)
+    except Exception:
+        if os.path.exists(stage_dir):
+            shutil.rmtree(stage_dir, ignore_errors=True)
+        raise
+
     return installed
 
 
-def build_agents_md(rule_text, mode_ilmiah_text, jurnal_sinta_text, laporan_gen_text):
-    return f"""# AGENTS.md - Panduan Universal AI Agent & CLI (Antigravity, KiloCode, OpenCode, Freebuff, Claude, Cursor)
+def build_agents_md(rule_text, skill_text):
+    return f"""# AGENTS.md - Panduan Universal AI Agent & CLI (Antigravity, Claude Code, Cursor, OpenCode, Freebuff, KiloCode)
 
-Repositori ini mendukung pembuatan, pengeditan *in-place*, penyuntingan bahasa (`humanizer-id`), dan audit otomatis **Jurnal Ilmiah Terakreditasi SINTA 1-6** (Word `.docx` & Typst `.pdf`), **Jurnal Internasional Bereputasi (Scopus Q1-Q4)**, **Skripsi/Tugas Akhir & Laporan/Proposal PKL UBSI (SK Rektor 2026)**, serta **Laporan Audit/Analitik Data**.
+Repositori ini menyediakan **1 skill terpadu (`laporan-generator`)** untuk pembuatan, pengeditan *in-place*, penyuntingan bahasa Indonesia baku (`humanizer-id` preset UBSI), dan audit otomatis **Jurnal Ilmiah Terakreditasi SINTA 1-6** (Word `.docx` & Typst `.pdf`), **Jurnal Internasional Bereputasi (Scopus Q1-Q4)**, **Skripsi/Tugas Akhir & Laporan/Proposal PKL UBSI (SK Rektor 2026)**, serta **Laporan Audit/Analitik Data**.
+
+## Pemasangan Tanpa Clone (1 Baris)
+```powershell
+npx skills add Sutannn13/laporan-generator
+# atau installer bawaan beserta slash command & cek runtime uv:
+npx -y github:Sutannn13/laporan-generator install
+```
 
 ## Daftar Slash Commands / Perintah Agent
-- `/laporan-generator` : Pintu utama pembuatan/edit `.docx` OpenXML (PKL UBSI, Audit TI, Jurnal SINTA 1-6, & Dosir Referensi).
-- `/mode-ilmiah`       : **Sistem Operasi Tim Akademik 6 Peran + Peer Reviewer & Auditor Kepatuhan** (anti-revisi, patuh R1-R4 Mendeley).
-- `/jurnal-sinta`      : Mode pembuatan/kelanjutan Jurnal SINTA 1-6 (6 instansi berbeda, 2 kolom / 1 kolom) dan riset referensi ber-DOI.
-- `/sinta-buat`        : Generate cepat dokumen Word Jurnal SINTA 1-6 atau perbarui katalog `contoh-template-ai/`.
+- `/laporan-generator` : Pintu utama skill terpadu (PKL UBSI, Skripsi 2026, Audit TI, Jurnal SINTA 1-6, & Dosir Referensi).
+- `/mode-ilmiah`       : **Sistem Operasi Tim Akademik 6 Peran + Peer Reviewer >= 85/100** (`references/mode-ilmiah.md`).
+- `/jurnal-sinta`      : Mode Jurnal SINTA 1-6 (6 instansi, 1/2 kolom, DOI Crossref & PDF HTTP 200, `references/jurnal-sinta.md`).
+- `/sinta-buat`        : Generate cepat dokumen Word Jurnal SINTA 1-6 mode Mendeley (`R1`).
 - `/sinta-cek`         : Inspeksi struktur internal `.docx` (`--inspect-docx`), cek Anti-Slop Burstiness, dan test suite (`npm run test:all`).
 
-## Pintasan CLI Cepat
+## Pintasan CLI Maintainer
 ```powershell
 npm run sinta                            # Wizard interaktif Jurnal SINTA 1-6 (.docx)
 npm run sinta:inspect -- "<file.docx>"   # Inspeksi template/draf .docx dari jurnal kampus lain
-npm run sinta:showcase                   # Generate ulang 12 contoh di contoh-template-ai/
-npm run agent:install                    # Sinkronkan skill mandiri, presets, examples, & rules ke semua agent
-npm run test:all                         # Jalankan seluruh test suite (Node CLI + Audit XML SINTA)
+npm run sinta:showcase                   # Generate ulang contoh di contoh-template-ai/
+npm run agent:install                    # Sinkronkan 1 skill terpadu, presets, & rules ke semua agent
+npm run test:all                         # Jalankan seluruh test suite (Typst + Installer + Audit XML SINTA)
 ```
 
 ---
@@ -253,69 +253,62 @@ npm run test:all                         # Jalankan seluruh test suite (Node CLI
 
 ---
 
-{laporan_gen_text}
-
----
-
-{jurnal_sinta_text}
-
----
-
-{mode_ilmiah_text}
+{skill_text}
 """
 
 
-def _read_skill(name):
-    p = os.path.join(SKILLS_ROOT, name, "SKILL.md")
-    with open(p, "r", encoding="utf-8") as f:
-        return f.read()
-
-
-def install_all(target_workspace=None, install_global=True):
+def install_all(target_workspace=None, install_global=True, home_dir=None, sync_repo_docs=None):
     ws = os.path.abspath(target_workspace or ROOT_DIR)
-    laporan_text = _read_skill("laporan-generator")
-    jurnal_text = _read_skill("jurnal-sinta")
-    mode_text = _read_skill("mode-ilmiah")
+    is_repo_root = ws == os.path.abspath(ROOT_DIR)
+    should_sync_repo_docs = is_repo_root if sync_repo_docs is None else bool(sync_repo_docs)
+
+    sync_source_skill_assets()
+
+    with open(os.path.join(SOURCE_SKILL_DIR, "SKILL.md"), "r", encoding="utf-8") as f:
+        skill_text = f.read()
     with open(RULE_SRC, "r", encoding="utf-8") as f:
         rule_text = f.read()
 
     rule_body = rule_text.split("---", 2)[-1].strip() if rule_text.startswith("---") else rule_text
-    agents_md_content = build_agents_md(rule_body, mode_text, jurnal_text, laporan_text)
+    agents_md_content = build_agents_md(rule_body, skill_text)
     installed_paths = []
 
-    # 1. Universal Entry Files (OpenCode, Freebuff/Codebuff, Codex, Cursor, Aider, Claude Code)
-    for univ_file in ("AGENTS.md", "CLAUDE.md", "knowledge.md"):
-        p = os.path.join(ws, univ_file)
-        write_text(p, agents_md_content)
-        installed_paths.append(("Universal Entry", p))
+    # 1. Universal Entry Files ONLY for repo root maintainer docs (never overwrite external user projects!)
+    if should_sync_repo_docs:
+        for univ_file in ("AGENTS.md", "CLAUDE.md", "knowledge.md"):
+            p = os.path.join(ws, univ_file)
+            write_text(p, agents_md_content)
+            installed_paths.append(("Universal Entry", p))
 
-    # 2. Skill Bundles (Workspace .agents/, OpenCode, Freebuff)
+    # 2. Single Unified Skill Bundle (Workspace + Global)
     skill_roots = [
         ("Antigravity (Workspace)", os.path.join(ws, ".agents", "skills")),
         ("OpenCode CLI (Workspace)", os.path.join(ws, ".opencode", "skills")),
         ("Freebuff CLI (Workspace)", os.path.join(ws, ".freebuff", "skills")),
     ]
-    home = os.path.expanduser("~")
+    home = os.path.abspath(home_dir) if home_dir else os.path.expanduser("~")
     if install_global:
         skill_roots.extend(
             [
                 ("Antigravity (Global)", os.path.join(home, ".gemini", "config", "skills")),
+                ("Universal Agents (Global)", os.path.join(home, ".agents", "skills")),
+                ("Claude Code (Global)", os.path.join(home, ".claude", "skills")),
                 ("OpenCode CLI (Global)", os.path.join(home, ".config", "opencode", "skills")),
                 ("Freebuff CLI (Global)", os.path.join(home, ".config", "freebuff", "skills")),
             ]
         )
 
     for label, sroot in skill_roots:
-        for p in install_skill_bundle(os.path.join(sroot, "laporan-generator"), "laporan-generator", LAPORAN_SCRIPTS, include_full_assets=True):
-            installed_paths.append((f"{label} / laporan-generator", p))
-        for p in install_skill_bundle(os.path.join(sroot, "jurnal-sinta"), "jurnal-sinta", JURNAL_SCRIPTS, include_full_assets=False):
-            installed_paths.append((f"{label} / jurnal-sinta", p))
-        for p in install_skill_bundle(os.path.join(sroot, "mode-ilmiah"), "mode-ilmiah", (), include_full_assets=False):
-            installed_paths.append((f"{label} / mode-ilmiah", p))
-        for p in install_humanizer_bundle(os.path.join(sroot, "humanizer-id")):
-            installed_paths.append((f"{label} / humanizer-id", p))
+        for p in copy_unified_skill_bundle(os.path.join(sroot, SKILL_NAME)):
+            installed_paths.append((f"{label} / {SKILL_NAME}", p))
+        # Clean legacy duplicate skill folders inside repo-local roots only
+        if sroot.startswith(ws):
+            for legacy in LEGACY_SKILL_NAMES:
+                leg_dir = os.path.join(sroot, legacy)
+                if os.path.isdir(leg_dir):
+                    shutil.rmtree(leg_dir, ignore_errors=True)
 
-    # 3. Rule Sync (Antigravity Workspace & Global)
+    # 3. Rule Sync (Scoped files only on external workspaces)
     rule_targets = [("Antigravity Rule (Workspace)", os.path.join(ws, ".agents", "rules", "sinta-journal-prompt.md"))]
     if install_global:
         rule_targets.append(("Antigravity Rule (Global)", os.path.join(home, ".gemini", "config", "rules", "sinta-journal-prompt.md")))
@@ -323,7 +316,7 @@ def install_all(target_workspace=None, install_global=True):
         copy_if_different(RULE_SRC, rp)
         installed_paths.append((label, rp))
 
-    # 4. Multi-Agent Slash Commands & Rules (Workspace + Global)
+    # 4. Multi-Agent Slash Commands (Workspace + Global)
     cmd_dirs = [
         ("KiloCode Workflow (Workspace)", os.path.join(ws, ".kilocode", "workflows")),
         ("OpenCode Command (Workspace)", os.path.join(ws, ".opencode", "commands")),
@@ -347,19 +340,24 @@ def install_all(target_workspace=None, install_global=True):
             installed_paths.append((label, cp))
 
     other_rules = [
-        ("KiloCode Rule (Workspace)", os.path.join(ws, ".kilocode", "rules", "jurnal-sinta.md"), agents_md_content),
-        ("Roo Code Rule", os.path.join(ws, ".roo", "rules", "jurnal-sinta.md"), agents_md_content),
-        ("Cline Rule", os.path.join(ws, ".clinerules", "jurnal-sinta.md"), agents_md_content),
+        ("KiloCode Rule (Workspace)", os.path.join(ws, ".kilocode", "rules", "laporan-generator.md"), agents_md_content),
+        ("Roo Code Rule", os.path.join(ws, ".roo", "rules", "laporan-generator.md"), agents_md_content),
         (
             "Cursor Rule",
-            os.path.join(ws, ".cursor", "rules", "jurnal-sinta.mdc"),
-            "---\ndescription: Protokol Laporan Generator, Mode Ilmiah, & Jurnal SINTA 1-6\nglobs: *\nalwaysApply: true\n---\n\n" + agents_md_content,
+            os.path.join(ws, ".cursor", "rules", "laporan-generator.mdc"),
+            "---\ndescription: Protokol Skill Terpadu laporan-generator (Mode Ilmiah, Jurnal SINTA 1-6, PKL/Skripsi UBSI, R1-R4)\nglobs: *\nalwaysApply: true\n---\n\n" + agents_md_content,
         ),
-        ("Windsurf Rule", os.path.join(ws, ".windsurfrules"), agents_md_content),
-        ("GitHub Copilot Rule", os.path.join(ws, ".github", "copilot-instructions.md"), agents_md_content),
     ]
+    if should_sync_repo_docs:
+        other_rules.extend(
+            [
+                ("Cline Rule", os.path.join(ws, ".clinerules", "jurnal-sinta.md"), agents_md_content),
+                ("Windsurf Rule", os.path.join(ws, ".windsurfrules"), agents_md_content),
+                ("GitHub Copilot Rule", os.path.join(ws, ".github", "copilot-instructions.md"), agents_md_content),
+            ]
+        )
     if install_global:
-        other_rules.append(("KiloCode Rule (Global)", os.path.join(home, ".kilocode", "rules", "jurnal-sinta.md"), agents_md_content))
+        other_rules.append(("KiloCode Rule (Global)", os.path.join(home, ".kilocode", "rules", "laporan-generator.md"), agents_md_content))
 
     for label, ap, content in other_rules:
         write_text(ap, content)
@@ -368,30 +366,28 @@ def install_all(target_workspace=None, install_global=True):
     return installed_paths
 
 
-def check_status(target_workspace=None):
+def check_status(target_workspace=None, home_dir=None):
     ws = os.path.abspath(target_workspace or ROOT_DIR)
-    home = os.path.expanduser("~")
+    home = os.path.abspath(home_dir) if home_dir else os.path.expanduser("~")
     checks = [
-        ("Antigravity laporan-generator (Workspace)", os.path.join(ws, ".agents", "skills", "laporan-generator", "SKILL.md")),
-        ("Antigravity laporan-generator Bundled Script (Workspace)", os.path.join(ws, ".agents", "skills", "laporan-generator", "scripts", "generate_sinta_journal_docx.py")),
-        ("Antigravity laporan-generator Preset (Workspace)", os.path.join(ws, ".agents", "skills", "laporan-generator", "presets", "sinta-journals.json")),
-        ("Antigravity laporan-generator Examples (Workspace)", os.path.join(ws, ".agents", "skills", "laporan-generator", "examples", "CONTOH_JURNAL_SINTA4_JKI_2KOLOM.docx")),
-        ("Antigravity laporan-generator (Global)", os.path.join(home, ".gemini", "config", "skills", "laporan-generator", "SKILL.md")),
-        ("Antigravity laporan-generator Bundled Script (Global)", os.path.join(home, ".gemini", "config", "skills", "laporan-generator", "scripts", "generate_sinta_journal_docx.py")),
-        ("Antigravity laporan-generator Examples (Global)", os.path.join(home, ".gemini", "config", "skills", "laporan-generator", "examples", "CONTOH_DOSIR_REFERENSI_SINTA5.docx")),
-        ("Antigravity jurnal-sinta (Workspace)", os.path.join(ws, ".agents", "skills", "jurnal-sinta", "SKILL.md")),
-        ("Antigravity jurnal-sinta (Global)", os.path.join(home, ".gemini", "config", "skills", "jurnal-sinta", "SKILL.md")),
-        ("Antigravity mode-ilmiah (Workspace)", os.path.join(ws, ".agents", "skills", "mode-ilmiah", "SKILL.md")),
-        ("Antigravity mode-ilmiah (Global)", os.path.join(home, ".gemini", "config", "skills", "mode-ilmiah", "SKILL.md")),
-        ("Antigravity humanizer-id (Workspace)", os.path.join(ws, ".agents", "skills", "humanizer-id", "SKILL.md")),
-        ("Antigravity humanizer-id UBSI Preset (Global)", os.path.join(home, ".gemini", "config", "skills", "humanizer-id", "data", "pedoman-kampus-ubsi.json")),
-        ("Antigravity humanizer-id (Global)", os.path.join(home, ".gemini", "config", "skills", "humanizer-id", "SKILL.md")),
+        ("Unified Skill laporan-generator (Workspace)", os.path.join(ws, ".agents", "skills", SKILL_NAME, "SKILL.md")),
+        ("Unified Skill References: mode-ilmiah (Workspace)", os.path.join(ws, ".agents", "skills", SKILL_NAME, "references", "mode-ilmiah.md")),
+        ("Unified Skill References: jurnal-sinta (Workspace)", os.path.join(ws, ".agents", "skills", SKILL_NAME, "references", "jurnal-sinta.md")),
+        ("Unified Skill References: humanizer-id (Workspace)", os.path.join(ws, ".agents", "skills", SKILL_NAME, "references", "humanizer-id.md")),
+        ("Unified Skill Bundled Script (Workspace)", os.path.join(ws, ".agents", "skills", SKILL_NAME, "scripts", "generate_sinta_journal_docx.py")),
+        ("Unified Skill Humanizer CLI (Workspace)", os.path.join(ws, ".agents", "skills", SKILL_NAME, "scripts", "audit_humanizer.py")),
+        ("Unified Skill SINTA Catalog (Workspace)", os.path.join(ws, ".agents", "skills", SKILL_NAME, "presets", "sinta-catalog.json.gz")),
+        ("Unified Skill UBSI Preset (Workspace)", os.path.join(ws, ".agents", "skills", SKILL_NAME, "data", "pedoman-kampus-ubsi.json")),
+        ("Antigravity laporan-generator (Global)", os.path.join(home, ".gemini", "config", "skills", SKILL_NAME, "SKILL.md")),
+        ("Universal Agents laporan-generator (Global)", os.path.join(home, ".agents", "skills", SKILL_NAME, "SKILL.md")),
+        ("Claude Code laporan-generator (Global)", os.path.join(home, ".claude", "skills", SKILL_NAME, "SKILL.md")),
+        ("Antigravity Bundled Script (Global)", os.path.join(home, ".gemini", "config", "skills", SKILL_NAME, "scripts", "generate_sinta_journal_docx.py")),
+        ("Antigravity Humanizer UBSI Preset (Global)", os.path.join(home, ".gemini", "config", "skills", SKILL_NAME, "data", "pedoman-kampus-ubsi.json")),
         ("Antigravity Rule (Global)", os.path.join(home, ".gemini", "config", "rules", "sinta-journal-prompt.md")),
         ("KiloCode /laporan-generator (Global)", os.path.join(home, ".kilocode", "workflows", "laporan-generator.md")),
         ("OpenCode CLI /laporan-generator (Global)", os.path.join(home, ".config", "opencode", "commands", "laporan-generator.md")),
         ("Freebuff CLI /laporan-generator (Global)", os.path.join(home, ".config", "freebuff", "commands", "laporan-generator.md")),
         ("Claude Code CLI /laporan-generator (Global)", os.path.join(home, ".claude", "commands", "laporan-generator.md")),
-        ("Universal AGENTS.md", os.path.join(ws, "AGENTS.md")),
     ]
     report = [
         {"agent": name, "status": "INSTALLED" if os.path.exists(path) else "MISSING", "path": path}
@@ -403,19 +399,26 @@ def check_status(target_workspace=None):
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Universal Installer Skill Mandiri (laporan-generator, mode-ilmiah, jurnal-sinta + Bundled Scripts/Presets/Examples)"
+        description="Universal Installer 1 Skill Terpadu (`laporan-generator`: Mode Ilmiah, Jurnal SINTA 1-6, Humanizer ID UBSI, & Bundled Scripts/Presets)"
     )
     parser.add_argument("--target", default=ROOT_DIR, help="Folder proyek target instalasi (default: workspace saat ini)")
+    parser.add_argument("--home", default=None, help="Override direktori home user (untuk pengujian terisolasi)")
     parser.add_argument("--no-global", action="store_true", help="Hanya pasang di folder proyek tanpa direktori global user")
+    parser.add_argument("--sync-repo-docs", action="store_true", help="Izinkan pembaruan AGENTS.md/CLAUDE.md di direktori target")
     parser.add_argument("--status", action="store_true", help="Cek status instalasi di seluruh AI Agent & CLI")
     args = parser.parse_args()
 
     if args.status:
-        check_status(args.target)
+        check_status(args.target, home_dir=args.home)
         return
 
-    installed = install_all(target_workspace=args.target, install_global=not args.no_global)
-    print(f"[BERHASIL] Terpasang {len(installed)} file konfigurasi, skill mandiri, scripts, presets, resources, & examples.")
+    installed = install_all(
+        target_workspace=args.target,
+        install_global=not args.no_global,
+        home_dir=args.home,
+        sync_repo_docs=True if args.sync_repo_docs else None,
+    )
+    print(f"[BERHASIL] Terpasang {len(installed)} berkas skill terpadu '{SKILL_NAME}', references, scripts, presets, & slash commands.")
 
 
 if __name__ == "__main__":

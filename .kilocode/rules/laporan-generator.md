@@ -1,0 +1,184 @@
+# AGENTS.md - Panduan Universal AI Agent & CLI (Antigravity, Claude Code, Cursor, OpenCode, Freebuff, KiloCode)
+
+Repositori ini menyediakan **1 skill terpadu (`laporan-generator`)** untuk pembuatan, pengeditan *in-place*, penyuntingan bahasa Indonesia baku (`humanizer-id` preset UBSI), dan audit otomatis **Jurnal Ilmiah Terakreditasi SINTA 1-6** (Word `.docx` & Typst `.pdf`), **Jurnal Internasional Bereputasi (Scopus Q1-Q4)**, **Skripsi/Tugas Akhir & Laporan/Proposal PKL UBSI (SK Rektor 2026)**, serta **Laporan Audit/Analitik Data**.
+
+## Pemasangan Tanpa Clone (1 Baris)
+```powershell
+npx skills add Sutannn13/laporan-generator
+# atau installer bawaan beserta slash command & cek runtime uv:
+npx -y github:Sutannn13/laporan-generator install
+```
+
+## Daftar Slash Commands / Perintah Agent
+- `/laporan-generator` : Pintu utama skill terpadu (PKL UBSI, Skripsi 2026, Audit TI, Jurnal SINTA 1-6, & Dosir Referensi).
+- `/mode-ilmiah`       : **Sistem Operasi Tim Akademik 6 Peran + Peer Reviewer >= 85/100** (`references/mode-ilmiah.md`).
+- `/jurnal-sinta`      : Mode Jurnal SINTA 1-6 (6 instansi, 1/2 kolom, DOI Crossref & PDF HTTP 200, `references/jurnal-sinta.md`).
+- `/sinta-buat`        : Generate cepat dokumen Word Jurnal SINTA 1-6 mode Mendeley (`R1`).
+- `/sinta-cek`         : Inspeksi struktur internal `.docx` (`--inspect-docx`), cek Anti-Slop Burstiness, dan test suite (`npm run test:all`).
+
+## Pintasan CLI Maintainer
+```powershell
+npm run sinta                            # Wizard interaktif Jurnal SINTA 1-6 (.docx)
+npm run sinta:inspect -- "<file.docx>"   # Inspeksi template/draf .docx dari jurnal kampus lain
+npm run sinta:showcase                   # Generate ulang contoh di contoh-template-ai/
+npm run agent:install                    # Sinkronkan 1 skill terpadu, presets, & rules ke semua agent
+npm run test:all                         # Jalankan seluruh test suite (Typst + Installer + Audit XML SINTA)
+```
+
+---
+
+# Protokol Pengarahan Agent: Skill Terpadu `laporan-generator` (Mode Ilmiah, Jurnal SINTA 1-6 / Scopus, PKL & Skripsi UBSI, Aturan R1-R4, & Anti-Revisi)
+
+Setiap kali pengguna meminta pembuatan, penulisan, kelanjutan, konversi, atau **Audit / Review** **Jurnal Ilmiah SINTA 1-6**, **Jurnal Scopus**, **Laporan/Proposal PKL UBSI**, **Skripsi / Tugas Akhir**, maupun **Laporan Tugas / Audit / Analitik**, Agent **WAJIB** mengaktifkan skill tunggal terpadu `laporan-generator` (`.agents/skills/laporan-generator/SKILL.md` atau direktori skill global), lalu memuat rujukan on-demand yang relevan dari `references/` (`mode-ilmiah.md`, `jurnal-sinta.md`, `matriks-metodologi-ilmiah.md`, `antislop-akademik-id.md`, dan `humanizer-id.md` khusus naskah Bahasa Indonesia; nonaktifkan `humanizer-id.md` untuk naskah 100% *Academic English* seperti IJAIN/Scopus).
+
+**Hierarki Otoritas Mutlak (Jika Ada Benturan Aturan)**:
+1. `Hukum Pemilik (R1-R4) & Pedoman Resmi Kampus/OJS Target` (termasuk SK Rektor UBSI 2026: semua pengarang Skripsi/TA ditulis lengkap tanpa `et al.`)
+2. `mode-ilmiah & check_antislop_academic.py`
+3. `humanizer-id` (hanya bekerja pada teks/draf `.md`/`.txt` atau ekstraksi teks memori; dilarang menulis Daftar Pustaka ke `.docx` jurnal R1, dilarang membuat berkas liar `humanizer/audit-*.md` / `jurnal/target-jurnal.md` tanpa izin R2).
+
+**Keamanan File In-Place (R2 Atomic Guard)**:
+Sebelum menyimpan hasil suntingan *in-place* ke berkas `.docx` milik pengguna, selalu buat salinan cadangan sementara dan gunakan penulisan sementara + *atomic replace* (`atomic_save_docx`) agar file asli tidak rusak bila eksekusi terhenti di tengah.
+
+---
+
+## 1. Hukum Tertinggi Pengerjaan Naskah Jurnal Pemilik (R1-R4 & Prinsip Anti-Revisi)
+
+1. **R1 - Referensi Itu Sakral, DILARANG Ditulis Agent ke Dalam Dokumen (`.docx`)**:
+   - Agent **DILARANG KERAS** menulis bagian `DAFTAR PUSTAKA` / `REFERENSI` / `REFERENCES` beserta daftar entrinya ke dalam file `.docx` naskah jurnal.
+   - Daftar Pustaka final di dalam `.docx` ditulis sendiri oleh manusia (pemilik memakai **Mendeley**). Hasil riset referensi agent **HANYA** boleh disimpan di file `.txt` kandidat terpisah sesuai **R3**.
+2. **R2 - Satu File Target (*Live In-Place Editing*, Dilarang Buat File `.docx` Baru/Turunan)**:
+   - Jika pemilik memberikan satu file `.docx` untuk dikerjakan (misal `Template JKI.docx`), agent **WAJIB bekerja *live* langsung di file `.docx` itu**.
+   - **DILARANG KERAS** membuat file `.docx` baru (termasuk file per-bab seperti `..._Bab1.docx` atau file turunan PDF/PNG) tanpa izin eksplisit pemilik.
+3. **R3 - File `.txt` & Dosir `.docx` Kandidat Referensi Terpisah Sesuai Level SINTA Target**:
+   - Agent **WAJIB** membuat file `.txt` kandidat referensi terpisah (serta dosir `.docx` berhyperlink DOI & PDF bila diminta pengguna).
+   - Seluruh kandidat referensi wajib **100% artikel jurnal primer terbitan maksimal 5 tahun terakhir (`2022-2026`)**, memiliki **DOI aktif terverifikasi HTTP 200 di Crossref (`https://doi.org/10....`)**, serta **tautan Download PDF Langsung HTTP 200 (`application/pdf` / header `%PDF-`)**, dan **diutamakan dari jurnal yang level SINTA-nya SETARA dengan jurnal target** (minimal 15 referensi untuk SINTA 2-5 dan minimal 25 untuk SINTA 1).
+   - Tiap entri di file `.txt` wajib diberi label level SINTA jurnal sumbernya (`[Peringkat: SINTA 4 - Terverifikasi SINTA Kemdiktisaintek]`); **jika levelnya tidak bisa diverifikasi secara pasti, tulis `[Level SINTA: tidak terverifikasi]`, jangan mengarang**.
+4. **R4 - Jurnal Bukan Laporan (Ringkas, Fokus ke Topik, Tidak Kepanjangan, & Data Valid Anti-Revisi)**:
+   - Isi naskah jurnal harus **ringkas, padat, fokus ke topik, dan tidak kepanjangan**: penelitian **DIRANGKUM secara analitis**, bukan disalin panjang dari laporan PKL/skripsi (Pendahuluan 4-6 paragraf / 500-750 kata; Metode 3-5 paragraf / 400-650 kata; Hasil & Pembahasan fokus pada bukti & analisis komparatif; Kesimpulan 1-2 paragraf menjawab tujuan).
+   - **Zero Halusinasi & Data Valid**: Jangan pernah mengarang angka statistik, hasil uji, nama pasal, atau klaim tanpa bukti. Gunakan data valid dari laporan sumber atau instansi resmi; tandai data yang belum tersedia dengan `[ISI DATA NYATA: ...]`.
+   - Patuhi TOS dan gaya selingkung template jurnal tujuan (untuk **JKI - SINTA 4 LPPM UBSI**: struktur artikel jurnal, layout 2 kolom, gaya sitasi **IEEE `[1]`, `[2]`**, min. 15 referensi di file `.txt`, batas *similarity* maksimal **20%**).
+
+---
+
+## 2. Mode Buat Template / Showcase Jurnal SINTA 1-6 Baru dari Nol (Interaktif Wajib)
+
+Hanya ketika pengguna secara eksplisit meminta pembuatan **template kosong / contoh showcase baru** (bukan mengerjakan file `.docx` target milik pengguna), tanyakan 3 pilihan utama ini:
+
+1. **Pilihan Peringkat Jurnal SINTA (1-6 dari Instansi Berbeda beserta DOI Prefix Resmi)**:
+   - **SINTA 1 (Informatika/AI) - IJAIN** (UAD Yogyakarta, `10.26555/ijain`, 100% Inggris, 2 Kolom, Min. 25 Ref)
+   - **SINTA 1 (Hukum/Hukum Siber) - PJIH** (Unpad, `10.22304/pjih`, 2/1 Kolom, Min. 25 Ref)
+   - **SINTA 2 - JTIIK** (FILKOM UB, `10.25126/jtiik`, 2 Kolom, Min. 15 Ref)
+   - **SINTA 3 - JISKA** (UIN Sunan Kalijaga, `10.14421/jiska`, 2 Kolom, Min. 15 Ref)
+   - **SINTA 4 - JKI** (LPPM UBSI, `10.31294/jki`, 2 Kolom, IEEE, Min. 15 Ref, Similarity <= 20%)
+   - **SINTA 5 - TEKNOIF** (ITP, `10.21063/jtif`, 2 Kolom, Min. 12 Ref)
+   - **SINTA 6 - METIK** (LPPM STMIK Jayakarta / Univ. Mulia, `10.47002/metik`, 1 Kolom, Min. 12 Ref)
+2. **Pilihan Tata Letak Kolom Jurnal**: `2col`, `1col`, atau `default`.
+3. **Pilihan Gaya Sitasi**: **IEEE (`[1]`, `[2]`)** atau **APA (`(Penulis, Tahun)`)**.
+
+---
+
+## 3. Aturan Ketat Anti-Slop Jurnal, Tipografi OpenXML, & Etika Publikasi (ARJUNA & COPE)
+
+1. **Bebas Teks "AI Indeks" / Debug Banner**: Dilarang keras menaruh teks `| Peringkat: SINTA X | Layout: 2 Kolom` di badan halaman. Semua metadata jurnal (`Journal Name`, `Vol/No/Tahun`, `p-ISSN`, `e-ISSN`, dan `DOI`) wajib ditempatkan di **Word Header (`w:hdr`)** dan **Footer (`w:ftr`)**, disertai blok **Riwayat Artikel (*Received / Revised / Accepted*)** dan lisensi **CC BY-SA 4.0**.
+2. **Superscript Asli, Tipografi Bersih, *Burstiness*, & Anti-Slop**: Gunakan `w:vertAlign="superscript"` untuk indeks afiliasi penulis (`1*`, `2`). Dilarang menggunakan karakter *em dash* (`\u2014`), frasa klise AI (`R-16`), atau *negative parallelism* berulang (`R-36`). Variasikan panjang kalimat secara alami (`std >= 5.5` kata) dan wajib lulus `<skill_dir>/scripts/check_antislop_academic.py`.
+3. **Inspeksi Dokumen Existing Sebelum Edit**: Jalankan `$env:PYTHONIOENCODING="utf-8"; uv run "<skill_dir>/scripts/generate_sinta_journal_docx.py" --inspect-docx "<nama_file.docx>"` sebelum menyunting file `.docx` yang sudah ada.
+
+---
+
+---
+name: laporan-generator
+description: >-
+  Skill akademik terpadu berbasis Word (.docx Python OpenXML) & Typst (.pdf) untuk
+  Laporan/Proposal PKL UBSI (Outline 1-4), Skripsi/TA UBSI 2026 (Outline 156/138/137/158),
+  Laporan Audit TI COBIT 2019 & Analitik Data, Jurnal Ilmiah SINTA 1-6 / Scopus (1-2 kolom),
+  Mode Ilmiah 6 fase dengan rubrik Peer Reviewer >= 85/100, kurasi referensi Mendeley
+  (2022-2026, DOI Crossref & PDF HTTP 200), dan penyuntingan Bahasa Indonesia baku
+  (humanizer-id preset UBSI). Aktifkan untuk penulisan, suntingan in-place, konversi,
+  audit naskah, atau pencarian referensi ilmiah.
+---
+
+# Laporan Generator - Skill Akademik Terpadu (Word .docx OpenXML Engine)
+
+Satu skill mandiri (*self-contained*) yang menyatukan seluruh alur kerja akademik tanpa perlu menggandakan banyak skill terpisah: **Engine Word OpenXML**, **Mode Ilmiah 6 Fase**, **Preset Jurnal SINTA 1-6 & DOI**, serta **Penyuntingan Bahasa Indonesia Baku (`humanizer-id` UBSI)**.
+
+> **Prioritas Engine & Lokasi Aset**: Utamakan **Microsoft Word (`.docx`) via Python OpenXML**. Seluruh script, preset katalog 16.617 jurnal SINTA, dataset kebahasaan, dan logo kampus sudah ter-bundle di dalam direktori skill ini (`<skill_dir>/`) agar dapat dijalankan dari folder proyek mana saja tanpa *clone* repositori.
+
+---
+
+## 1. Hukum Tertinggi & Hierarki Otoritas (Mutlak: R1-R4)
+
+Jika terjadi benturan antar aturan, urutan prioritasnya mutlak:
+`Hukum Pemilik (R1-R4) & Pedoman Resmi Kampus/OJS Target > mode-ilmiah & check_antislop_academic.py > humanizer-id`
+
+1. **R1 - Daftar Pustaka Jurnal Wilayah Mendeley**: Saat menulis atau menyunting `.docx` naskah jurnal milik pengguna, **DILARANG KERAS** menuliskan bagian `DAFTAR PUSTAKA` / `REFERENSI` / `REFERENCES` beserta entrinya ke dalam `.docx`. Gunakan `--mendeley-mode`; biarkan daftar pustaka diisi pengguna via Mendeley Cite.
+2. **R2 - Live In-Place Satu Berkas + Atomic Guard**: Jika pengguna menyerahkan satu berkas `.docx` target, sunting langsung berkas tersebut memakai `atomic_save_docx()` (cadangan `.bak` + staging `.tmp.docx`). **DILARANG** membuat file `.docx` pecahan/duplikat atau berkas liar (`humanizer/audit-*.md`) tanpa izin eksplisit.
+3. **R3 - Dosir Referensi Terpisah (`.txt` / `.docx`)**: Simpan seluruh kandidat referensi di berkas `.txt` terpisah (dan dosir `.docx` bila diminta). Syarat mutlak: artikel jurnal primer **maks. 5 tahun terakhir (`2022-2026`)**, **DOI Crossref aktif HTTP 200**, tautan **PDF langsung HTTP 200**, setara peringkat SINTA target, dan label jujur (`[Peringkat: SINTA X - Terverifikasi]` atau `[Level SINTA: tidak terverifikasi]`, dilarang mengarang).
+4. **R4 - Ringkas Analitis, Zero Halusinasi, & Data Valid**: Jurnal bukan salinan laporan PKL/skripsi; patuhi anggaran kata IMRaD. Dilarang mengarang angka statistik, jumlah responden, hasil uji, atau nomor pasal. Tandai data lapangan yang belum tersedia dengan `[ISI DATA NYATA: ...]`.
+
+---
+
+## 2. Peta Modul On-Demand (Progressive Disclosure)
+
+Baca **HANYA** berkas rujukan di `references/` yang relevan dengan tugas pengguna agar konteks tetap hemat dan presisi:
+
+| Kebutuhan / Skenario Pengguna | Berkas Rujukan Wajib Dibaca | Kapan Dimuat |
+| :--- | :--- | :--- |
+| Alur kerja 6 fase, anggaran kata IMRaD, & rubrik Peer Reviewer >= 85/100 | [`references/mode-ilmiah.md`](references/mode-ilmiah.md) | Semua tugas penulisan, konversi, atau audit (`/mode-ilmiah`) |
+| Jurnal SINTA 1-6 lintas kampus (IJAIN, PJIH, JTIIK, JISKA, JKI, TEKNOIF, METIK), DNA OJS, & R1-R4 | [`references/jurnal-sinta.md`](references/jurnal-sinta.md) | Penulisan, konversi, inspeksi, atau template Jurnal SINTA/Scopus (`/jurnal-sinta`) |
+| Pilihan metodologi baku (PKL 1-4, Skripsi 156/138/137/158, Audit COBIT CCCE, CRISP-DM, SINTA) | [`references/matriks-metodologi-ilmiah.md`](references/matriks-metodologi-ilmiah.md) | Fase penyusunan kerangka/metode untuk semua jenis laporan & jurnal |
+| Filter Anti-Slop (0 em-dash, bebas klise AI, Burstiness `std >= 5.5` kata) | [`references/antislop-akademik-id.md`](references/antislop-akademik-id.md) | Sebelum penulisan akhir & audit kualitas teks |
+| Penyuntingan Bahasa Indonesia baku (EYD V, TBBBI IV, preset SK Rektor UBSI 2026) | [`references/humanizer-id.md`](references/humanizer-id.md) | **Default khusus naskah Bahasa Indonesia** (nonaktifkan untuk naskah 100% *Academic English*). Sub-kaidah mendalam tersedia di `references/humanizer/*.md`. |
+
+---
+
+## 3. Jalur Eksekusi per Jenis Dokumen (`<skill_dir>/scripts/`)
+
+### A. Laporan / Proposal PKL & Skripsi UBSI 2026 (`.docx`)
+- Margin baku SK Rektor UBSI No. `165/2.01/UBSI/III/2026`: A4, Atas `3.0 cm`, Kiri `4.0 cm`, Bawah `2.5 cm`, Kanan `2.5 cm`, Times New Roman `12 pt`, spasi `2.0`, indentasi `1.2 cm`.
+- **PKL Prodi TI** (`--type laporan --outline 1..4` atau `--type proposal`): logo sampul `4 x 4 cm`, penomoran Romawi Bab (`Gambar II.1.`, `Tabel III.1.`), tanpa `et al.`/`dkk.`.
+- **Skripsi / TA UBSI 2026** (`--type skripsi --outline 156|138|137|158`): `ABSTRAK`/`ABSTRACT` terpisah (150-200 kata, 1 spasi), logo sampul `5 x 5 cm`, watermark Behind Text `10 x 10 cm`, semua pengarang Daftar Pustaka ditulis lengkap (`--no-et-al`).
+```powershell
+# Scaffold baru (bekerja dari direktori kerja mana saja):
+uv run "<skill_dir>/scripts/update_docx_script.py" --scaffold --type laporan --outline 4 --title "JUDUL" --author "Nama" --nim "12345678" --output "Laporan_PKL.docx"
+uv run "<skill_dir>/scripts/update_docx_script.py" --scaffold --type skripsi --outline 156 --title "JUDUL" --author "Nama" --nim "12345678" --output "Skripsi_UBSI.docx"
+```
+
+### B. Laporan Audit TI (COBIT 2019 CCCE), Analitik Data, & Makalah (`.docx`)
+- Terapkan kerangka metode dari [`references/matriks-metodologi-ilmiah.md`](references/matriks-metodologi-ilmiah.md) (`COBIT 2019 CCCE`, `CRISP-DM`, atau `BAB I-V`).
+- Generator & verifikator konsistensi angka tabel vs lampiran:
+```powershell
+uv run "<skill_dir>/scripts/generate_audit_report_docx.py" --output "Laporan_Audit.docx"
+uv run "<skill_dir>/scripts/challenge_text_and_math.py" -t "Laporan_Audit.docx"
+```
+
+### C. Jurnal Ilmiah SINTA 1-6 & Scopus (`.docx` In-Place atau Template Baru)
+- **Sunting file `.docx` target pengguna**: wajib inspeksi DNA template dulu (`--inspect-docx`), lalu sunting *live in-place* patuh R1-R4.
+- **Buat draf/template SINTA baru dari nol**: jika pengguna belum menentukan pilihan, tanyakan 3 opsi utama: (1) Peringkat SINTA `1-6`, (2) Tata letak kolom (`2col` / `1col`), (3) Gaya sitasi (`ieee` / `apa`).
+```powershell
+$env:PYTHONIOENCODING="utf-8"; uv run "<skill_dir>/scripts/generate_sinta_journal_docx.py" --inspect-docx "<target.docx>"
+uv run "<skill_dir>/scripts/generate_sinta_journal_docx.py" --sinta 4 --layout 2col --citation ieee --mendeley-mode --output "Naskah_JKI.docx" --yes
+```
+
+### D. Riset & Verifikasi Referensi SINTA 1-6 + GARUDA + Crossref (`.txt` & `.docx`)
+- Gunakan katalog lokal **16.617 Jurnal SINTA 1-6** (`<skill_dir>/presets/sinta-catalog.json.gz`) melalui MCP server `sinta-garuda` atau CLI langsung:
+```powershell
+uv run "<skill_dir>/scripts/sinta_garuda_mcp.py" --search-journals "informatika" --sinta 4
+uv run "<skill_dir>/scripts/sinta_garuda_mcp.py" --find-refs "sistem informasi" --sinta 4 --txt-out "kandidat_referensi_sinta4.txt" --docx-out "Dosir_Referensi_SINTA4.docx"
+uv run "<skill_dir>/scripts/verify_sinta_refs.py" --help
+```
+
+---
+
+## 4. Gerbang Verifikasi Otomatis Sebelum Serah Terima (Wajib)
+
+Jalankan perintah verifikasi nyata berikut sebelum menyerahkan hasil ke pengguna (dan tampilkan hasilnya apa adanya):
+```powershell
+# 1. Audit kebahasaan Bahasa Indonesia preset UBSI (khusus draf teks/markdown berbahasa Indonesia, pure Python stdlib):
+python "<skill_dir>/scripts/audit_humanizer.py" "<draf_teks.md>" --preset akademik --kampus ubsi
+
+# 2. Inspeksi struktur OpenXML & audit Anti-Slop + Burstiness (>= 5.5) + Kepatuhan R1 pada .docx final:
+$env:PYTHONIOENCODING="utf-8"; uv run "<skill_dir>/scripts/generate_sinta_journal_docx.py" --inspect-docx "<target.docx>"
+uv run "<skill_dir>/scripts/check_antislop_academic.py" --input "<target.docx>" --mendeley-mode
+```
+*(Lepas `--mendeley-mode` hanya untuk laporan PKL/Skripsi/Audit yang memang mewajibkan Daftar Pustaka tertulis di dalam `.docx`.)*
+
