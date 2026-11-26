@@ -11,8 +11,8 @@ Repositori ini menyediakan **1 skill terpadu (`laporan-generator`)** untuk pembu
 ## Pemasangan Tanpa Clone (1 Baris)
 ```powershell
 npx skills add Sutannn13/laporan-generator
-# atau installer bawaan beserta slash command & cek runtime uv:
-npx -y github:Sutannn13/laporan-generator install
+# atau installer bawaan beserta slash command & cek runtime uv (kompatibel npm 12+):
+npx -y --allow-git=all github:Sutannn13/laporan-generator install
 ```
 
 ## Daftar Slash Commands / Perintah Agent

@@ -495,9 +495,9 @@ function printUsage() {
 
 Penggunaan (tanpa git clone):
   npx skills add Sutannn13/laporan-generator
-  npx -y github:Sutannn13/laporan-generator install [opsi]
-  npx -y github:Sutannn13/laporan-generator status [--json]
-  npx -y github:Sutannn13/laporan-generator uninstall [opsi]
+  npx -y --allow-git=all github:Sutannn13/laporan-generator install [opsi]
+  npx -y --allow-git=all github:Sutannn13/laporan-generator status [--json]
+  npx -y --allow-git=all github:Sutannn13/laporan-generator uninstall [opsi]
 
 Opsi:
   --workspace [dir]   Tambahkan pemasangan scoped ke folder proyek (tanpa menimpa AGENTS.md/CLAUDE.md)

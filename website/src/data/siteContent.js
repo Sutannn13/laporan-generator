@@ -196,20 +196,20 @@ export const INSTALL_TABS = [
   {
     id: "installer",
     label: "Installer CLI + Slash Cmd",
-    command: "npx -y github:Sutannn13/laporan-generator install",
-    hint: "Installer bawaan tanpa clone (pure Node.js): memasang 1 skill terpadu, 5 slash command, aturan scoped, serta cek runtime uv tanpa menimpa AGENTS.md atau CLAUDE.md proyek Anda.",
+    command: "npx -y --allow-git=all github:Sutannn13/laporan-generator install",
+    hint: "Installer bawaan tanpa clone (pure Node.js, kompatibel npm 12+): memasang 1 skill terpadu, 5 slash command, aturan scoped, serta cek runtime uv tanpa menimpa AGENTS.md atau CLAUDE.md proyek Anda.",
   },
   {
     id: "cli",
     label: "Scaffold PKL / Skripsi (npx)",
     command:
-      "npx -y github:Sutannn13/laporan-generator my-laporan --type laporan --outline 4 --yes",
+      "npx -y --allow-git=all github:Sutannn13/laporan-generator my-laporan --type laporan --outline 4 --yes",
     hint: "Membuat folder kerja Typst PKL Prodi TI (outline 1-4 / proposal) atau Skripsi UBSI (--type skripsi --outline 156/138/137/158) tanpa clone repo.",
   },
   {
     id: "status",
     label: "Cek Status & Runtime",
-    command: "npx -y github:Sutannn13/laporan-generator status",
+    command: "npx -y --allow-git=all github:Sutannn13/laporan-generator status",
     hint: "Memverifikasi lokasi 1 skill terpadu di seluruh agent, kesiapan runtime uv/Python, serta kelengkapan katalog SINTA 1-6 dan preset UBSI.",
   },
 ];

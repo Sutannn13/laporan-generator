@@ -114,12 +114,12 @@ Program Studi: Teknologi Informasi (S1) | Jurnal SINTA 1-6 | Audit TI
 
 1. Pemasangan 1 Skill AI Agent Terpadu (Tanpa git clone):
   npx skills add Sutannn13/laporan-generator
-  npx -y github:Sutannn13/laporan-generator install [--workspace [dir]] [--require-uv]
-  npx -y github:Sutannn13/laporan-generator status [--json]
-  npx -y github:Sutannn13/laporan-generator uninstall
+  npx -y --allow-git=all github:Sutannn13/laporan-generator install [--workspace [dir]] [--require-uv]
+  npx -y --allow-git=all github:Sutannn13/laporan-generator status [--json]
+  npx -y --allow-git=all github:Sutannn13/laporan-generator uninstall
 
 2. Scaffold Proyek Typst PKL, Proposal & Skripsi UBSI:
-  npx -y github:Sutannn13/laporan-generator [nama-folder] [opsi]
+  npx -y --allow-git=all github:Sutannn13/laporan-generator [nama-folder] [opsi]
 
 Opsi Scaffold:
   -t, --type <proposal|laporan|skripsi>  Pilih jenis naskah:

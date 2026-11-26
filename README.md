@@ -202,12 +202,12 @@ npx github:Sutannn13/laporan-generator . --force
 #### Pemasangan 1 Skill AI Agent Tanpa Clone & Scaffolder Word (.docx) SK Rektor UBSI 2026
 Pasang **1 skill terpadu (`laporan-generator`)** yang sudah mencakup modul `mode-ilmiah`, `jurnal-sinta`, `humanizer-id` preset UBSI 2026, serta seluruh skrip OpenXML & katalog 16.617 jurnal SINTA ke Antigravity, Claude Code, Cursor, OpenCode, Freebuff, dan KiloCode **tanpa perlu `git clone`**:
 ```powershell
-# Opsi 1 (Standar skills.sh - paling ringkas):
+# Opsi 1 (Standar skills.sh - paling ringkas, tanpa flag tambahan):
 npx skills add Sutannn13/laporan-generator
 
-# Opsi 2 (Installer CLI bawaan tanpa clone - ikut memasang 5 slash command & cek runtime uv):
-npx -y github:Sutannn13/laporan-generator install
-npx -y github:Sutannn13/laporan-generator status
+# Opsi 2 (Installer CLI bawaan tanpa clone - ikut memasang 5 slash command & cek runtime uv, kompatibel npm 12+):
+npx -y --allow-git=all github:Sutannn13/laporan-generator install
+npx -y --allow-git=all github:Sutannn13/laporan-generator status
 
 # Buat kerangka Word (.docx) Skripsi / TA / PKL UBSI 2026:
 uv run scripts/update_docx_script.py --scaffold --type skripsi --outline 156 --title "JUDUL SKRIPSI" --author "Penulis Contoh" --nim "00000001" --output "Skripsi_UBSI.docx"
