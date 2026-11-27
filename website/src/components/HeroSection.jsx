@@ -54,7 +54,7 @@ export default function HeroSection({ scheme, onInstallClick, onNavigate }) {
             className="ovs-btn-xl"
           >
             <span>Install Skill</span>
-            <ArrowIcon />
+            <ArrowIcon direction="down" />
           </ChargeInstallButton>
           <a
             href="#hasil-output"

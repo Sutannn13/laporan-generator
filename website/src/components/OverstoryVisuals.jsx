@@ -44,11 +44,16 @@ const OFFICIAL_BRAND_PATHS = {
   },
 };
 
-export function ArrowIcon() {
+export function ArrowIcon({ direction = "right" } = {}) {
+  const isDown = direction === "down";
   return (
-    <svg className="ovs-svg ovs-arrow" viewBox="0 0 16 16" aria-hidden="true">
+    <svg
+      className={`ovs-svg ovs-arrow${isDown ? " ovs-arrow-down" : ""}`}
+      viewBox="0 0 16 16"
+      aria-hidden="true"
+    >
       <path
-        d="M3 8h10M9 4l4 4-4 4"
+        d={isDown ? "M8 3v10M4 9l4 4 4-4" : "M3 8h10M9 4l4 4-4 4"}
         fill="none"
         stroke="currentColor"
         strokeWidth="1.6"
@@ -279,12 +284,10 @@ export function ChargeInstallButton({
     completeCharge(e);
   };
 
-  const isNavCta = className.includes("ovs-nav-cta");
-
   return (
     <span
       ref={wrapRef}
-      className={`ovs-charge-wrap${isNavCta ? " ovs-nav-cta" : ""}`}
+      className="ovs-charge-wrap"
       data-charge-state={phase}
       data-charge-variant={variant}
     >

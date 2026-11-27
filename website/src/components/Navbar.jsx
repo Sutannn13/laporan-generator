@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { NAV_LINKS } from "../data/siteContent";
-import { ArrowIcon, ChargeInstallButton, LockGlyph, useSlidingPill } from "./OverstoryVisuals";
+import { LockGlyph, useSlidingPill } from "./OverstoryVisuals";
 
 export default function Navbar({
   scheme,
@@ -152,16 +152,14 @@ export default function Navbar({
               </svg>
             </button>
 
-            <ChargeInstallButton
+            <a
               href="#pasang-skill"
               onClick={handleInstall}
-              variant="nav"
-              className="ovs-nav-cta"
+              className="ovs-btn ovs-nav-cta"
             >
               {!unlocked && <LockGlyph unlocked={false} size={14} />}
               <span>Install Skill</span>
-              <ArrowIcon />
-            </ChargeInstallButton>
+            </a>
 
             <button
               ref={burgerRef}
@@ -241,7 +239,6 @@ export default function Navbar({
                 >
                   {!unlocked && <LockGlyph unlocked={false} size={15} />}
                   <span>Install Skill</span>
-                  <ArrowIcon />
                 </a>
                 <button
                   type="button"

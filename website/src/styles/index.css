@@ -518,6 +518,31 @@ body {
 
 .ovs-nav-cta.ovs-btn {
   border-radius: 999px;
+  background: rgba(16, 25, 17, 0.88);
+  color: #f4f6f0;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.ovs-root[data-solid] .ovs-nav-cta.ovs-btn {
+  background: #101912;
+  color: #f4f6f0;
+  border-color: rgba(16, 21, 13, 0.18);
+}
+
+.ovs-root[data-scheme="dark"] .ovs-nav-cta.ovs-btn {
+  background: rgba(237, 241, 230, 0.12);
+  color: #edf1e6;
+  border-color: rgba(237, 241, 230, 0.24);
+}
+
+.ovs-nav-cta.ovs-btn:hover,
+.ovs-root[data-solid] .ovs-nav-cta.ovs-btn:hover,
+.ovs-root[data-scheme="dark"] .ovs-nav-cta.ovs-btn:hover {
+  background: var(--ovs-soft);
+  color: #10150d;
+  border-color: var(--ovs-soft);
 }
 
 .ovs-btn:active {
@@ -534,6 +559,10 @@ body {
   transform: translateX(4px);
 }
 
+.ovs-btn:hover .ovs-arrow-down {
+  transform: translateY(3px);
+}
+
 .ovs-btn-dark {
   background: var(--ovs-ink);
   color: var(--ovs-paper);
@@ -546,10 +575,6 @@ body {
   align-items: center;
   justify-content: center;
   border-radius: var(--ovs-r-ctrl);
-}
-
-.ovs-charge-wrap.ovs-nav-cta {
-  border-radius: 999px;
 }
 
 .ovs-charge-burst-ring {
@@ -596,23 +621,6 @@ body {
     border-color 0.28s ease,
     box-shadow 0.32s ease,
     transform 0.22s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.ovs-charge-btn[data-charge-variant="nav"] {
-  background: rgba(16, 25, 17, 0.88);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-}
-
-.ovs-root[data-solid] .ovs-charge-btn[data-charge-variant="nav"] {
-  background: #101912;
-  border-color: rgba(16, 21, 13, 0.18);
-}
-
-.ovs-root[data-scheme="dark"] .ovs-charge-btn[data-charge-variant="nav"] {
-  background: rgba(237, 241, 230, 0.12);
-  color: #edf1e6;
-  border-color: rgba(237, 241, 230, 0.24);
 }
 
 .ovs-charge-btn[data-charge-variant="dark"] {
@@ -698,6 +706,10 @@ body {
   transform: translateX(calc(var(--charge) * 4.5px));
 }
 
+.ovs-charge-btn[data-charge-state="charging"] .ovs-arrow-down {
+  transform: translateY(calc(var(--charge) * 4px));
+}
+
 /* Discharge / Failed state: fill turns warm burnt-terracotta and collapses cleanly back to 0 */
 .ovs-charge-btn[data-charge-state="failed"] {
   --charge-fill-bg: #b83e1f;
@@ -720,6 +732,10 @@ body {
 
 .ovs-charge-btn[data-charge-state="charged"] .ovs-arrow {
   transform: translateX(5px);
+}
+
+.ovs-charge-btn[data-charge-state="charged"] .ovs-arrow-down {
+  transform: translateY(4.5px);
 }
 
 @keyframes ovs-charge-recoil {
