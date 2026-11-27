@@ -8,13 +8,34 @@ IT Audit Project Report of Portal Akademik Perguruan Tinggi Contoh (Simulation) 
 Output: High-DPI PNGs saved into template/gambar/
 """
 
+import argparse
 import os
-import matplotlib.pyplot as plt
-import matplotlib.patches as patches
+
+plt = None
+patches = None
 
 ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-GAMBAR_DIR = os.path.join(ROOT_DIR, "template", "gambar")
-os.makedirs(GAMBAR_DIR, exist_ok=True)
+
+
+def _default_output_dir():
+    if os.path.exists(os.path.join(ROOT_DIR, "package.json")):
+        return os.path.join(ROOT_DIR, "template", "gambar")
+    return os.path.join(os.getcwd(), "audit_diagrams")
+
+
+GAMBAR_DIR = _default_output_dir()
+
+
+def _ensure_matplotlib():
+    global plt, patches
+    if plt is None or patches is None:
+        import matplotlib
+        matplotlib.use("Agg")
+        import matplotlib.pyplot as _plt
+        import matplotlib.patches as _patches
+        plt = _plt
+        patches = _patches
+    os.makedirs(GAMBAR_DIR, exist_ok=True)
 
 
 def generate_architecture_diagram():
@@ -420,10 +441,27 @@ def generate_roadmap_diagram():
     print(f"Generated: {out_path}")
 
 
-if __name__ == "__main__":
+def main():
+    global GAMBAR_DIR
+    parser = argparse.ArgumentParser(
+        description="Generator 5 diagram teknis 300 DPI untuk Laporan Audit TI COBIT 2019."
+    )
+    parser.add_argument(
+        "-o",
+        "--output-dir",
+        default=_default_output_dir(),
+        help="Direktori keluaran PNG diagram (default: template/gambar di dalam repo, atau ./audit_diagrams di luar repo)",
+    )
+    args = parser.parse_args()
+    GAMBAR_DIR = os.path.abspath(args.output_dir)
+    _ensure_matplotlib()
     generate_architecture_diagram()
     generate_org_chart()
     generate_risk_matrix()
     generate_capability_chart()
     generate_roadmap_diagram()
-    print("All diagrams generated successfully!")
+    print(f"All diagrams generated successfully in: {GAMBAR_DIR}")
+
+
+if __name__ == "__main__":
+    main()

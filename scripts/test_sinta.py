@@ -53,93 +53,103 @@ def verify_sinta_system():
     assert len(institutions) == 6, "All 6 SINTA journals must come from 6 different institutions"
     assert len(doi_prefixes) == 6, "All 6 SINTA journals must have 6 distinct Crossref DOI prefixes"
 
-    # Generate and verify showcase folder
-    showcase_dir = "contoh-template-ai"
-    generated = generate_showcase_folder(showcase_dir)
-    assert len(generated) == 9, f"Expected 9 SINTA showcase variants, got {len(generated)}"
-    assert os.path.exists(os.path.join(showcase_dir, "README.md")), "Missing README.md in showcase folder"
-    assert os.path.exists(os.path.join(showcase_dir, "11_Jurnal_SINTA4_JKI_UBSI_Typst.pdf")), "Missing Typst SINTA 4 PDF in showcase folder"
-    assert os.path.exists(os.path.join(showcase_dir, "00_Jurnal_SINTA1_HukumSiber_APK_KUHP_Baru_PJIH_Unpad.docx")), "Missing SINTA 1 APK & KUHP Baru manuscript"
+    # Verify committed showcase companion artifacts remain present, while generating test showcase into an isolated temp dir (M-05: never dirty tracked contoh-template-ai/)
+    repo_showcase_dir = "contoh-template-ai"
+    assert os.path.exists(os.path.join(repo_showcase_dir, "README.md")), "Missing README.md in repo showcase folder"
+    assert os.path.exists(os.path.join(repo_showcase_dir, "11_Jurnal_SINTA4_JKI_UBSI_Typst.pdf")), "Missing Typst SINTA 4 PDF in repo showcase folder"
+    assert os.path.exists(os.path.join(repo_showcase_dir, "00_Jurnal_SINTA1_HukumSiber_APK_KUHP_Baru_PJIH_Unpad.docx")), "Missing SINTA 1 APK & KUHP Baru manuscript"
 
-    ns = {"w": "http://schemas.openxmlformats.org/wordprocessingml/2006/main"}
+    with tempfile.TemporaryDirectory(prefix="lg_showcase_test_") as showcase_dir:
+        generated = generate_showcase_folder(showcase_dir)
+        assert len(generated) == 9, f"Expected 9 SINTA showcase variants, got {len(generated)}"
+        assert os.path.exists(os.path.join(showcase_dir, "README.md")), "Missing README.md in generated showcase folder"
+        assert os.path.exists(os.path.join(showcase_dir, "00_Jurnal_SINTA1_HukumSiber_APK_KUHP_Baru_PJIH_Unpad.docx")), "Missing SINTA 1 APK & KUHP Baru manuscript"
 
-    # Audit every generated SINTA docx in showcase_dir
-    for fname, info in generated:
-        fpath = os.path.join(showcase_dir, fname)
-        assert os.path.exists(fpath), f"Missing generated file: {fpath}"
+        ns = {"w": "http://schemas.openxmlformats.org/wordprocessingml/2006/main"}
 
-        with zipfile.ZipFile(fpath, "r") as zf:
-            namelist = zf.namelist()
-            assert "word/header1.xml" in namelist, f"Missing OJS Word header in {fname}"
-            assert "word/footer1.xml" in namelist, f"Missing OJS Word footer in {fname}"
+        # Audit every generated SINTA docx in showcase_dir
+        for fname, info in generated:
+            fpath = os.path.join(showcase_dir, fname)
+            assert os.path.exists(fpath), f"Missing generated file: {fpath}"
 
-            hdr_xml = zf.read("word/header1.xml").decode("utf-8")
-            assert "https://doi.org/10." in hdr_xml, f"Missing DOI in Word header of {fname}"
-            assert "ISSN" in hdr_xml, f"Missing ISSN in Word header of {fname}"
+            with zipfile.ZipFile(fpath, "r") as zf:
+                namelist = zf.namelist()
+                assert "word/header1.xml" in namelist, f"Missing OJS Word header in {fname}"
+                assert "word/footer1.xml" in namelist, f"Missing OJS Word footer in {fname}"
 
-            doc_bytes = zf.read("word/document.xml")
-            doc_str = doc_bytes.decode("utf-8")
-            root_el = ET.fromstring(doc_bytes)
+                hdr_xml = zf.read("word/header1.xml").decode("utf-8")
+                assert "https://doi.org/10." in hdr_xml, f"Missing DOI in Word header of {fname}"
+                assert "ISSN" in hdr_xml, f"Missing ISSN in Word header of {fname}"
 
-            # 1. Verify zero "AI indeks" debug banner in body
-            assert "| Peringkat: SINTA" not in doc_str, f"Found forbidden AI debug banner in {fname}"
-            assert "Layout: 2 Kolom" not in doc_str and "Layout: 1 Kolom" not in doc_str, f"Found layout debug text in body of {fname}"
+                doc_bytes = zf.read("word/document.xml")
+                doc_str = doc_bytes.decode("utf-8")
+                root_el = ET.fromstring(doc_bytes)
 
-            # 2. Verify real OpenXML superscript exists for author affiliations
-            superscripts = root_el.findall(".//w:vertAlign[@w:val='superscript']", ns)
-            assert len(superscripts) >= 4, f"Expected >= 4 superscript runs in {fname}, got {len(superscripts)}"
+                # 1. Verify zero "AI indeks" debug banner in body
+                assert "| Peringkat: SINTA" not in doc_str, f"Found forbidden AI debug banner in {fname}"
+                assert "Layout: 2 Kolom" not in doc_str and "Layout: 1 Kolom" not in doc_str, f"Found layout debug text in body of {fname}"
 
-        # 3. Verify references & zero em-dashes via python-docx
-        d = docx.Document(fpath)
-        full_text = "\n".join(p.text for p in d.paragraphs)
-        assert "\u2014" not in full_text, f"Forbidden em dash found in {fname}"
+                # 2. Verify real OpenXML superscript exists for author affiliations
+                superscripts = root_el.findall(".//w:vertAlign[@w:val='superscript']", ns)
+                assert len(superscripts) >= 4, f"Expected >= 4 superscript runs in {fname}, got {len(superscripts)}"
 
-        doi_occurrences = full_text.count("https://doi.org/10.")
-        min_expected_dois = 22 if str(info["sinta_rank"]) == "1" else 14
-        assert doi_occurrences >= min_expected_dois, (
-            f"Expected >= {min_expected_dois} live Crossref DOIs in {fname}, got {doi_occurrences}"
-        )
+            # 3. Verify references & zero em-dashes via python-docx
+            d = docx.Document(fpath)
+            full_text = "\n".join(p.text for p in d.paragraphs)
+            assert "\u2014" not in full_text, f"Forbidden em dash found in {fname}"
 
-    # Specific audit for SINTA 1 APK & KUHP Baru manuscript
-    apk_docx = os.path.join(showcase_dir, "00_Jurnal_SINTA1_HukumSiber_APK_KUHP_Baru_PJIH_Unpad.docx")
-    d_apk = docx.Document(apk_docx)
-    apk_text = "\n".join(p.text for p in d_apk.paragraphs)
-    for required_term in [
-        "Unauthorized Access to Computer System",
-        "Tanggung Jawab Bank atas Pengurasan Rekening Nasabah Melalui Aplikasi APK Berbahaya Setelah Berlakunya KUHP Baru",
-        "BIND_ACCESSIBILITY_SERVICE",
-        "Pasal 332",
-        "Pasal 334",
-        "POJK Nomor 22 Tahun 2023",
-        "Runtime Application Self-Protection",
-    ]:
-        assert required_term in apk_text, f"Missing required legal/technical term '{required_term}' in SINTA 1 APK paper"
-    assert len(d_apk.tables) == 3, f"Expected 3 analytical tables in SINTA 1 APK paper, got {len(d_apk.tables)}"
+            doi_occurrences = full_text.count("https://doi.org/10.")
+            min_expected_dois = 22 if str(info["sinta_rank"]) == "1" else 14
+            assert doi_occurrences >= min_expected_dois, (
+                f"Expected >= {min_expected_dois} live Crossref DOIs in {fname}, got {doi_occurrences}"
+            )
 
-    # Specific audit for SINTA 1 IJAIN English manuscript
-    ijain_docx = os.path.join(showcase_dir, "01_Jurnal_SINTA1_IJAIN_UAD_2Kolom.docx")
-    d_ijain = docx.Document(ijain_docx)
-    ijain_text = "\n".join(p.text for p in d_ijain.paragraphs)
-    assert "1. INTRODUCTION" in ijain_text and "REFERENCES" in ijain_text, "SINTA 1 IJAIN must use full English headings"
+        # Specific audit for SINTA 1 APK & KUHP Baru manuscript
+        apk_docx = os.path.join(showcase_dir, "00_Jurnal_SINTA1_HukumSiber_APK_KUHP_Baru_PJIH_Unpad.docx")
+        d_apk = docx.Document(apk_docx)
+        apk_text = "\n".join(p.text for p in d_apk.paragraphs)
+        for required_term in [
+            "Unauthorized Access to Computer System",
+            "Tanggung Jawab Bank atas Pengurasan Rekening Nasabah Melalui Aplikasi APK Berbahaya Setelah Berlakunya KUHP Baru",
+            "BIND_ACCESSIBILITY_SERVICE",
+            "Pasal 332",
+            "Pasal 334",
+            "POJK Nomor 22 Tahun 2023",
+            "Runtime Application Self-Protection",
+        ]:
+            assert required_term in apk_text, f"Missing required legal/technical term '{required_term}' in SINTA 1 APK paper"
+        assert len(d_apk.tables) == 3, f"Expected 3 analytical tables in SINTA 1 APK paper, got {len(d_apk.tables)}"
 
-    # Verify 2-column and 1-column XML structure on SINTA 4 showcase files
-    docx_2col = os.path.join(showcase_dir, "04_Jurnal_SINTA4_JKI_UBSI_2Kolom.docx")
-    docx_1col = os.path.join(showcase_dir, "05_Jurnal_SINTA4_JKI_UBSI_1Kolom_Biasa.docx")
+        # Specific audit for SINTA 1 IJAIN English manuscript
+        ijain_docx = os.path.join(showcase_dir, "01_Jurnal_SINTA1_IJAIN_UAD_2Kolom.docx")
+        d_ijain = docx.Document(ijain_docx)
+        ijain_text = "\n".join(p.text for p in d_ijain.paragraphs)
+        assert "1. INTRODUCTION" in ijain_text and "REFERENCES" in ijain_text, "SINTA 1 IJAIN must use full English headings"
 
-    with zipfile.ZipFile(docx_2col, "r") as zf:
-        root_2 = ET.fromstring(zf.read("word/document.xml"))
-        media_files = [n for n in zf.namelist() if n.startswith("word/media/")]
-        assert len(media_files) == 3, f"Expected 3 embedded diagrams, got {len(media_files)}"
-    cols_2 = [c.attrib.get(f"{{{ns['w']}}}num") for c in root_2.findall(".//w:sectPr/w:cols", ns)]
-    assert cols_2 == ["1", "2"], f"Expected ['1', '2'] columns in 2col file, got {cols_2}"
+        # Verify 2-column and 1-column XML structure on SINTA 4 showcase files
+        docx_2col = os.path.join(showcase_dir, "04_Jurnal_SINTA4_JKI_UBSI_2Kolom.docx")
+        docx_1col = os.path.join(showcase_dir, "05_Jurnal_SINTA4_JKI_UBSI_1Kolom_Biasa.docx")
 
-    with zipfile.ZipFile(docx_1col, "r") as zf:
-        root_1 = ET.fromstring(zf.read("word/document.xml"))
-    cols_1 = [c.attrib.get(f"{{{ns['w']}}}num") for c in root_1.findall(".//w:sectPr/w:cols", ns)]
-    assert cols_1 == ["1", "1"], f"Expected ['1', '1'] columns in 1col file, got {cols_1}"
+        with zipfile.ZipFile(docx_2col, "r") as zf:
+            root_2 = ET.fromstring(zf.read("word/document.xml"))
+            media_files = [n for n in zf.namelist() if n.startswith("word/media/")]
+            assert len(media_files) == 3, f"Expected 3 embedded diagrams, got {len(media_files)}"
+        cols_2 = [c.attrib.get(f"{{{ns['w']}}}num") for c in root_2.findall(".//w:sectPr/w:cols", ns)]
+        assert cols_2 == ["1", "2"], f"Expected ['1', '2'] columns in 2col file, got {cols_2}"
 
-    inspected = inspect_existing_docx(docx_2col)
-    assert inspected["tables_count"] == 3, f"Expected 3 tables in SINTA journal, got {inspected['tables_count']}"
+        with zipfile.ZipFile(docx_1col, "r") as zf:
+            root_1 = ET.fromstring(zf.read("word/document.xml"))
+        cols_1 = [c.attrib.get(f"{{{ns['w']}}}num") for c in root_1.findall(".//w:sectPr/w:cols", ns)]
+        assert cols_1 == ["1", "1"], f"Expected ['1', '1'] columns in 1col file, got {cols_1}"
+
+        inspected = inspect_existing_docx(docx_2col)
+        assert inspected["tables_count"] == 3, f"Expected 3 tables in SINTA journal, got {inspected['tables_count']}"
+
+        # 5. Verify all showcase manuscripts pass antislop + Burstiness
+        for fname, _ in generated:
+            res = audit_manuscript(os.path.join(showcase_dir, fname), min_std=5.5, mendeley_mode=False)
+            assert res["passed"], f"Antislop failed on showcase {fname}: {res['critical_issues']}"
+            assert not res["warnings"], f"Antislop warnings on showcase {fname}: {res['warnings']}"
 
     # 4. Verify strict 5-year recency window (2022-2026) in sinta_content_data.py
     for dataset_name, dataset in (("REFS_APK_KUHP", REFS_APK_KUHP), ("REFS_HUMAS", REFS_HUMAS)):
@@ -150,12 +160,6 @@ def verify_sinta_system():
             assert is_within_recency_window(yr, current_year=2026, window_years=5), (
                 f"{dataset_name} id={entry['id']} year={yr} violates 5-year recency (2022-2026)"
             )
-
-    # 5. Verify all showcase manuscripts and bundled examples pass antislop + Burstiness
-    for fname, _ in generated:
-        res = audit_manuscript(os.path.join(showcase_dir, fname), min_std=5.5, mendeley_mode=False)
-        assert res["passed"], f"Antislop failed on showcase {fname}: {res['critical_issues']}"
-        assert not res["warnings"], f"Antislop warnings on showcase {fname}: {res['warnings']}"
 
     # Verify unified 1-skill bundle contract under .agents/skills/ (1 SKILL.md, lean size < 3.5 MB)
     skills_root = os.path.join(".agents", "skills")
@@ -295,9 +299,21 @@ def verify_sinta_system():
             skr_ext = ET.fromstring(z_skr.read("word/document.xml")).find(".//{http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing}extent")
             assert skr_ext is not None and round(int(skr_ext.attrib["cx"]) / 360000.0, 1) == 5.0, "Expected 5.0 cm Skripsi cover logo"
 
-        # Verify SSRF scheme guard & UBSI full author formatting (--no-et-al) & LAMPIRAN em-dash check
+        # Verify SSRF scheme + private/loopback/metadata IP guard (M-02) & UBSI full author formatting (--no-et-al) & LAMPIRAN em-dash check
         bad_url_res = verify_url_status("file:///C:/Windows/win.ini")
         assert not bad_url_res["ok"] and "HTTP(S)" in bad_url_res.get("error", "")
+        for ssrf_url in (
+            "http://127.0.0.1:8080/secret",
+            "http://localhost/admin",
+            "http://[::1]/",
+            "http://169.254.169.254/latest/meta-data/",
+            "http://192.168.1.1/",
+            "http://10.0.0.1/",
+        ):
+            ssrf_res = verify_url_status(ssrf_url)
+            assert not ssrf_res["ok"] and "Blocked" in ssrf_res.get("error", ""), (
+                f"SSRF guard failed to block {ssrf_url}: {ssrf_res}"
+            )
         assert "et al." not in _format_authors_apa(["A", "B", "C", "D"], no_et_al=True)
         lampiran_txt = os.path.join(tmp_iso, "lampiran.txt")
         with open(lampiran_txt, "w", encoding="utf-8") as f:
@@ -381,6 +397,68 @@ def verify_sinta_system():
             text=True,
         )
         assert cp_hum.returncode == 0, f"Isolated bundled audit_humanizer.py failed:\n{cp_hum.stdout}\n{cp_hum.stderr}"
+
+        # Regression H-01: audit_humanizer.py must NOT crash on Windows cp1252 console when draft is clean (0 findings) or with --report
+        clean_md = os.path.join(tmp_iso, "clean_draft.md")
+        with open(clean_md, "w", encoding="utf-8") as cf:
+            cf.write("Sistem informasi mencatat data transaksi akademik dengan tepat.\n")
+        cp1252_env = os.environ.copy()
+        cp1252_env["PYTHONIOENCODING"] = "cp1252"
+        cp1252_env["PYTHONUTF8"] = "0"
+        cp_clean_win = subprocess.run(
+            [sys.executable, os.path.join(global_scripts_dir, "audit_humanizer.py"), clean_md, "--preset", "akademik", "--kampus", "ubsi"],
+            cwd=tmp_iso,
+            env=cp1252_env,
+            capture_output=True,
+            text=True,
+        )
+        assert cp_clean_win.returncode == 0, f"H-01 regression (cp1252 clean draft crashed):\n{cp_clean_win.stdout}\n{cp_clean_win.stderr}"
+        cp_rep_win = subprocess.run(
+            [sys.executable, os.path.join(global_scripts_dir, "audit_humanizer.py"), clean_md, "--report", "--report-dir", os.path.join(tmp_iso, "rep")],
+            cwd=tmp_iso,
+            env=cp1252_env,
+            capture_output=True,
+            text=True,
+        )
+        assert cp_rep_win.returncode == 0, f"H-01 regression (cp1252 --report crashed):\n{cp_rep_win.stdout}\n{cp_rep_win.stderr}"
+
+        # Regression H-04 & M-04: real `uv run` on bundled diagram CLIs (--help) and full zero-clone Audit TI pipeline (generate -> challenge APPROVE)
+        uv_bin = shutil.which("uv")
+        if uv_bin:
+            global_gambar_dir = os.path.join(global_skill_root, "template", "gambar")
+            before_gambar = sorted(os.listdir(global_gambar_dir))
+            for diag_cli in ("generate_audit_diagrams.py", "generate_diagrams.py"):
+                cp_dh = subprocess.run(
+                    [uv_bin, "run", os.path.join(global_scripts_dir, diag_cli), "--help"],
+                    cwd=tmp_iso,
+                    capture_output=True,
+                    text=True,
+                )
+                assert cp_dh.returncode == 0 and "--output-dir" in cp_dh.stdout, (
+                    f"M-04 regression ({diag_cli} --help failed):\n{cp_dh.stdout}\n{cp_dh.stderr}"
+                )
+            assert sorted(os.listdir(global_gambar_dir)) == before_gambar, "M-04 regression: --help mutated global skill template/gambar/"
+
+            out_audit = os.path.join(tmp_iso, "Laporan_Audit_ZeroClone.docx")
+            cp_aud = subprocess.run(
+                [uv_bin, "run", os.path.join(global_scripts_dir, "generate_audit_report_docx.py"), "--output", out_audit],
+                cwd=tmp_iso,
+                capture_output=True,
+                text=True,
+            )
+            assert cp_aud.returncode == 0 and os.path.exists(out_audit), (
+                f"H-04 regression (zero-clone audit docx failed):\n{cp_aud.stdout}\n{cp_aud.stderr}"
+            )
+            assert sorted(os.listdir(global_gambar_dir)) == before_gambar, "H-04 regression: audit report mutated global skill template/gambar/"
+            cp_chal = subprocess.run(
+                [uv_bin, "run", os.path.join(global_scripts_dir, "challenge_text_and_math.py"), "-t", out_audit],
+                cwd=tmp_iso,
+                capture_output=True,
+                text=True,
+            )
+            assert cp_chal.returncode == 0 and "FINAL VERDICT: APPROVE" in cp_chal.stdout, (
+                f"H-04 regression (challenge_text_and_math rejected zero-clone audit docx):\n{cp_chal.stdout}\n{cp_chal.stderr}"
+            )
         sys.path.insert(0, global_skill_root)
         from humanizer_id.engine import _read_text_file_safely, audit_text, load_data
         k_dict, g_dict, c_dict = load_data("ubsi")

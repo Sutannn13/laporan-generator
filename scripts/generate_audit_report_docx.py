@@ -22,7 +22,10 @@ Kepatuhan Standar Tata Naskah UBSI:
 """
 
 import os
+import shutil
+import subprocess
 import sys
+import tempfile
 from pathlib import Path
 
 import docx
@@ -48,6 +51,62 @@ import argparse
 DEFAULT_OUTPUT_FILE = BASE_DIR / "Laporan_Audit_TI_COBIT2019_Contoh.docx"
 LOGO_PATH = BASE_DIR / "template" / "gambar" / "logo-ubsi.png"
 GAMBAR_DIR = BASE_DIR / "template" / "gambar"
+REQUIRED_AUDIT_DIAGRAMS = (
+    "diagram_organisasi_upt_tik.png",
+    "diagram_arsitektur_siakad.png",
+    "diagram_risk_matrix.png",
+    "diagram_radar_capability.png",
+    "diagram_roadmap_perbaikan.png",
+)
+
+
+def _find_diagram_file(filename, search_dirs):
+    for d in search_dirs:
+        if not d:
+            continue
+        cand = Path(d) / filename
+        if cand.exists():
+            return cand
+    return GAMBAR_DIR / filename
+
+
+def _prepare_audit_diagrams(diagrams_dir=None, auto_diagrams=True):
+    """Resolve the 5 audit PNGs from user dir / repo template, auto-rendering into a temp dir if pruned in zero-clone skill bundles."""
+    search_dirs = []
+    if diagrams_dir:
+        search_dirs.append(Path(diagrams_dir))
+    search_dirs.extend([
+        Path.cwd() / "audit_diagrams",
+        Path.cwd() / "template" / "gambar",
+        Path.cwd(),
+        GAMBAR_DIR,
+    ])
+    missing = [fn for fn in REQUIRED_AUDIT_DIAGRAMS if not _find_diagram_file(fn, search_dirs).exists()]
+    if not missing or not auto_diagrams:
+        return search_dirs, None
+
+    diag_script = Path(__file__).resolve().parent / "generate_audit_diagrams.py"
+    if not diag_script.exists():
+        return search_dirs, None
+
+    tmp_obj = None
+    if diagrams_dir:
+        target_dir = Path(diagrams_dir)
+        target_dir.mkdir(parents=True, exist_ok=True)
+    else:
+        tmp_obj = tempfile.TemporaryDirectory(prefix="lg_audit_diagrams_")
+        target_dir = Path(tmp_obj.name)
+
+    uv_bin = shutil.which("uv")
+    cmd = (
+        [uv_bin, "run", str(diag_script), "--output-dir", str(target_dir)]
+        if uv_bin
+        else [sys.executable, str(diag_script), "--output-dir", str(target_dir)]
+    )
+    res = subprocess.run(cmd, capture_output=True, text=True, encoding="utf-8", errors="replace")
+    if res.returncode != 0:
+        print(f"Warning: Auto-generation of audit diagrams failed (rc={res.returncode}): {res.stderr.strip()}")
+    return [target_dir, *search_dirs], tmp_obj
 
 
 
@@ -476,7 +535,46 @@ def build_audit_report(
     city="Kota Contoh",
     year="2026",
     mendeley_mode=True,
+    diagrams_dir=None,
+    auto_diagrams=True,
 ):
+    diagram_search_dirs, tmp_diag_ctx = _prepare_audit_diagrams(
+        diagrams_dir=diagrams_dir,
+        auto_diagrams=auto_diagrams,
+    )
+    try:
+        return _build_audit_report_impl(
+            output_path=output_path,
+            title=title,
+            subtitle=subtitle,
+            author=author,
+            nim=nim,
+            auditee=auditee,
+            unit=unit,
+            city=city,
+            year=year,
+            mendeley_mode=mendeley_mode,
+            diagram_search_dirs=diagram_search_dirs,
+        )
+    finally:
+        if tmp_diag_ctx is not None:
+            tmp_diag_ctx.cleanup()
+
+
+def _build_audit_report_impl(
+    output_path=None,
+    title="Audit Tata Kelola Keamanan dan Kepatuhan Portal Akademik Perguruan Tinggi Contoh Menggunakan Framework COBIT 2019",
+    subtitle="(Studi pada Proses APO13, BAI06, DSS01, DSS05, dan MEA03)",
+    author="Penulis Contoh",
+    nim="00000001",
+    auditee="Portal Akademik Perguruan Tinggi Contoh",
+    unit="UPT Teknologi Informasi dan Komunikasi Perguruan Tinggi Contoh",
+    city="Kota Contoh",
+    year="2026",
+    mendeley_mode=True,
+    diagram_search_dirs=None,
+):
+    diagram_search_dirs = diagram_search_dirs or [GAMBAR_DIR]
     target_out = Path(output_path) if output_path else DEFAULT_OUTPUT_FILE
     target_out.parent.mkdir(parents=True, exist_ok=True)
     print(f"Creating document: {target_out}")
@@ -1110,7 +1208,7 @@ def build_audit_report(
                "organisasi UPT TIK disajikan pada Gambar III.1 berikut:")
 
     # Gambar III.1: Struktur Organisasi
-    img_org = GAMBAR_DIR / "diagram_organisasi_upt_tik.png"
+    img_org = _find_diagram_file("diagram_organisasi_upt_tik.png", diagram_search_dirs)
     if img_org.exists():
         p_img_org = doc.add_paragraph()
         format_paragraph(p_img_org, space_before=10, space_after=2, line_spacing=1.0,
@@ -1142,7 +1240,7 @@ def build_audit_report(
                "logis dan fisik sistem disajikan pada Gambar III.2:")
 
     # Gambar III.2: Arsitektur Sistem
-    img_arch = GAMBAR_DIR / "diagram_arsitektur_siakad.png"
+    img_arch = _find_diagram_file("diagram_arsitektur_siakad.png", diagram_search_dirs)
     if img_arch.exists():
         p_img_arch = doc.add_paragraph()
         format_paragraph(p_img_arch, space_before=10, space_after=2, line_spacing=1.0,
@@ -1244,7 +1342,7 @@ def build_audit_report(
                "pada Gambar IV.1 dan dirinci pada Tabel IV.1:")
 
     # Gambar IV.1: Risk Matrix
-    img_risk = GAMBAR_DIR / "diagram_risk_matrix.png"
+    img_risk = _find_diagram_file("diagram_risk_matrix.png", diagram_search_dirs)
     if img_risk.exists():
         p_img_risk = doc.add_paragraph()
         format_paragraph(p_img_risk, space_before=10, space_after=2, line_spacing=1.0,
@@ -1413,7 +1511,7 @@ def build_audit_report(
     add_table_source(doc, "Sumber: Hasil Perhitungan Gap Analysis Tim Audit, 2026")
 
     # Gambar IV.2: Capability Chart
-    img_cap = GAMBAR_DIR / "diagram_radar_capability.png"
+    img_cap = _find_diagram_file("diagram_radar_capability.png", diagram_search_dirs)
     if img_cap.exists():
         p_img_cap = doc.add_paragraph()
         format_paragraph(p_img_cap, space_before=10, space_after=2, line_spacing=1.0,
@@ -1430,7 +1528,7 @@ def build_audit_report(
                "Perbaikan 3 Fase yang terstruktur dan realistis sebagaimana disajikan pada Gambar IV.3:")
 
     # Gambar IV.3: Roadmap Diagram
-    img_road = GAMBAR_DIR / "diagram_roadmap_perbaikan.png"
+    img_road = _find_diagram_file("diagram_roadmap_perbaikan.png", diagram_search_dirs)
     if img_road.exists():
         p_img_road = doc.add_paragraph()
         format_paragraph(p_img_road, space_before=10, space_after=2, line_spacing=1.0,
@@ -1788,6 +1886,8 @@ if __name__ == "__main__":
     parser.add_argument("--city", default="Kota Contoh", help="Kota instansi")
     parser.add_argument("--year", default="2026", help="Tahun laporan")
     parser.add_argument("--no-mendeley-mode", dest="mendeley_mode", action="store_false", help="Nonaktifkan placeholder Mendeley R1")
+    parser.add_argument("--diagrams-dir", default=None, help="Direktori PNG diagram audit (opsional; otomatis dibangkitkan jika belum ada)")
+    parser.add_argument("--no-auto-diagrams", dest="auto_diagrams", action="store_false", help="Jangan bangkitkan diagram audit otomatis bila file PNG belum ada")
     args = parser.parse_args()
     build_audit_report(
         output_path=args.output,
@@ -1800,4 +1900,6 @@ if __name__ == "__main__":
         city=args.city,
         year=args.year,
         mendeley_mode=args.mendeley_mode,
+        diagrams_dir=args.diagrams_dir,
+        auto_diagrams=args.auto_diagrams,
     )

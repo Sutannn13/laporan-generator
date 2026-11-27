@@ -522,7 +522,7 @@ def print_report(findings, filename=""):
     print("=" * 72)
 
     if not findings:
-        print("[✓] Tidak ditemukan penanda kalke, verba ringan, atau istilah asing tak baku.")
+        print("[OK] Tidak ditemukan penanda kalke, verba ringan, atau istilah asing tak baku.")
         print("    Naskah terbaca lugas dan memenuhi kaidah bahasa Indonesia terpadu.")
         print("=" * 72)
         return
@@ -545,6 +545,12 @@ def print_report(findings, filename=""):
     print("=" * 72)
 
 def main():
+    for _stream in (sys.stdout, sys.stderr):
+        if hasattr(_stream, "reconfigure"):
+            try:
+                _stream.reconfigure(encoding="utf-8", errors="replace")
+            except Exception:
+                pass
     if len(sys.argv) < 2 or sys.argv[1] in ("-h", "--help"):
         print(__doc__)
         print("Pilihan tambahan:")
@@ -632,7 +638,7 @@ def main():
         from .report import tulis_laporan
         findings = audit_text(content, kalke_dict, glosarium_dict, kampus_dict, preset)
         report_path = tulis_laporan(findings, filepath, report_dir)
-        print(f"[✓] Laporan audit bernomor ditulis: {report_path}")
+        print(f"[OK] Laporan audit bernomor ditulis: {report_path}")
         print(f"    Temuan: {len(findings)} (prioritas HIGH/MEDIUM/LOW di laporan)")
         return
 
@@ -669,7 +675,7 @@ Meskipun akurat, bukan berarti arsitektur ini tanpa kompromi performa.
         if write_in_place:
             with open(filepath, "w", encoding="utf-8") as f:
                 f.write(fixed_content)
-            print(f"[✓] Berhasil memperbaiki {fix_count} temuan langsung pada berkas: {filepath}")
+            print(f"[OK] Berhasil memperbaiki {fix_count} temuan langsung pada berkas: {filepath}")
         else:
             print(f"[*] Hasil autofix ({fix_count} penggantian diterapkan):\n")
             print(fixed_content)

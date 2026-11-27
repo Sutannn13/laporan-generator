@@ -87,7 +87,36 @@ function testBundleContract() {
     assert.ok(!/Sutan\s+Arlie\s+Johan|Sutan%20Arlie%20Johan|DATA%20SUTAN|DATA\s+SUTAN/i.test(content), `Hardcoded personal path found in ${mf}`);
   }
 
-  console.log(`PASS: Bundle Contract (1 SKILL.md, ${allFiles.length} files, ${totalMB.toFixed(2)} MB, 0 personal paths, 0 em-dashes)`);
+  // 4. Contract M-03: references/humanizer-id.md must not point to unbundled upstream files
+  const humRef = fs.readFileSync(path.join(HUB_DIR, 'references', 'humanizer-id.md'), 'utf8');
+  for (const staleRef of ['scripts/audit.py', 'panduan-preset-kampus.md', 'log-integrasi-kaidah.md', 'PROMPT.md']) {
+    assert.ok(!humRef.includes(staleRef), `Stale unbundled reference '${staleRef}' found in references/humanizer-id.md`);
+  }
+
+  // 5. Contract H-03 & M-01: all npx github: docs include --allow-git=all (npm 12+) and sinta-agent help never suggests unpublished `npx sinta-agent`
+  const docFiles = [
+    'README.md',
+    'AGENTS.md',
+    'bin/cli.js',
+    'bin/install-skill.js',
+    'bin/sinta-agent.js',
+    'website/src/data/siteContent.js',
+  ];
+  for (const rel of docFiles) {
+    const fp = path.join(REPO_ROOT, rel);
+    if (!fs.existsSync(fp)) continue;
+    const lines = fs.readFileSync(fp, 'utf8').split(/\r?\n/);
+    lines.forEach((line, idx) => {
+      if (line.includes('npx') && line.includes('github:') && !line.includes('--allow-git')) {
+        assert.fail(`H-03 regression: missing --allow-git=all at ${rel}:${idx + 1}: ${line.trim()}`);
+      }
+    });
+  }
+  const sintaHelp = runNode(SINTA_AGENT_JS, ['help']);
+  assert.strictEqual(sintaHelp.status, 0);
+  assert.ok(!/\bnpx\s+sinta-agent\b/.test(sintaHelp.stdout), 'M-01 regression: sinta-agent help suggests unpublished `npx sinta-agent`');
+
+  console.log(`PASS: Bundle Contract (1 SKILL.md, ${allFiles.length} files, ${totalMB.toFixed(2)} MB, 0 personal paths, 0 em-dashes, npm 12+ flags verified)`);
 }
 
 function testZeroCloneInstaller() {
@@ -178,7 +207,27 @@ function testZeroCloneInstaller() {
     assert.strictEqual(rScaffold.status, 0, `Backward-compat scaffold failed:\n${rScaffold.stdout}\n${rScaffold.stderr}`);
     assert.ok(fs.existsSync(path.join(tmpCwd, 'install', 'main.typ')), 'Expected --type flag to scaffold Typst project into ./install');
 
-    console.log('PASS: Zero-Clone Installer (fresh, status, idempotent, non-destructive, missing-uv fail-fast, uninstall, scaffold compat)');
+    // 8. Regression H-02: sinta-agent cek must work when repo root AND target .docx path contain spaces (no shell: true arg splitting)
+    const sampleDocx = path.join(REPO_ROOT, 'contoh-template-ai', '04_Jurnal_SINTA4_JKI_UBSI_2Kolom.docx');
+    const spacedDir = path.join(tmpBase, 'folder dengan spasi');
+    fs.mkdirSync(spacedDir, { recursive: true });
+    const spacedDocx = path.join(spacedDir, 'Naskah Uji Spasi.docx');
+    fs.copyFileSync(sampleDocx, spacedDocx);
+    const uvCheck = spawnSync('uv', ['--version'], { stdio: 'ignore' });
+    if (uvCheck.status === 0) {
+      const rSpacedCek = runNode(SINTA_AGENT_JS, ['cek', spacedDocx], {
+        cwd: tmpCwd,
+        env: { ...process.env, PYTHONIOENCODING: 'utf-8' },
+      });
+      assert.strictEqual(
+        rSpacedCek.status,
+        0,
+        `H-02 regression: sinta-agent cek failed on spaced path:\n${rSpacedCek.stdout}\n${rSpacedCek.stderr}`
+      );
+      assert.ok(rSpacedCek.stdout.includes('paragraphs_count'), 'Expected JSON inspection output from sinta-agent cek');
+    }
+
+    console.log('PASS: Zero-Clone Installer (fresh, status, idempotent, non-destructive, missing-uv fail-fast, uninstall, scaffold compat, spaced-path sinta-agent)');
   } finally {
     fs.rmSync(tmpBase, { recursive: true, force: true });
   }

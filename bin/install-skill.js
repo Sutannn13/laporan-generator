@@ -3,9 +3,9 @@
  * Zero-Clone Pure-Node Skill Installer for `laporan-generator` (Unified Single Skill).
  *
  * Usage:
- *   npx -y github:Sutannn13/laporan-generator install [--workspace [dir]] [--no-global] [--require-uv]
- *   npx -y github:Sutannn13/laporan-generator status [--json] [--workspace [dir]]
- *   npx -y github:Sutannn13/laporan-generator uninstall [--workspace [dir]] [--no-global]
+ *   npx -y --allow-git=all github:Sutannn13/laporan-generator install [--workspace [dir]] [--no-global] [--require-uv]
+ *   npx -y --allow-git=all github:Sutannn13/laporan-generator status [--json] [--workspace [dir]]
+ *   npx -y --allow-git=all github:Sutannn13/laporan-generator uninstall [--workspace [dir]] [--no-global]
  *
  * Guarantees:
  * - Installs 1 unified skill (`laporan-generator`) containing references/, scripts/, presets/,

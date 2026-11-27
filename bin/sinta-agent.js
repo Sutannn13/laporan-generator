@@ -25,7 +25,7 @@ function runUv(scriptRelPath, scriptArgs = []) {
   const res = spawnSync('uv', ['run', scriptAbs, ...scriptArgs], {
     cwd: process.cwd(),
     stdio: 'inherit',
-    shell: process.platform === 'win32',
+    shell: false,
   });
   if (res.error) {
     console.error(`[GAGAL] Tidak dapat menjalankan uv: ${res.error.message}`);
@@ -40,7 +40,7 @@ if (sub === 'install' || sub === 'setup' || sub === 'status' || sub === 'uninsta
   runUv('generate_sinta_journal_docx.py', rest);
 } else if (sub === 'cek' || sub === 'inspect') {
   if (!rest[0]) {
-    console.error('Gunakan: npx sinta-agent cek "<nama_file.docx>"');
+    console.error('Gunakan: npx -y --allow-git=all -p github:Sutannn13/laporan-generator sinta-agent cek "<nama_file.docx>"');
     process.exit(1);
   }
   runUv('generate_sinta_journal_docx.py', ['--inspect-docx', ...rest]);
@@ -50,14 +50,21 @@ if (sub === 'install' || sub === 'setup' || sub === 'status' || sub === 'uninsta
   console.log(`Laporan Generator & SINTA 1-6 Universal AI Agent CLI (sinta-agent)
 Mendukung: Antigravity, Claude Code, Cursor, OpenCode, Freebuff, KiloCode, Windsurf, Cline, & Roo Code
 
-Perintah (Tanpa git clone):
-  npx skills add Sutannn13/laporan-generator      Pasang 1 skill terpadu via skills.sh
-  npx sinta-agent install [--workspace [dir]]     Pasang 1 skill terpadu + slash commands (pure Node, tanpa clone)
-  npx sinta-agent status [--json]                 Cek status pemasangan skill & kesiapan runtime uv/Python
-  npx sinta-agent uninstall                       Hapus berkas terkelola milik skill laporan-generator
-  npx sinta-agent buat [opsi]                     Jalankan generator Jurnal SINTA 1-6 (.docx)
-  npx sinta-agent cek "<file.docx>"               Inspeksi DNA template .docx eksternal / draf existing
-  npx sinta-agent showcase                        Generate ulang contoh di folder contoh-template-ai/
+Perintah (Tanpa git clone, kompatibel npm 12+):
+  npx skills add Sutannn13/laporan-generator
+      Pasang 1 skill terpadu via skills.sh
+  npx -y --allow-git=all github:Sutannn13/laporan-generator install [--workspace [dir]]
+      Pasang 1 skill terpadu + slash commands (pure Node, tanpa clone)
+  npx -y --allow-git=all github:Sutannn13/laporan-generator status [--json]
+      Cek status pemasangan skill & kesiapan runtime uv/Python
+  npx -y --allow-git=all github:Sutannn13/laporan-generator uninstall
+      Hapus berkas terkelola milik skill laporan-generator
+  npx -y --allow-git=all -p github:Sutannn13/laporan-generator sinta-agent buat [opsi]
+      Jalankan generator Jurnal SINTA 1-6 (.docx)
+  npx -y --allow-git=all -p github:Sutannn13/laporan-generator sinta-agent cek "<file.docx>"
+      Inspeksi DNA template .docx eksternal / draf existing
+  npx -y --allow-git=all -p github:Sutannn13/laporan-generator sinta-agent showcase
+      Generate ulang contoh di folder contoh-template-ai/
 
 Slash Commands di dalam Chat AI Agent:
   /laporan-generator   Pintu utama semua dokumen (PKL, Skripsi UBSI, Audit COBIT, Jurnal SINTA)

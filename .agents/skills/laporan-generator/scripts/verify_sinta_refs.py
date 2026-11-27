@@ -12,9 +12,11 @@ Menegakkan 4 syarat R3:
 """
 import argparse
 from datetime import datetime
+import ipaddress
 import json
 import os
 import re
+import socket
 import sys
 import urllib.error
 import urllib.parse
@@ -69,20 +71,79 @@ def format_sinta_label(sinta_rank=None, verified=False):
     return "[Level SINTA: tidak terverifikasi]"
 
 
+def _validate_public_http_url(url):
+    """Validate URL is HTTP(S) and resolves strictly to public unicast IP addresses (SSRF guard)."""
+    parsed = urllib.parse.urlparse(str(url or "").strip())
+    if parsed.scheme.lower() not in ("http", "https") or not parsed.netloc or not parsed.hostname:
+        return None, f"Blocked non-HTTP(S) URL scheme: {parsed.scheme!r}"
+
+    host = parsed.hostname.strip().lower().rstrip(".")
+    if host in ("localhost", "localhost.localdomain") or host.endswith(".local") or host.endswith(".internal"):
+        return None, f"Blocked local/internal hostname: {host!r}"
+
+    def _is_forbidden_ip(ip_obj):
+        return (
+            ip_obj.is_private
+            or ip_obj.is_loopback
+            or ip_obj.is_link_local
+            or ip_obj.is_multicast
+            or ip_obj.is_reserved
+            or ip_obj.is_unspecified
+        )
+
+    try:
+        literal_ip = ipaddress.ip_address(host)
+    except ValueError:
+        literal_ip = None
+
+    if literal_ip is not None:
+        if _is_forbidden_ip(literal_ip):
+            return None, f"Blocked private/loopback/reserved IP address: {host}"
+        return parsed.geturl(), None
+
+    port = parsed.port or (443 if parsed.scheme.lower() == "https" else 80)
+    try:
+        infos = socket.getaddrinfo(host, port, type=socket.SOCK_STREAM)
+    except OSError as exc:
+        return None, f"DNS resolution failed for {host}: {exc}"
+
+    if not infos:
+        return None, f"No DNS records resolved for {host}"
+
+    for _, _, _, _, sockaddr in infos:
+        resolved_ip = ipaddress.ip_address(sockaddr[0])
+        if _is_forbidden_ip(resolved_ip):
+            return None, f"Blocked hostname resolving to non-public IP: {host} -> {resolved_ip}"
+
+    return parsed.geturl(), None
+
+
+class _SafeRedirectHandler(urllib.request.HTTPRedirectHandler):
+    """Re-validate every HTTP redirect target against the public-IP SSRF guard."""
+
+    def redirect_request(self, req, fp, code, msg, headers, newurl):
+        resolved_next = urllib.parse.urljoin(req.full_url, newurl)
+        safe_url, err = _validate_public_http_url(resolved_next)
+        if err:
+            raise urllib.error.URLError(err)
+        return super().redirect_request(req, fp, code, msg, headers, safe_url)
+
+
 def verify_url_status(url, expect_pdf=False, timeout=12):
     """Verify live HTTP 200 status and optional PDF Content-Type / %PDF- magic header."""
-    parsed = urllib.parse.urlparse(str(url or "").strip())
-    if parsed.scheme.lower() not in ("http", "https") or not parsed.netloc:
-        return {"ok": False, "status": 0, "content_type": "", "error": f"Blocked non-HTTP(S) URL scheme: {parsed.scheme!r}"}
+    safe_url, err = _validate_public_http_url(url)
+    if err:
+        return {"ok": False, "status": 0, "content_type": "", "error": err}
     req = urllib.request.Request(
-        parsed.geturl(),
+        safe_url,
         headers={
             "User-Agent": "Mozilla/5.0 (compatible; SintaRefVerifier/1.0)",
             "Accept": "application/pdf,*/*;q=0.8" if expect_pdf else "*/*",
         },
     )
+    opener = urllib.request.build_opener(_SafeRedirectHandler())
     try:
-        with urllib.request.urlopen(req, timeout=timeout) as resp:
+        with opener.open(req, timeout=timeout) as resp:
             status = getattr(resp, "status", 200)
             ctype = (resp.headers.get("Content-Type") or "").lower()
             head = resp.read(16) if expect_pdf else b""

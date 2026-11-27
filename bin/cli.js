@@ -126,7 +126,7 @@ Opsi Scaffold:
                                            proposal : Proposal PKL (3 Bab)
                                            laporan  : Laporan Akhir PKL (default)
                                            skripsi  : Skripsi Sarjana (S1)
-  -o, --outline <1|2|3|4|156>            Pilih outline naskah:
+  -o, --outline <1|2|3|4|156|138|137|158> Pilih outline naskah:
                                            Untuk Laporan PKL:
                                              1 : Proyek Inovasi Perangkat Lunak (6 Bab) (default)
                                              2 : Analisa Program Berbasis Mobile (4 Bab)
@@ -141,10 +141,10 @@ Opsi Scaffold:
   -f, --force                            Timpa berkas bila direktori tujuan telah berisi proyek
   -h, --help                             Tampilkan bantuan ini
 
-Contoh:
-  npx -y github:Sutannn13/laporan-generator install
-  npx -y github:Sutannn13/laporan-generator my-laporan --type laporan --outline 4 --yes
-  npx -y github:Sutannn13/laporan-generator skripsi-ku --type skripsi --outline 156 --yes
+Contoh (kompatibel npm 12+):
+  npx -y --allow-git=all github:Sutannn13/laporan-generator install
+  npx -y --allow-git=all github:Sutannn13/laporan-generator my-laporan --type laporan --outline 4 --yes
+  npx -y --allow-git=all github:Sutannn13/laporan-generator skripsi-ku --type skripsi --outline 156 --yes
 `);
 }
 
@@ -309,7 +309,7 @@ async function main() {
         console.log('\nPilih Jenis Dokumen:');
         console.log('  1. Proposal PKL (3 Bab)');
         console.log('  2. Laporan Akhir PKL (4 Pilihan Outline)');
-        console.log('  3. Skripsi Sarjana (Outline 156: Perancangan Program Science)');
+        console.log('  3. Skripsi Sarjana (4 Pilihan Outline: 156, 138, 137, 158)');
         const jenisChoice = await pr.ask('Pilihan Anda [1-3] (default: 2): ', '2');
         if (jenisChoice === '1') docType = 'proposal';
         else if (jenisChoice === '3') docType = 'skripsi';

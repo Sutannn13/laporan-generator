@@ -57,7 +57,7 @@ Tentukan mode kerja sebelum memulai penyuntingan. Bila tidak dinyatakan spesifik
    - Kepatuhan penuh EYD V dan leksikon KBBI; nol pujian tanpa pembuktian data statistik.
    - **Pemisahan Simpulan vs Saran:** Bagian Simpulan wajib menjawab rumusan masalah secara lugas berbasis data hasil pengujian; bagian Saran dikhususkan untuk limitasi teknis dan peluang riset lanjutan-tidak mencampurbaurkan opini pribadi atau harapan umum.
    - **Judul & Abstrak Dwibahasa:** Judul skripsi/makalah dalam bahasa Indonesia dan bahasa Inggris harus selaras makna tanpa distorsi istilah kunci.
-   - **Dukungan Preset Kampus:** Mendukung konvensi khusus 11 perguruan tinggi terkemuka (UI, ITB, UGM, ITS, IPB, UNDIP, UNPAD, UNAIR, UB, Telkom, UDINUS). Bila pengguna menyebut kampusnya, aktifkan kaidah spesifik dari `data/pedoman-kampus.json` dan panduan `references/panduan-preset-kampus.md` (misal: IPB sub-bab tanpa titik akhir, UGM/UI format `Persamaan (nomor)`).
+   - **Dukungan Preset Kampus:** Mendukung konvensi khusus 12 perguruan tinggi (UBSI SK Rektor 165/2026 di `data/pedoman-kampus-ubsi.json` serta 11 kampus di `data/pedoman-kampus.json`: UI, ITB, UGM, ITS, IPB, UNDIP, UNPAD, UNAIR, UB, Telkom, UDINUS). Aktifkan lewat flag `--kampus ubsi` (atau kode kampus terkait) pada `<skill_dir>/scripts/audit_humanizer.py`.
 2. **Mode Esai & Opini Populer (Artikel, Kolom, Blog):**
    - Sudut pandang penulis (*saya* atau *kami*) dipertahankan.
    - Ritme kalimat dinamis dan variatif; analogi konkret diperbolehkan asal tidak klise.
@@ -103,7 +103,7 @@ Bersihkan struktur bahasa Inggris yang dialihbahasakan secara harfiah:
 
 ## 4. Rute Sub-Kaidah (Deep-Dive On-Demand)
 
-Kaidah editorial lanjutan (sebelumnya satu seksi monolitik) kini terbagi ke lima berkas sub-skill di folder `skills/`. Muat HANYA rute yang relevan dengan naskah agar hemat konteks. Aturan integritas ilmiah pada dokumen ini tetap mengikat penuh dan TIDAK terduplikasi di sub-skill. Satu naskah boleh menyentuh beberapa strata sekaligus - muat semua berkas yang relevan.
+Kaidah editorial lanjutan terbagi ke lima berkas sub-kaidah di dalam `references/humanizer/`. Muat HANYA rute yang relevan dengan naskah agar hemat konteks. Aturan integritas ilmiah pada dokumen ini tetap mengikat penuh dan TIDAK terduplikasi di sub-kaidah. Satu naskah boleh menyentuh beberapa strata sekaligus - muat semua berkas yang relevan.
 
 | Strata | Berkas | Cakupan |
 |---|---|---|
@@ -112,8 +112,7 @@ Kaidah editorial lanjutan (sebelumnya satu seksi monolitik) kini terbagi ke lima
 | Diksi, pleonasme & istilah | `references/humanizer/diksi-istilah.md` | Pilihan kata, peristilahan PUPI, padanan lintas bidang, salah kaprah, diksi preskriptif (13 blok kaidah) |
 | Wacana & retorika | `references/humanizer/wacana-retorika.md` | Kohesi-koherensi paragraf, sitasi terajut, hedging epistemik, monotoni pembuka, ragam opini (18 blok kaidah) |
 | Naskah resmi & metadata jurnal | `references/humanizer/naskah-resmi.md` | Bahasa pewara, surat dinas, penerbitan buku BRIN, proporsi IMRaD, penyajian data visual (6 blok kaidah) |
-
-Catatan provenance: log lengkap sesi integrasi kaidah (BW-BZ) pindah ke `references/log-integrasi-kaidah.md` - arsip asal-usul aturan, bukan aturan operasional.
+| Panduan & template jurnal | `references/humanizer/jurnal/panduan-jurnal.md` | Checklist editorial, struktur IMRaD, peta Scopus/SINTA, serta template abstrak & cover letter |
 
 ---
 
@@ -201,35 +200,33 @@ Jalankan bersamaan dengan Delivery Gate. Centang setiap butir sebelum menyerahka
 
 ---
 
-## Tooling & Aset Pendukung
+## Tooling & Aset Pendukung (Ter-bundle di `<skill_dir>/`)
 
-Repositori [apissaj/humanizer-id](https://github.com/apissaj/humanizer-id) menyediakan berkas perkakas, dataset terstruktur, dan dokumentasi rujukan resmi terintegrasi:
+Diadaptasi dari [apissaj/humanizer-id](https://github.com/apissaj/humanizer-id) dengan preset kampus UBSI 2026:
 
 ### 1. Dataset Terstruktur (`data/`)
-- **`data/kalke-indonesia.json`**: Dataset leksikon terbuka (terus bertambah; baca berkas untuk jumlah mutakhir aktif) memetakan kalke terjemahan mesin, verba ringan, retorika klise AI, tata bilangan TBBBI, dan kaidah morfologi peluluhan KTSP lengkap dengan sitasi buku/halaman.
-- **`data/glosarium-lintas-bidang.json`**: Glosarium 50+ padanan istilah resmi lintas 4 bidang profesi (Teknologi, Hukum, Jurnalistik, Bisnis) bersumber dari **PASTI Kemendikdasmen RI** (172.931 istilah, 59 ranah).
-- **`data/pedoman-kampus.json`**: Basis data konfigurasi format skripsi & tugas akhir untuk 11 perguruan tinggi terkemuka (UI, ITB, UGM, ITS, IPB, UNDIP, UNPAD, UNAIR, UB, Telkom, UDINUS).
+- **`data/kalke-indonesia.json`**: Dataset leksikon terbuka memetakan kalke terjemahan mesin, verba ringan, retorika klise AI, tata bilangan TBBBI, dan kaidah morfologi peluluhan KTSP lengkap dengan sitasi buku/halaman.
+- **`data/glosarium-lintas-bidang.json`**: Glosarium padanan istilah resmi lintas 4 bidang profesi (Teknologi, Hukum, Jurnalistik, Bisnis) bersumber dari **PASTI Kemendikdasmen RI**.
+- **`data/pedoman-kampus-ubsi.json`**: Preset aturan khusus SK Rektor UBSI No. `165/2.01/UBSI/III/2026` (aktif via `--kampus ubsi`).
+- **`data/pedoman-kampus.json`**: Basis data konfigurasi format skripsi & tugas akhir untuk 11 perguruan tinggi (UI, ITB, UGM, ITS, IPB, UNDIP, UNPAD, UNAIR, UB, Telkom, UDINUS).
 
 ### 2. Perkakas Pemindai Mandiri (`scripts/`)
-- **`scripts/audit.py`**: Skrip CLI auditor berbasis 100% pustaka standar Python (tanpa dependensi luar/zero pip) yang memuat seluruh dataset leksikon, glosarium, dan aturan kampus secara real-time:
+- **`scripts/audit_humanizer.py`**: Skrip CLI auditor berbasis 100% pustaka standar Python (zero pip) yang memuat seluruh dataset leksikon, glosarium, dan aturan kampus secara langsung:
   ```bash
   # Uji coba demo multi-bidang
   python "<skill_dir>/scripts/audit_humanizer.py" --demo
 
-  # Pindai naskah skripsi umum
-  python "<skill_dir>/scripts/audit_humanizer.py" path/ke/naskah.md
+  # Pindai naskah skripsi / PKL UBSI 2026
+  python "<skill_dir>/scripts/audit_humanizer.py" path/ke/naskah.md --preset akademik --kampus ubsi
 
-  # Pindai naskah dengan kepatuhan format kampus tertentu (misal: IPB, UGM, UDINUS)
-  python "<skill_dir>/scripts/audit_humanizer.py" path/ke/naskah.md --kampus ipb
+  # Pindai naskah dengan kepatuhan format kampus lain (misal: IPB, UGM, UDINUS)
+  python "<skill_dir>/scripts/audit_humanizer.py" path/ke/naskah.md --preset akademik --kampus ipb
+  ```
+- **`scripts/word_count_check.py`**: Pemeriksa batas kata IMRaD dan larangan sitasi di abstrak (stdlib Python):
+  ```bash
+  python "<skill_dir>/scripts/word_count_check.py" path/ke/naskah.md
   ```
 
-### 3. Dokumentasi Rujukan & Ekstrak Buku Asli (`references/`)
-- **`references/ekstrak-buku-teks-kemdikbud.md`**: Intisari kaidah dan kunci jawaban resmi dari Buku Siswa Kelas XI (ISBN 978-634-00-0958-3) dan Kelas XII (2024).
-- **`references/buku-ajar-bahasa-indonesia-perguruan-tinggi.md`**: Enam syarat kalimat efektif akademik dari buku ajar UIN Syarif Hidayatullah Jakarta (Suyatno dkk., hlm. 100–107).
-- **`references/panduan-preset-kampus.md`**: Panduan detail penulisan tugas akhir untuk 11 perguruan tinggi Indonesia.
-- **`references/pedoman-kebahasaan-resmi.md`**: Rangkuman kaidah tata bahasa baku EYD V dan TBBBI Edisi IV.
-- **`references/panduan-gaya-lintas-kalangan.md`**: Karakteristik register 5 domain profesional.
-- **`references/puebi-*.md`**: Empat dokumen resmi PUEBI (kata depan, partikel pun, gabungan kata konfiks, bentuk ulang).
-
-### 4. Template Siap Pakai Pengguna Web
-- **`PROMPT.md`**: Sistem prompt mandiri untuk pengguna antarmuka obrolan web (ChatGPT Custom Instructions, Claude Projects, Gemini Gems).
+### 3. Rujukan Sub-Kaidah & Template Jurnal (`references/humanizer/`)
+- **`references/humanizer/ejaan-morfologi.md`**, **`sintaksis.md`**, **`diksi-istilah.md`**, **`wacana-retorika.md`**, **`naskah-resmi.md`**: Sub-kaidah EYD V, TBBBI IV, PUPI, dan tata tulis ilmiah.
+- **`references/humanizer/jurnal/`**: Panduan jurnal (`panduan-jurnal.md`), `checklist.md`, referensi IMRaD & peta Scopus/SINTA (`references/`), serta template abstrak, judul, cover letter, dan response-to-reviewer (`templates/`).

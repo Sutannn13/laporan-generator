@@ -2,16 +2,38 @@
 # requires-python = ">=3.10"
 # dependencies = ["matplotlib"]
 # ///
+import argparse
 import os
-import matplotlib.pyplot as plt
-import matplotlib.patches as patches
+
+plt = None
+patches = None
 
 ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-GAMBAR_DIR = os.path.join(ROOT_DIR, "template", "gambar")
-os.makedirs(GAMBAR_DIR, exist_ok=True)
+
+
+def _default_output_dir():
+    if os.path.exists(os.path.join(ROOT_DIR, "package.json")):
+        return os.path.join(ROOT_DIR, "template", "gambar")
+    return os.path.join(os.getcwd(), "diagrams")
+
+
+GAMBAR_DIR = _default_output_dir()
+
+
+def _ensure_matplotlib():
+    global plt, patches
+    if plt is None or patches is None:
+        import matplotlib
+        matplotlib.use("Agg")
+        import matplotlib.pyplot as _plt
+        import matplotlib.patches as _patches
+        plt = _plt
+        patches = _patches
+    os.makedirs(GAMBAR_DIR, exist_ok=True)
 
 
 def out_img(filename):
+    os.makedirs(GAMBAR_DIR, exist_ok=True)
     return os.path.join(GAMBAR_DIR, filename)
 
 
@@ -783,7 +805,20 @@ def generate_ui_mockup_chart():
     print(f"Saved: {target}")
 
 
-if __name__ == "__main__":
+def main():
+    global GAMBAR_DIR
+    parser = argparse.ArgumentParser(
+        description="Generator diagram UML, arsitektur, dan alur 300 DPI untuk Laporan PKL & Jurnal SINTA."
+    )
+    parser.add_argument(
+        "-o",
+        "--output-dir",
+        default=_default_output_dir(),
+        help="Direktori keluaran PNG diagram (default: template/gambar di dalam repo, atau ./diagrams di luar repo)",
+    )
+    args = parser.parse_args()
+    GAMBAR_DIR = os.path.abspath(args.output_dir)
+    _ensure_matplotlib()
     generate_org_chart()
     generate_use_case_chart()
     generate_activity_diagram()
@@ -791,3 +826,7 @@ if __name__ == "__main__":
     generate_use_case_usulan_chart()
     generate_activity_usulan_chart()
     generate_ui_mockup_chart()
+
+
+if __name__ == "__main__":
+    main()

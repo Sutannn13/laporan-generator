@@ -189,14 +189,14 @@ Pilih salah satu metode kerja yang paling nyaman untuk Anda:
 Perintah ini akan membuat folder kerja mandiri yang hanya memuat outline pilihan Anda (tanpa folder outline lain):
 ```bash
 # Mode Interaktif:
-npx github:Sutannn13/laporan-generator <nama-folder-proyek>
+npx -y --allow-git=all github:Sutannn13/laporan-generator <nama-folder-proyek>
 
 # Mode Otomatis / Non-interaktif:
-npx github:Sutannn13/laporan-generator my-laporan --type laporan --outline 1 --yes
-npx github:Sutannn13/laporan-generator my-proposal --type proposal --yes
+npx -y --allow-git=all github:Sutannn13/laporan-generator my-laporan --type laporan --outline 1 --yes
+npx -y --allow-git=all github:Sutannn13/laporan-generator my-proposal --type proposal --yes
 
 # Di dalam folder yang sudah ada / folder aktif (.):
-npx github:Sutannn13/laporan-generator . --force
+npx -y --allow-git=all github:Sutannn13/laporan-generator . --force
 ```
 
 #### Pemasangan 1 Skill AI Agent Tanpa Clone & Scaffolder Word (.docx) SK Rektor UBSI 2026

@@ -99,7 +99,7 @@ def install(eksplisit_target=None, sumber_eksplisit=None, dengan_referensi=False
                 _salin_folder(src, dst)
             else:
                 shutil.copy2(src, dst)
-        print(f"[✓] {nama}: skill tersalin ke {dest}")
+        print(f"[OK] {nama}: skill tersalin ke {dest}")
 
     if not dengan_referensi:
         print("[i] references/ dilewati (opsional). Tambahkan --with-references untuk menyalinnya.")

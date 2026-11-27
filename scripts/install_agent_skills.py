@@ -168,6 +168,18 @@ def sync_source_skill_assets():
     legacy_ex = os.path.join(SOURCE_SKILL_DIR, "examples")
     if os.path.isdir(legacy_ex):
         shutil.rmtree(legacy_ex, ignore_errors=True)
+    # Prune any __pycache__/.pyc generated during local script runs inside the source bundle
+    for cur_root, dirs, files in os.walk(SOURCE_SKILL_DIR):
+        for dname in list(dirs):
+            if dname == "__pycache__":
+                shutil.rmtree(os.path.join(cur_root, dname), ignore_errors=True)
+                dirs.remove(dname)
+        for fname in files:
+            if fname.endswith((".pyc", ".pyo")):
+                try:
+                    os.remove(os.path.join(cur_root, fname))
+                except OSError:
+                    pass
     return synced
 
 
