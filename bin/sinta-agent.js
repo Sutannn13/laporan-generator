@@ -3,6 +3,7 @@
 const { spawnSync } = require('child_process');
 const path = require('path');
 const { checkRuntimes, runCli } = require('./install-skill');
+const tui = require('./tui');
 
 const ROOT_DIR = path.resolve(__dirname, '..');
 const args = process.argv.slice(2);
@@ -47,30 +48,32 @@ if (sub === 'install' || sub === 'setup' || sub === 'status' || sub === 'uninsta
 } else if (sub === 'showcase') {
   runUv('generate_sinta_journal_docx.py', ['--generate-showcase', rest[0] || 'contoh-template-ai']);
 } else {
-  console.log(`Laporan Generator & SINTA 1-6 Universal AI Agent CLI (sinta-agent)
-Mendukung: Antigravity, Claude Code, Cursor, OpenCode, Freebuff, KiloCode, Windsurf, Cline, & Roo Code
-
-Perintah (Tanpa git clone, kompatibel npm 12+):
-  npx skills add Sutannn13/laporan-generator
-      Pasang 1 skill terpadu via skills.sh
-  npx -y --allow-git=all github:Sutannn13/laporan-generator install [--workspace [dir]]
-      Pasang 1 skill terpadu + slash commands (pure Node, tanpa clone)
-  npx -y --allow-git=all github:Sutannn13/laporan-generator status [--json]
-      Cek status pemasangan skill & kesiapan runtime uv/Python
-  npx -y --allow-git=all github:Sutannn13/laporan-generator uninstall
-      Hapus berkas terkelola milik skill laporan-generator
-  npx -y --allow-git=all -p github:Sutannn13/laporan-generator sinta-agent buat [opsi]
-      Jalankan generator Jurnal SINTA 1-6 (.docx)
-  npx -y --allow-git=all -p github:Sutannn13/laporan-generator sinta-agent cek "<file.docx>"
-      Inspeksi DNA template .docx eksternal / draf existing
-  npx -y --allow-git=all -p github:Sutannn13/laporan-generator sinta-agent showcase
-      Generate ulang contoh di folder contoh-template-ai/
-
-Slash Commands di dalam Chat AI Agent:
-  /laporan-generator   Pintu utama semua dokumen (PKL, Skripsi UBSI, Audit COBIT, Jurnal SINTA)
-  /mode-ilmiah         Alur tim akademik 6 fase + rubrik Peer Reviewer >= 85/100
-  /jurnal-sinta        Mode Jurnal SINTA 1-6 (1/2 kolom, DOI Crossref, patuh R1-R4 Mendeley)
-  /sinta-buat          Generate cepat Word (.docx) mode Mendeley
-  /sinta-cek           Inspeksi XML & audit Anti-Slop + Burstiness
-`);
+  const st = tui.makeStyle();
+  console.log(tui.renderBanner({ version: '1.2.0' }));
+  tui.printIntro('sinta-agent', '1.2.0');
+  tui.printStep('Universal AI Agent CLI: Antigravity, Claude Code, Cursor, OpenCode, Freebuff, KiloCode, & Roo');
+  tui.printBox('Perintah (Tanpa git clone, kompatibel npm 12+)', [
+    `${st.amber('npx skills add Sutannn13/laporan-generator')}`,
+    `  ${st.muted('Pasang 1 skill terpadu via skills.sh')}`,
+    `${st.ivory('npx -y --allow-git=all github:Sutannn13/laporan-generator install [--workspace [dir]]')}`,
+    `  ${st.muted('Pasang 1 skill terpadu + 5 slash commands (pure Node, tanpa clone)')}`,
+    `${st.ivory('npx -y --allow-git=all github:Sutannn13/laporan-generator status [--json]')}`,
+    `  ${st.muted('Cek status pemasangan skill & kesiapan runtime uv/Python')}`,
+    `${st.ivory('npx -y --allow-git=all github:Sutannn13/laporan-generator uninstall')}`,
+    `  ${st.muted('Hapus berkas terkelola milik skill laporan-generator')}`,
+    `${st.ivory('npx -y --allow-git=all -p github:Sutannn13/laporan-generator sinta-agent buat [opsi]')}`,
+    `  ${st.muted('Jalankan generator Jurnal SINTA 1-6 (.docx)')}`,
+    `${st.ivory('npx -y --allow-git=all -p github:Sutannn13/laporan-generator sinta-agent cek "<file.docx>"')}`,
+    `  ${st.muted('Inspeksi DNA template .docx eksternal / draf existing')}`,
+    `${st.ivory('npx -y --allow-git=all -p github:Sutannn13/laporan-generator sinta-agent showcase')}`,
+    `  ${st.muted('Generate ulang contoh di folder contoh-template-ai/')}`,
+  ]);
+  tui.printBox('Slash Commands di dalam Chat AI Agent', [
+    `${st.amber('/laporan-generator')}  ${st.muted('Pintu utama semua dokumen (PKL, Skripsi UBSI, Audit COBIT, Jurnal SINTA)')}`,
+    `${st.amber('/mode-ilmiah')}        ${st.muted('Alur tim akademik 6 fase + rubrik Peer Reviewer >= 85/100')}`,
+    `${st.amber('/jurnal-sinta')}       ${st.muted('Mode Jurnal SINTA 1-6 (1/2 kolom, DOI Crossref, patuh R1-R4 Mendeley)')}`,
+    `${st.amber('/sinta-buat')}         ${st.muted('Generate cepat Word (.docx) mode Mendeley')}`,
+    `${st.amber('/sinta-cek')}          ${st.muted('Inspeksi XML & audit Anti-Slop + Burstiness')}`,
+  ]);
+  tui.printOutro('Gunakan subperintah di atas untuk mulai bekerja tanpa git clone.');
 }

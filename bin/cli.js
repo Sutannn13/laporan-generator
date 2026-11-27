@@ -3,6 +3,15 @@
 const fs = require('fs');
 const path = require('path');
 const readline = require('readline');
+const tui = require('./tui');
+
+const PKG_VERSION = (() => {
+  try {
+    return JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'package.json'), 'utf8')).version || '1.2.0';
+  } catch {
+    return '1.2.0';
+  }
+})();
 
 const outlines = {
   '1': {
@@ -109,6 +118,8 @@ function parseArgs(args) {
 }
 
 function printHelp() {
+  console.log(tui.renderBanner({ version: PKG_VERSION }));
+  tui.printIntro('laporan-generator', PKG_VERSION);
   console.log(`Laporan Generator & Template UBSI CLI (Zero-Clone)
 Program Studi: Teknologi Informasi (S1) | Jurnal SINTA 1-6 | Audit TI
 
@@ -278,10 +289,9 @@ async function main() {
     return;
   }
 
-  console.log('====================================================');
-  console.log('Template Typst PKL, Proposal & Skripsi UBSI CLI');
-  console.log('Program Studi: Teknologi Informasi (S1)');
-  console.log('====================================================\n');
+  console.log(tui.renderBanner({ version: PKG_VERSION }));
+  tui.printIntro('laporan-generator', PKG_VERSION);
+  tui.printStep('Template Typst PKL, Proposal & Skripsi UBSI CLI (Prodi TI S1)');
 
   const pr = createPromptReader();
 

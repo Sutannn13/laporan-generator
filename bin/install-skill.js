@@ -20,6 +20,7 @@ const fs = require('fs');
 const os = require('os');
 const path = require('path');
 const { spawnSync } = require('child_process');
+const tui = require('./tui');
 
 const PKG_ROOT = path.resolve(__dirname, '..');
 const SKILL_NAME = 'laporan-generator';
@@ -491,22 +492,26 @@ function parseCliArgs(argv) {
 }
 
 function printUsage() {
-  console.log(`Laporan Generator - Zero-Clone Unified Skill Installer (1 Skill: ${SKILL_NAME})
-
-Penggunaan (tanpa git clone):
-  npx skills add Sutannn13/laporan-generator
-  npx -y --allow-git=all github:Sutannn13/laporan-generator install [opsi]
-  npx -y --allow-git=all github:Sutannn13/laporan-generator status [--json]
-  npx -y --allow-git=all github:Sutannn13/laporan-generator uninstall [opsi]
-
-Opsi:
-  --workspace [dir]   Tambahkan pemasangan scoped ke folder proyek (tanpa menimpa AGENTS.md/CLAUDE.md)
-  --no-global         Jangan pasang ke direktori global user (wajib bersama --workspace)
-  --home <dir>        Override direktori home user (untuk pengujian terisolasi)
-  --require-uv        Gagal dengan exit code != 0 jika runtime uv belum terpasang
-  --json              Cetak output JSON (untuk status/install)
-  -h, --help          Tampilkan bantuan ini
-`);
+  const st = tui.makeStyle();
+  console.log(tui.renderBanner({ version: PKG_VERSION }));
+  tui.printIntro(SKILL_NAME, PKG_VERSION);
+  tui.printBox('Penggunaan (Tanpa git clone, kompatibel npm 12+)', [
+    `${st.amber('npx skills add Sutannn13/laporan-generator')}`,
+    `${st.muted('  Pasang 1 skill terpadu via skills.sh (Universal agents)')}`,
+    '',
+    `${st.ivory('npx -y --allow-git=all github:Sutannn13/laporan-generator install [opsi]')}`,
+    `${st.ivory('npx -y --allow-git=all github:Sutannn13/laporan-generator status [--json]')}`,
+    `${st.ivory('npx -y --allow-git=all github:Sutannn13/laporan-generator uninstall [opsi]')}`,
+  ]);
+  tui.printBox('Opsi CLI', [
+    `${st.amber('--workspace [dir]')}  Pasang scoped ke folder proyek (AGENTS.md/CLAUDE.md aman)`,
+    `${st.amber('--no-global')}        Hanya pasang di folder proyek (wajib bersama --workspace)`,
+    `${st.amber('--home <dir>')}       Override direktori home user (pengujian terisolasi)`,
+    `${st.amber('--require-uv')}       Gagal (exit 1) bila runtime uv belum terpasang`,
+    `${st.amber('--json')}             Output JSON murni tanpa banner (untuk CI/script)`,
+    `${st.amber('-h, --help')}         Tampilkan panduan ini`,
+  ]);
+  tui.printOutro('Siap dipakai di Antigravity, Claude Code, Cursor, OpenCode, Freebuff, KiloCode, & Roo.');
 }
 
 function runCli(argv = process.argv.slice(2)) {
@@ -516,21 +521,38 @@ function runCli(argv = process.argv.slice(2)) {
     return 0;
   }
 
+  const st = tui.makeStyle();
+
   try {
     if (opts.action === 'status') {
-      const st = getStatus(opts);
+      const stData = getStatus(opts);
       if (opts.json) {
-        console.log(JSON.stringify(st, null, 2));
+        console.log(JSON.stringify(stData, null, 2));
       } else {
-        console.log(`Status Skill Terpadu: ${st.skill} (v${st.version})`);
-        console.log(`Runtime uv     : ${st.runtimes.uv.available ? `OK (${st.runtimes.uv.version})` : 'BELUM TERPASANG (dibutuhkan untuk generator .docx)'}`);
-        console.log(`Runtime python : ${st.runtimes.python.available ? `OK (${st.runtimes.python.version})` : 'BELUM TERPASANG (opsional untuk audit_humanizer.py)'}`);
-        console.log('');
-        for (const c of st.checks) {
-          console.log(`  [${c.status.padEnd(9)}] ${c.agent}`);
-        }
+        console.log(tui.renderBanner({ version: stData.version }));
+        tui.printIntro(stData.skill, stData.version);
+        tui.printStep(
+          `Runtime uv: ${stData.runtimes.uv.available ? st.green(`OK (${stData.runtimes.uv.version})`) : st.amber('BELUM TERPASANG (butuh untuk generator .docx)')}`,
+          stData.runtimes.uv.available ? 'ok' : 'warn'
+        );
+        tui.printStep(
+          `Runtime python: ${stData.runtimes.python.available ? st.green(`OK (${stData.runtimes.python.version})`) : st.muted('OPSIONAL (untuk audit_humanizer.py)')}`,
+          stData.runtimes.python.available ? 'ok' : 'info'
+        );
+        const checkLines = stData.checks.map((c) => {
+          const badge = c.status === 'INSTALLED' ? st.green('[INSTALLED]') : st.red('[MISSING]  ');
+          return `${badge} ${c.agent}`;
+        });
+        const allOk = stData.checks.every((c) => c.status === 'INSTALLED');
+        tui.printBox('Status Instalasi Agent & Slash Commands', checkLines, allOk ? 'ok' : 'warn');
+        tui.printOutro(
+          allOk
+            ? 'Semua target skill & slash command terpasang lengkap.'
+            : 'Sebagian target belum terpasang. Jalankan subperintah `install` untuk melengkapi.',
+          allOk ? 'ok' : 'warn'
+        );
       }
-      return st.checks.every(c => c.status === 'INSTALLED') ? 0 : 1;
+      return stData.checks.every((c) => c.status === 'INSTALLED') ? 0 : 1;
     }
 
     if (opts.action === 'uninstall') {
@@ -538,7 +560,13 @@ function runCli(argv = process.argv.slice(2)) {
       if (opts.json) {
         console.log(JSON.stringify(res, null, 2));
       } else {
-        console.log(`[BERHASIL] Menghapus ${res.removed.length} berkas/direktori terkelola milik skill '${SKILL_NAME}'.`);
+        console.log(tui.renderBanner({ version: PKG_VERSION }));
+        tui.printIntro(SKILL_NAME, PKG_VERSION);
+        tui.printStep(
+          `Menghapus ${st.bold(res.removed.length)} berkas/direktori terkelola milik skill '${SKILL_NAME}'.`,
+          'ok'
+        );
+        tui.printOutro('Uninstall selesai. Berkas proyek pribadi Anda tetap utuh.');
       }
       return 0;
     }
@@ -547,20 +575,44 @@ function runCli(argv = process.argv.slice(2)) {
     if (opts.json) {
       console.log(JSON.stringify(res, null, 2));
     } else {
-      console.log(`[BERHASIL] 1 Skill Terpadu '${res.skill}' (v${res.version}) terpasang tanpa git clone!`);
-      console.log(`- Lokasi skill : ${res.installedSkills.length} direktori agent (${res.installedSkills[0]?.filesCount || 0} berkas per bundel, mencakup mode-ilmiah, jurnal-sinta, humanizer-id UBSI, & skrip OpenXML)`);
-      console.log(`- Slash command: ${res.installedCommands.length} berkas (/laporan-generator, /mode-ilmiah, /jurnal-sinta, /sinta-buat, /sinta-cek)`);
-      console.log(`- Aturan scoped: ${res.installedRules.length} berkas (AGENTS.md & CLAUDE.md proyek Anda tidak disentuh)`);
-      if (res.runtimes.uv.available) {
-        console.log(`- Runtime uv   : OK (${res.runtimes.uv.version})`);
-      } else {
-        console.warn(
-          '\n[PERHATIAN] Runtime `uv` belum terdeteksi di PATH.\n' +
-          'Skill sudah terpasang, tetapi skrip pembuat Word (.docx) & verifikator DOI membutuhkan `uv`.\n' +
-          'Pasang cepat (PowerShell): powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"\n' +
-          'Pasang cepat (macOS/Linux): curl -LsSf https://astral.sh/uv/install.sh | sh'
-        );
+      const filesPerBundle = res.installedSkills[0]?.filesCount || 0;
+      const okMark = st.unicode ? '✓' : '[OK]';
+      const agentSummaryLines = res.installedSkills.map(
+        (s) => `${st.green(okMark)} ${st.ivory(s.label)} ${st.muted(`(${s.filesCount} berkas)`)}`
+      );
+      const slashSummaryLines = [
+        `${st.amber('/laporan-generator')}  ${st.muted('Pintu utama PKL, Skripsi 2026, Audit COBIT, Jurnal SINTA')}`,
+        `${st.amber('/mode-ilmiah')}        ${st.muted('Alur tim akademik 6 fase + Peer Reviewer >= 85/100')}`,
+        `${st.amber('/jurnal-sinta')}       ${st.muted('Jurnal SINTA 1-6 (1/2 kolom, DOI Crossref, Mendeley R1-R4)')}`,
+        `${st.amber('/sinta-buat')}         ${st.muted('Generate cepat Word (.docx) mode Mendeley R1')}`,
+        `${st.amber('/sinta-cek')}          ${st.muted('Inspeksi XML .docx & audit Anti-Slop + Burstiness')}`,
+      ];
+
+      console.log(tui.renderBanner({ version: res.version }));
+      tui.printIntro(res.skill, res.version);
+      tui.printStep(
+        `1 Skill Terpadu ${st.bold(st.ivory(res.skill))} terpasang tanpa git clone (${filesPerBundle} berkas/bundel).`,
+        'ok'
+      );
+      tui.printBox('Ringkasan Instalasi', [
+        ...agentSummaryLines,
+        '',
+        `${st.muted('Slash commands :')} ${st.ivory(`${res.installedCommands.length} berkas terpasang`)}`,
+        `${st.muted('Aturan scoped  :')} ${st.ivory(`${res.installedRules.length} berkas`)} ${st.muted('(AGENTS.md & CLAUDE.md proyek aman)')}`,
+        `${st.muted('Runtime uv     :')} ${res.runtimes.uv.available ? st.green(`OK (${res.runtimes.uv.version})`) : st.amber('BELUM TERPASANG')}`,
+        `${st.muted('Runtime python :')} ${res.runtimes.python.available ? st.green(`OK (${res.runtimes.python.version})`) : st.muted('OPSIONAL')}`,
+      ], 'ok');
+      tui.printBox('Slash Commands Siap Pakai', slashSummaryLines, 'info');
+
+      if (!res.runtimes.uv.available) {
+        tui.printBox('Perhatian: Runtime `uv` Belum Terdeteksi', [
+          'Skill sudah terpasang, tetapi generator Word (.docx) & verifikator DOI butuh `uv`.',
+          `${st.amber('Windows :')} powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"`,
+          `${st.amber('macOS/L :')} curl -LsSf https://astral.sh/uv/install.sh | sh`,
+        ], 'warn');
       }
+
+      tui.printOutro(`Selesai! Buka chat AI Agent lalu ketik ${st.amber('/laporan-generator')} untuk mulai.`);
     }
     return 0;
   } catch (err) {

@@ -227,7 +227,23 @@ function testZeroCloneInstaller() {
       assert.ok(rSpacedCek.stdout.includes('paragraphs_count'), 'Expected JSON inspection output from sinta-agent cek');
     }
 
-    console.log('PASS: Zero-Clone Installer (fresh, status, idempotent, non-destructive, missing-uv fail-fast, uninstall, scaffold compat, spaced-path sinta-agent)');
+    // 9. TUI Banner & NO_COLOR / narrow-terminal / JSON-purity checks
+    const rHumanHelp = runNode(CLI_JS, ['install', '--help'], {
+      cwd: tmpCwd,
+      env: { ...process.env, NO_COLOR: '1', COLUMNS: '100' },
+    });
+    assert.strictEqual(rHumanHelp.status, 0);
+    assert.ok(!/\x1b\[/.test(rHumanHelp.stdout), 'Expected zero ANSI codes when NO_COLOR=1');
+    assert.ok(rHumanHelp.stdout.includes('██') || rHumanHelp.stdout.includes('LAPORAN GENERATOR'), 'Expected LAPORAN GENERATOR banner in human help');
+
+    const rNarrowHelp = runNode(CLI_JS, ['install', '--help'], {
+      cwd: tmpCwd,
+      env: { ...process.env, NO_COLOR: '1', COLUMNS: '60' },
+    });
+    assert.strictEqual(rNarrowHelp.status, 0);
+    assert.ok(rNarrowHelp.stdout.includes('LAPORAN GENERATOR'), 'Expected compact LAPORAN GENERATOR fallback on narrow terminal');
+
+    console.log('PASS: Zero-Clone Installer (fresh, status, idempotent, non-destructive, missing-uv fail-fast, uninstall, scaffold compat, spaced-path sinta-agent, TUI banner)');
   } finally {
     fs.rmSync(tmpBase, { recursive: true, force: true });
   }
