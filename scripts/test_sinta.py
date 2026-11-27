@@ -299,6 +299,88 @@ def verify_sinta_system():
             skr_ext = ET.fromstring(z_skr.read("word/document.xml")).find(".//{http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing}extent")
             assert skr_ext is not None and round(int(skr_ext.attrib["cx"]) / 360000.0, 1) == 5.0, "Expected 5.0 cm Skripsi cover logo"
 
+        # Verify ALL 9 official UBSI 2026 outlines match template/outlines/* (chapters, subchapters, cover logo <w:drawing>)
+        outline_specs = [
+            ("proposal", "4", 6, 4.0, ["BAB I PENDAHULUAN", "BAB II TEMPAT DAN WAKTU PKL", "BAB III PENUTUP", "2.1. Tempat PKL"]),
+            ("laporan", "1", 9, 4.0, ["BAB I LATAR BELAKANG IDE APLIKASI", "BAB II ANALISIS MASALAH", "BAB III SOLUSI INOVASI", "BAB IV TUJUAN DAN MANFAAT APLIKASI", "BAB V METODE PENGEMBANGAN PERANGKAT LUNAK", "BAB VI PENUTUP", "1.1. Latar Belakang Masalah", "3.1. Konsep Solusi Perangkat Lunak", "5.1. Model Siklus Hidup Perangkat Lunak (SDLC)"]),
+            ("laporan", "2", 7, 4.0, ["BAB I PENDAHULUAN", "BAB II LANDASAN TEORI", "BAB III PEMBAHASAN", "BAB IV PENUTUP", "2.1. Konsep Dasar Mobile Computing", "3.2. Analisa Flow Chart"]),
+            ("laporan", "3", 7, 4.0, ["BAB I PENDAHULUAN", "BAB II LANDASAN TEORI", "BAB III PEMBAHASAN", "BAB IV PENUTUP", "2.3. Model Referensi OSI dan TCP/IP", "3.2. Skema Jaringan"]),
+            ("laporan", "4", 7, 4.0, ["BAB I PENDAHULUAN", "BAB II LANDASAN TEORI", "BAB III PEMBAHASAN", "BAB IV PENUTUP", "2.2. Unified Modelling Language (UML)", "3.1. Tinjauan Institusi"]),
+            ("skripsi", "156", 8, 5.0, ["BAB III ANALISIS DAN PERANCANGAN APLIKASI", "BAB IV IMPLEMENTASI DAN PENGUJIAN SOFTWARE", "BAB V PENUTUP", "4.1. Desain"]),
+            ("skripsi", "138", 8, 5.0, ["BAB III METODOLOGI PENELITIAN", "BAB IV HASIL PENELITIAN DAN PEMBAHASAN", "1.7. Hipotesis"]),
+            ("skripsi", "137", 8, 5.0, ["BAB III ANALISIS JARINGAN BERJALAN", "BAB IV RANCANGAN JARINGAN USULAN", "4.2. Pengujian Jaringan"]),
+            ("skripsi", "158", 7, 5.0, ["BAB III ANALISIS DAN PERANCANGAN APLIKASI", "BAB IV PENUTUP", "3.1. Tinjauan StartUp", "3.6. Uraian Tugas"]),
+        ]
+        pkl1_docx = None
+        for o_type, o_code, exp_sections, exp_logo_cm, req_headings in outline_specs:
+            o_path = os.path.join(tmp_iso, f"UBSI_{o_type}_{o_code}.docx")
+            cp_o = subprocess.run(
+                [
+                    sys.executable,
+                    os.path.join(global_scripts_dir, "update_docx_script.py"),
+                    "--scaffold", "--type", o_type, "--outline", o_code,
+                    "--title", f"UJI OUTLINE {o_type.upper()} {o_code}",
+                    "--author", "Penulis Contoh", "--nim", "00000099", "--output", o_path,
+                ],
+                cwd=tmp_iso,
+                capture_output=True,
+                text=True,
+            )
+            assert cp_o.returncode == 0, f"Outline {o_type}/{o_code} scaffold failed:\n{cp_o.stdout}\n{cp_o.stderr}"
+            d_o = docx.Document(o_path)
+            assert len(d_o.sections) == exp_sections, f"Outline {o_type}/{o_code}: expected {exp_sections} sections, got {len(d_o.sections)}"
+            o_txt = "\n".join(p.text for p in d_o.paragraphs)
+            for h_req in req_headings:
+                assert h_req in o_txt, f"Outline {o_type}/{o_code} missing official heading '{h_req}'"
+            if o_code == "158":
+                assert "BAB V " not in o_txt, "Skripsi Outline 158 must have exactly 4 chapters (no BAB V)"
+            with zipfile.ZipFile(o_path, "r") as z_o:
+                o_ext = ET.fromstring(z_o.read("word/document.xml")).find(".//{http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing}extent")
+                assert o_ext is not None and round(int(o_ext.attrib["cx"]) / 360000.0, 1) == exp_logo_cm, (
+                    f"Outline {o_type}/{o_code}: expected {exp_logo_cm} cm cover logo"
+                )
+            logo_audit = audit_manuscript(o_path, require_cover_logo=True)
+            assert logo_audit["cover_logo_present"] is True, f"Outline {o_type}/{o_code} failed cover_logo_present check"
+            if o_type == "laporan" and o_code == "1":
+                pkl1_docx = o_path
+
+        # Regression: wiping cover paragraph text destroys <w:drawing> while leaving orphaned media/image1.png;
+        # check_antislop_academic --require-cover-logo --max-placeholders --min-words MUST fail on that broken docx!
+        broken_pkl = os.path.join(tmp_iso, "PKL1_Broken_NoLogo_Empty.docx")
+        d_broken = docx.Document(pkl1_docx)
+        for p_cov in d_broken.paragraphs[:6]:
+            if p_cov._p.find(".//{http://schemas.openxmlformats.org/wordprocessingml/2006/main}drawing") is not None:
+                p_cov.text = ""
+        for idx_ph in range(12):
+            d_broken.add_paragraph(f"[ISI DATA NYATA: Placeholder uji ke-{idx_ph + 1}]")
+        d_broken.save(broken_pkl)
+        broken_res = audit_manuscript(broken_pkl, require_cover_logo=True, max_placeholders=8, min_words=2000)
+        assert not broken_res["passed"], f"Expected broken PKL (no cover logo + empty) to fail: {broken_res}"
+        assert broken_res["cover_logo_present"] is False, f"Expected cover_logo_present=False, got {broken_res}"
+        assert any("Logo sampul" in c for c in broken_res["critical_issues"]), f"Missing cover logo failure: {broken_res['critical_issues']}"
+        assert any("Draf terlalu kosong" in c for c in broken_res["critical_issues"]), f"Missing placeholder cap failure: {broken_res['critical_issues']}"
+        assert any("Substansi naskah terlalu singkat" in c for c in broken_res["critical_issues"]), f"Missing min_words failure: {broken_res['critical_issues']}"
+
+        # Happy-path completeness check: cover logo intact + >= 2000 words + <= 8 placeholders passes
+        full_pkl = os.path.join(tmp_iso, "PKL1_Substantive.docx")
+        d_full = docx.Document(pkl1_docx)
+        for p_cl in d_full.paragraphs:
+            if "[ISI DATA NYATA:" in p_cl.text:
+                p_cl.text = "Data identitas mahasiswa telah diverifikasi oleh pembimbing akademik sesuai pedoman resmi kampus."
+        substantive_block = (
+            "Sistem e-voting berbasis web membantu panitia pemilihan tingkat lingkungan menata daftar pemilih tetap secara akurat. "
+            "Validasi hak suara berlangsung otomatis pada sisi peladen menggunakan mekanisme autentikasi berbasis token sekali pakai dan pencatatan log audit yang dapat diperiksa ulang kapan saja oleh panitia pengawas independen. "
+            "Pendekatan ini menekan kesalahan hitung manual. "
+            "Arsitektur perangkat lunak memisahkan lapisan antarmuka pemilih, layanan verifikasi kredensial, dan basis data relasional terenkripsi sehingga integritas hasil rekapitulasi suara tetap terjaga selama seluruh tahapan pemungutan suara berlangsung."
+        )
+        for _ in range(30):
+            d_full.add_paragraph(substantive_block)
+        d_full.save(full_pkl)
+        full_res = audit_manuscript(full_pkl, require_cover_logo=True, max_placeholders=8, min_words=2000)
+        assert full_res["passed"] and full_res["cover_logo_present"] is True and full_res["body_word_count"] >= 2000, (
+            f"Substantive PKL with cover logo should pass: {full_res}"
+        )
+
         # Verify SSRF scheme + private/loopback/metadata IP guard (M-02) & UBSI full author formatting (--no-et-al) & LAMPIRAN em-dash check
         bad_url_res = verify_url_status("file:///C:/Windows/win.ini")
         assert not bad_url_res["ok"] and "HTTP(S)" in bad_url_res.get("error", "")

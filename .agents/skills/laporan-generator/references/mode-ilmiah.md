@@ -6,15 +6,17 @@ Kamu bekerja sebagai SATU agent yang menjalankan tugas akademik, riset, dan anal
 
 ## 8 Prinsip Inti Anti-Revisi (Mutlak & Tidak Bisa Ditawar)
 
-1. **Zero Halusinasi (Bukti & Data Valid, Bukan Karangan)**:
-   - Setiap angka statistik, temuan lapangan, kutipan regulasi (UU/PP/POJK/PBI/Putusan Pengadilan), nama instansi, dan klaim ilmiah **WAJIB** berasal dari dokumen sumber pengguna, berkas workspace, atau API publik terverifikasi (Crossref/OpenAlex/PubMed/BPS/OJK).
-   - Jika ada data nyata yang belum tersedia (misal: jumlah sampel, hasil wawancara, metrik akurasi pengujian, atau nomor surat), **DILARANG KERAS mengarang angka**. Tulis placeholder mencolok `[ISI DATA NYATA: <jelaskan data yang dibutuhkan>]` dan laporkan ke pengguna.
-2. **Ringkas, Padat, Fokus ke Topik (Anti-Kepanjangan / Anti-Bertele-tele)**:
-   - Jurnal ilmiah (SINTA/Scopus) **bukan** tempat mendongeng atau menyalin bab laporan PKL/skripsi.
-   - Patuhi **Anggaran Kata (*Word Budget*)** yang ditetapkan di Fase 2. Gunakan kalimat akademik efektif (rata-rata 15-25 kata per kalimat; 4-6 kalimat per paragraf; 1 ide pokok per paragraf). Langsung masuk ke inti masalah, metode, dan temuan tanpa pengantar klise.
-3. **R1 - Referensi Itu Sakral (Wilayah Mendeley Pemilik)**:
-   - Saat menulis atau mengedit file `.docx` naskah jurnal milik pengguna, agent **DILARANG KERAS menulis bagian `DAFTAR PUSTAKA` / `REFERENSI` / `REFERENCES` beserta daftar entrinya ke dalam file `.docx`**.
-   - Daftar Pustaka di dalam `.docx` dikelola sendiri oleh pemilik menggunakan **Mendeley**. Biarkan bagian bawah setelah Kesimpulan (atau di bawah heading `REFERENSI` bawaan template) tetap bersih untuk Mendeley.
+1. **Zero Halusinasi (Bukti & Data Valid, Bukan Karangan, Sekaligus Anti Draf Kosong)**:
+   - Setiap angka statistik, temuan lapangan, kutipan regulasi (UU/PP/POJK/PBI/Putusan Pengadilan), nama instansi, dan klaim ilmiah **WAJIB** berasal dari dokumen sumber pengguna, berkas/*source code* workspace, atau API publik terverifikasi (Crossref/OpenAlex/SINTA-GARUDA/dokumentasi resmi).
+   - **Pisahkan secara tegas materi konseptual vs data empiris privat**:
+     - **Wajib ditulis penuh & substantif** (JANGAN diganti `[ISI DATA NYATA]`): landasan teori, definisi konseptual berbasis literatur nyata/dokumentasi resmi (misal arsitektur Web, E-Voting, Laravel, UML, SDLC, PIECES, Black-Box), kerangka pemecahan masalah dari brief pengguna, dan rancangan arsitektur/alur sistem.
+     - **Tandai dengan `[ISI DATA NYATA: <jelaskan data yang dibutuhkan>]` HANYA** untuk data empiris/administratif privat yang benar-benar tidak ada di brief maupun workspace (misal NIP pembimbing lapangan, tanggal pengesahan, angka survei lapangan aktual, tangkapan layar aplikasi nyata, atau log eksekusi pengujian aktual). **Dilarang keras mengarang angka** maupun membiarkan bab konseptual kosong.
+2. **Proporsional sesuai Jenis Dokumen (Ringkas untuk Jurnal, Substantif untuk PKL/Skripsi)**:
+   - Untuk **Jurnal Ilmiah (SINTA/Scopus)**: ringkas, padat, fokus ke topik; patuhi **Anggaran Kata (*Word Budget*) IMRaD** tanpa menyalin bab administratif PKL/skripsi.
+   - Untuk **Laporan PKL / Skripsi (`LAPORAN-AKADEMIK`)**: penuhi seluruh bab dan sub-bab resmi outline kampus secara utuh, runtut, dan bernilai akademik (minimal 2.000+ kata prose substantif untuk Laporan PKL dan sesuai target halaman Pedoman UBSI 2026 untuk Skripsi).
+3. **R1 - Referensi Jurnal Wilayah Mendeley vs Daftar Pustaka PKL/Skripsi**:
+   - **Khusus Jurnal SINTA/Scopus (`JURNAL-SINTA` / `JURNAL-SCOPUS`)**: saat menulis atau mengedit file `.docx` naskah jurnal, agent **DILARANG KERAS menulis bagian `DAFTAR PUSTAKA` / `REFERENSI` / `REFERENCES` beserta daftar entrinya ke dalam file `.docx`**. Daftar Pustaka jurnal dikelola sendiri oleh pemilik lewat **Mendeley** (gunakan `--mendeley-mode`).
+   - **Khusus Laporan PKL & Skripsi UBSI (`LAPORAN-AKADEMIK`)**: agent **menulis langsung** Daftar Pustaka APA V.7 terverifikasi nyata ke dalam `.docx` (semua nama pengarang ditulis utuh tanpa `et al.` / `dkk.` sesuai SK Rektor UBSI 2026) **sekaligus** mengekspor berkas `.txt` terpisah agar mudah diimpor ke Mendeley.
 4. **R2 - Satu File Target (*Live In-Place Editing*)**:
    - Jika pemilik memberikan satu file `.docx` target (misalnya `Template JKI.docx`), agent **WAJIB bekerja dan menyimpan perubahan langsung di file `.docx` tersebut**.
    - **DILARANG KERAS** membuat file `.docx` baru, file pecahan per-bab (`_Bab1.docx`), file duplikat, atau ekspor PDF/PNG turunan tanpa izin eksplisit pemilik.
@@ -60,6 +62,29 @@ Agar isi jurnal **fokus ke topik, proporsional, dan tidak terlalu panjang**, peg
 | **3. Hasil dan Pembahasan** | 45% - 55% | **1.400 - 2.000 kata** (Sub-bab sesuai tujuan) | **2.000 - 3.000 kata** (Sub-bab analitis mendalam) | Sajikan bukti (tabel/gambar/studi kasus/analisis pasal), lalu **analisis maknanya** dan **bandingkan dengan temuan peneliti terdahulu** (apakah mendukung, membantah, atau memperluas?). Jangan hanya mengulang angka di dalam tabel menjadi kalimat. |
 | **4. Kesimpulan** | 5% - 8% | **150 - 250 kata** (1 - 2 paragraf utuh) | **200 - 350 kata** (1 - 2 paragraf utuh) | Menjawab langsung tujuan di akhir Pendahuluan secara padat (bentuk paragraf, **bukan** poin-poin *bullet/numbering*), disertai 1-2 kalimat keterbatasan studi dan arah riset lanjutan. **Dilarang ada sitasi baru di Kesimpulan.** |
 | **Daftar Pustaka** | Sesuai R1 & R3 | **0 entri di `.docx` (disimpan di `.txt` terpisah, min. 15 ref ber-DOI)** | **0 entri di `.docx` (disimpan di `.txt` terpisah, min. 25-30 ref ber-DOI)** | Di dalam `.docx` dikosongkan untuk Mendeley pemilik (R1). Di file `.txt` (R3): minimal 80% artikel jurnal primer 5-10 tahun terakhir dengan DOI Crossref aktif & label SINTA/Scopus. |
+
+---
+
+## Standar Kelengkapan Khusus `LAPORAN-AKADEMIK` (PKL & Skripsi UBSI 2026)
+
+Saat menjalankan mode `LAPORAN-AKADEMIK` (Proposal PKL, Laporan PKL Outline 1-4, atau Skripsi Outline 156/138/137/158), terapkan kontrak berikut agar dokumen **tidak pernah kosong, selalu membawa logo UBSI, dan 100% sesuai outline resmi**:
+
+1. **Wajib Mulai dari Scaffolder Resmi (`update_docx_script.py --scaffold`)**:
+   - Gunakan `--type proposal|laporan|skripsi` dan `--outline 1|2|3|4|156|138|137|158` agar seluruh judul Bab, Sub-bab resmi UBSI 2026, margin 3/4/2.5/2.5 cm, penomoran Romawi-Arab multi-seksi, watermark (Skripsi), dan **logo UBSI (`logo-ubsi.png`)** di halaman sampul terpasang otomatis.
+   - **Larangan Penghancuran Logo Sampul**: Saat menyunting `.docx` hasil scaffold secara *in-place*, **JANGAN PERNAH** menetapkan `p.text = ...` pada paragraf yang memuat `<w:drawing>` (atau menulis ulang seluruh paragraf dari awal), karena operasi tersebut menghapus elemen gambar logo dari `word/document.xml` sementara menyisakan `rId` yatim.
+2. **Eksplorasi Proyek & Riset Literatur Nyata Sebelum Menulis**:
+   - Periksa folder kerja pengguna (`composer.json`, `package.json`, `routes/`, `database/migrations/`, `app/`, `README.md`) bila proyek perangkat lunak tersedia; ekstrak versi framework, entitas basis data, dan fitur nyata dari kode tersebut.
+   - Jalankan `sinta_garuda_mcp.py` / `verify_sinta_refs.py` (atau dokumentasi resmi teknologi terkait) untuk menghimpun referensi terverifikasi 5 tahun terakhir (`2022-2026`) guna menopang seluruh bab konseptual/teori secara utuh.
+3. **Tulis Substansi Penuh, Batasi `[ISI DATA NYATA: ...]`**:
+   - Seluruh sub-bab konseptual, uraian latar belakang, analisis masalah, solusi inovasi/arsitektur, teori/pustaka, dan metode SDLC wajib ditulis lengkap (minimal 2-4 paragraf padat per sub-bab, total >= 2.000 kata prose untuk Laporan PKL dan >= 5.000 kata untuk Skripsi).
+   - Batasi `[ISI DATA NYATA: ...]` **maksimal <= 8 titik** hanya untuk data privat lapangan yang tidak tersedia (NIP pembimbing, angka survei aktual, tangkapan layar lokal, log hasil uji aktual).
+4. **Daftar Pustaka Ganda (`.docx` + `.txt`)**:
+   - Tulis referensi terverifikasi nyata format **APA V.7 tanpa `et al.` / `dkk.`** (semua nama pengarang ditulis lengkap sesuai SK Rektor UBSI 2026) langsung pada bagian `DAFTAR PUSTAKA` `.docx`, sekaligus ekspor salinan berkas `.txt` untuk kemudahan impor ke Mendeley.
+5. **Gerbang Lulus Wajib Fase 5 (`LAPORAN-AKADEMIK`)**:
+   ```powershell
+   uv run "<skill_dir>/scripts/check_antislop_academic.py" --input "<path_file_target.docx>" --require-cover-logo --max-placeholders 8 --min-words 2000
+   ```
+   *(Naskah **TIDAK LOLOS** jika logo sampul `<w:drawing>` hilang, placeholder `[ISI DATA NYATA]` melampaui batas, atau prose di bawah ambang minimum.)*
 
 ---
 
@@ -207,10 +232,16 @@ Jalankan perintah verifikasi nyata di terminal dan tampilkan output aslinya:
    ```powershell
    $env:PYTHONIOENCODING="utf-8"; uv run "<skill_dir>/scripts/generate_sinta_journal_docx.py" --inspect-docx "<path_file_target.docx>"
    ```
-2. **Audit Otomatis `antislop-copywriting`, `humanizer-id`, *Burstiness*, & Kepatuhan R1-R4**:
+2. **Audit Otomatis `antislop-copywriting`, `humanizer-id`, *Burstiness*, Logo Sampul, & Kepatuhan R1-R4**:
    Jalankan linter struktur/anti-slop pada `.docx` serta auditor kebahasaan `humanizer-id` pada draf teks/ekstraksi teks (sebelum/saat disuntikkan ke `.docx`, karena `humanizer-id` berbasis teks/markdown dan tidak membaca biner `.docx` secara langsung):
    ```powershell
+   # Untuk Jurnal SINTA/Scopus (R1 ketat: 0 entri daftar pustaka di .docx):
    uv run "<skill_dir>/scripts/check_antislop_academic.py" --input "<path_file_target.docx>" --mendeley-mode
+
+   # Untuk Laporan PKL / Skripsi UBSI (wajib logo sampul <w:drawing> & prose substantif):
+   uv run "<skill_dir>/scripts/check_antislop_academic.py" --input "<path_file_target.docx>" --require-cover-logo --max-placeholders 8 --min-words 2000
+
+   # Audit Bahasa Indonesia baku preset kampus UBSI:
    python "<skill_dir>/scripts/audit_humanizer.py" "<path_draf_teks.md>" --preset akademik --kampus ubsi
    ```
    *(Serta cek entri ber-DOI aktif & link PDF `HTTP 200` pada berkas `.txt` / dosir `.docx` kandidat referensi sesuai R3).*

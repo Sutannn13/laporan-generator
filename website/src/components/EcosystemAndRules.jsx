@@ -1,13 +1,13 @@
 import { Fragment, useEffect, useMemo, useRef, useState } from "react";
 import gsap from "gsap";
-import { AnimatePresence, motion } from "motion/react";
 import { Check, Copy, Terminal } from "lucide-react";
 import {
-  INSTALL_TABS,
   MANIFESTO_CONTENT,
   MANIFESTO_STATS,
+  PRIMARY_INSTALL,
   R1_R4_PRINCIPLES,
   REPO_URL,
+  SECONDARY_COMMANDS,
   SKILL_ROWS,
   UPSTREAM_REPO_URL,
 } from "../data/siteContent";
@@ -18,7 +18,6 @@ import {
   ServicePreviewArt,
   SplitHeading,
   StarGlyph,
-  useSlidingPill,
 } from "./OverstoryVisuals";
 
 function parseManifestoTokens(text) {
@@ -37,22 +36,13 @@ export default function EcosystemAndRules({
   starGate,
 }) {
   const [hoveredIdx, setHoveredIdx] = useState(0);
-  const [cliTabIdx, setCliTabIdx] = useState(0);
   const [copiedId, setCopiedId] = useState("");
   const listRef = useRef(null);
   const prevRef = useRef(null);
   const showPrevRef = useRef(false);
-  const cliTabsRef = useRef(null);
-  const cliTabItemRefs = useRef([]);
   const cliBoxRef = useRef(null);
 
   const tokens = useMemo(() => parseManifestoTokens(MANIFESTO_CONTENT.text), []);
-  const activeCliTab = INSTALL_TABS[cliTabIdx] || INSTALL_TABS[0];
-  const cliPillBox = useSlidingPill(
-    cliTabsRef,
-    cliTabItemRefs,
-    starGate.unlocked && openSkillIdx === 4 ? cliTabIdx : -1
-  );
 
   // Animate unlock reveal when starGate.unlocked transitions to true
   useEffect(() => {
@@ -139,14 +129,6 @@ export default function EcosystemAndRules({
     } else {
       markDone();
     }
-  };
-
-  const handleCliTabKeyDown = (idx, e) => {
-    if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;
-    e.preventDefault();
-    const next = (idx + (e.key === "ArrowRight" ? 1 : -1) + INSTALL_TABS.length) % INSTALL_TABS.length;
-    setCliTabIdx(next);
-    cliTabItemRefs.current[next]?.focus();
   };
 
   return (
@@ -336,89 +318,65 @@ export default function EcosystemAndRules({
                                 </span>
                               </div>
 
-                              <div
-                                ref={cliTabsRef}
-                                className="ovs-cli-tabs"
-                                role="tablist"
-                                aria-label="Skenario perintah terminal"
-                              >
-                                <span
-                                  className="ovs-sliding-pill ovs-sliding-pill-cli"
-                                  aria-hidden="true"
-                                  style={{
-                                    width: `${cliPillBox.w}px`,
-                                    height: `${cliPillBox.h}px`,
-                                    opacity: cliPillBox.ready ? 1 : 0,
-                                    transform: `translate3d(${cliPillBox.x}px, ${cliPillBox.y}px, 0)`,
-                                  }}
-                                />
-                                {INSTALL_TABS.map((tab, tIdx) => (
-                                  <button
-                                    key={tab.id}
-                                    ref={(el) => {
-                                      cliTabItemRefs.current[tIdx] = el;
-                                    }}
-                                    type="button"
-                                    role="tab"
-                                    tabIndex={cliTabIdx === tIdx ? 0 : -1}
-                                    aria-selected={cliTabIdx === tIdx}
-                                    className="ovs-cli-tab"
-                                    onClick={() => setCliTabIdx(tIdx)}
-                                    onKeyDown={(e) => handleCliTabKeyDown(tIdx, e)}
-                                  >
-                                    <span className="ovs-cli-tab-idx">0{tIdx + 1}</span>
-                                    <span>{tab.label}</span>
-                                  </button>
-                                ))}
-                              </div>
-
                               <div className="ovs-cli-stage">
                                 <div className="ovs-cli-stage-bar">
                                   <span className="ovs-cli-stage-meta">
                                     <i className="ovs-cli-live-dot" aria-hidden="true" />
-                                    <span>{activeCliTab.label}</span>
+                                    <span>{PRIMARY_INSTALL.label}</span>
                                     <span className="ovs-cli-shell-tag">powershell / bash</span>
                                   </span>
 
                                   <button
                                     type="button"
                                     className="ovs-cli-copy-btn"
-                                    data-copied={copiedId === activeCliTab.id ? "" : undefined}
+                                    data-copied={copiedId === PRIMARY_INSTALL.id ? "" : undefined}
                                     onClick={() =>
-                                      handleCopyText(activeCliTab.id, activeCliTab.command)
+                                      handleCopyText(PRIMARY_INSTALL.id, PRIMARY_INSTALL.command)
                                     }
                                   >
-                                    {copiedId === activeCliTab.id ? (
+                                    {copiedId === PRIMARY_INSTALL.id ? (
                                       <Check size={14} aria-hidden="true" />
                                     ) : (
                                       <Copy size={14} aria-hidden="true" />
                                     )}
                                     <span aria-live="polite">
-                                      {copiedId === activeCliTab.id ? "Tersalin" : "Salin Perintah"}
+                                      {copiedId === PRIMARY_INSTALL.id ? "Tersalin" : "Salin Perintah"}
                                     </span>
                                   </button>
                                 </div>
 
-                                <AnimatePresence mode="wait" initial={false}>
-                                  <motion.div
-                                    key={activeCliTab.id}
-                                    initial={{ opacity: 0, y: 6 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    exit={{ opacity: 0, y: -4 }}
-                                    transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
-                                    className="ovs-cli-code-panel"
-                                  >
-                                    <pre className="ovs-cli-pre">
-                                      <code className="ovs-cli-cmd">
-                                        <span className="ovs-cli-prompt" aria-hidden="true">
-                                          $
-                                        </span>
-                                        {activeCliTab.command}
+                                <div className="ovs-cli-code-panel">
+                                  <pre className="ovs-cli-pre">
+                                    <code className="ovs-cli-cmd">
+                                      <span className="ovs-cli-prompt" aria-hidden="true">
+                                        $
+                                      </span>
+                                      {PRIMARY_INSTALL.command}
+                                    </code>
+                                  </pre>
+                                  <p className="ovs-cli-hint">{PRIMARY_INSTALL.hint}</p>
+                                </div>
+                              </div>
+
+                              <div className="ovs-cli-utils" aria-label="Perintah bantu lanjutan">
+                                <span className="ovs-cli-utils-label">Utilitas opsional:</span>
+                                <div className="ovs-cli-utils-list">
+                                  {SECONDARY_COMMANDS.map((item) => (
+                                    <button
+                                      key={item.id}
+                                      type="button"
+                                      className="ovs-cli-util-item"
+                                      data-copied={copiedId === item.id ? "" : undefined}
+                                      onClick={() => handleCopyText(item.id, item.command)}
+                                      title={`Salin: ${item.command}`}
+                                    >
+                                      <span className="ovs-cli-util-name">{item.label}</span>
+                                      <code className="ovs-cli-util-cmd">
+                                        {copiedId === item.id ? "Tersalin" : item.command}
                                       </code>
-                                    </pre>
-                                    <p className="ovs-cli-hint">{activeCliTab.hint}</p>
-                                  </motion.div>
-                                </AnimatePresence>
+                                    </button>
+                                  ))}
+                                </div>
                               </div>
 
                               <div className="ovs-fork-note">
@@ -468,7 +426,7 @@ export default function EcosystemAndRules({
 
                               <div className="ovs-star-redacted" aria-hidden="true">
                                 <code>
-                                  $ npx skills add Sutannn13/laporan-generator
+                                  $ npx -y --allow-git=all github:Sutannn13/laporan-generator install
                                 </code>
                                 <span className="ovs-star-lock-tag">
                                   <LockGlyph unlocked={false} size={13} />

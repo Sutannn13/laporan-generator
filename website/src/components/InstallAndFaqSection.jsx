@@ -69,7 +69,7 @@ export default function InstallAndFaqSection({
                       ? "Buka Kunci CLI (Star GitHub)"
                       : copied
                         ? "Perintah Tersalin"
-                        : "Salin npx skills add"}
+                        : "Salin Perintah Install"}
                   </span>
                 </button>
                 <a

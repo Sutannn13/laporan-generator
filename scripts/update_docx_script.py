@@ -30,18 +30,277 @@ DEFAULT_BACKUP = 'Laporan_PKL_Input.docx'
 DEFAULT_TARGET = 'Laporan_PKL_Output.docx'
 
 PKL_OUTLINES = {
-    'proposal': ('Proposal PKL (3 Bab)', ['BAB I PENDAHULUAN', 'BAB II LANDASAN TEORI', 'BAB III METODE PELAKSANAAN DAN JADWAL PKL']),
-    '1': ('Proyek Inovasi Perangkat Lunak (6 Bab)', ['BAB I PENDAHULUAN', 'BAB II LANDASAN TEORI', 'BAB III ANALISIS DAN PERANCANGAN SISTEM', 'BAB IV IMPLEMENTASI DAN PENGUJIAN', 'BAB V PEMBAHASAN', 'BAB VI PENUTUP']),
-    '2': ('Analisa Program Berbasis Mobile (4 Bab)', ['BAB I PENDAHULUAN', 'BAB II TINJAUAN PUSTAKA', 'BAB III ANALISIS PROGRAM MOBILE', 'BAB IV PENUTUP']),
-    '3': ('Jaringan Komputer (4 Bab)', ['BAB I PENDAHULUAN', 'BAB II LANDASAN TEORI JARINGAN', 'BAB III ANALISIS DAN TOPOLOGI JARINGAN', 'BAB IV PENUTUP']),
-    '4': ('Analisis Sistem (4 Bab)', ['BAB I PENDAHULUAN', 'BAB II LANDASAN TEORI', 'BAB III ANALISIS SISTEM BERJALAN DAN USULAN', 'BAB IV PENUTUP']),
+    'proposal': (
+        'Proposal PKL (3 Bab)',
+        ['BAB I PENDAHULUAN', 'BAB II TEMPAT DAN WAKTU PKL', 'BAB III PENUTUP'],
+    ),
+    '1': (
+        'Proyek Inovasi Perangkat Lunak (6 Bab)',
+        [
+            'BAB I LATAR BELAKANG IDE APLIKASI',
+            'BAB II ANALISIS MASALAH',
+            'BAB III SOLUSI INOVASI',
+            'BAB IV TUJUAN DAN MANFAAT APLIKASI',
+            'BAB V METODE PENGEMBANGAN PERANGKAT LUNAK',
+            'BAB VI PENUTUP',
+        ],
+    ),
+    '2': (
+        'Analisa Program Berbasis Mobile (4 Bab)',
+        ['BAB I PENDAHULUAN', 'BAB II LANDASAN TEORI', 'BAB III PEMBAHASAN', 'BAB IV PENUTUP'],
+    ),
+    '3': (
+        'Jaringan Komputer (4 Bab)',
+        ['BAB I PENDAHULUAN', 'BAB II LANDASAN TEORI', 'BAB III PEMBAHASAN', 'BAB IV PENUTUP'],
+    ),
+    '4': (
+        'Analisis Sistem (4 Bab)',
+        ['BAB I PENDAHULUAN', 'BAB II LANDASAN TEORI', 'BAB III PEMBAHASAN', 'BAB IV PENUTUP'],
+    ),
 }
 
 SKRIPSI_OUTLINES = {
-    '156': ('Skripsi Outline 156 - Perancangan Program (Individu)', ['BAB I PENDAHULUAN', 'BAB II LANDASAN TEORI', 'BAB III ANALISIS DAN PERANCANGAN SISTEM', 'BAB IV IMPLEMENTASI DAN PENGUJIAN', 'BAB V PENUTUP']),
-    '138': ('Skripsi Outline 138 - Penelitian Ilmiah (Individu)', ['BAB I PENDAHULUAN', 'BAB II TINJAUAN PUSTAKA', 'BAB III METODOLOGI PENELITIAN', 'BAB IV HASIL DAN PEMBAHASAN', 'BAB V PENUTUP']),
-    '137': ('Skripsi Outline 137 - Jaringan Komputer (Individu)', ['BAB I PENDAHULUAN', 'BAB II LANDASAN TEORI', 'BAB III ANALISIS DAN PERANCANGAN JARINGAN', 'BAB IV IMPLEMENTASI DAN PENGUJIAN', 'BAB V PENUTUP']),
-    '158': ('Skripsi Outline 158 - Aplikasi StartUp (Kelompok Maks. 2 Mahasiswa)', ['BAB I PENDAHULUAN', 'BAB II LANDASAN TEORI', 'BAB III PERANCANGAN DAN PENGEMBANGAN STARTUP', 'BAB IV IMPLEMENTASI DAN EVALUASI', 'BAB V PENUTUP']),
+    '156': (
+        'Skripsi Outline 156 - Perancangan Program Science (5 Bab)',
+        [
+            'BAB I PENDAHULUAN',
+            'BAB II LANDASAN TEORI',
+            'BAB III ANALISIS DAN PERANCANGAN APLIKASI',
+            'BAB IV IMPLEMENTASI DAN PENGUJIAN SOFTWARE',
+            'BAB V PENUTUP',
+        ],
+    ),
+    '138': (
+        'Skripsi Outline 138 - Penelitian Ilmiah (5 Bab)',
+        [
+            'BAB I PENDAHULUAN',
+            'BAB II LANDASAN TEORI',
+            'BAB III METODOLOGI PENELITIAN',
+            'BAB IV HASIL PENELITIAN DAN PEMBAHASAN',
+            'BAB V PENUTUP',
+        ],
+    ),
+    '137': (
+        'Skripsi Outline 137 - Jaringan Komputer (5 Bab)',
+        [
+            'BAB I PENDAHULUAN',
+            'BAB II LANDASAN TEORI',
+            'BAB III ANALISIS JARINGAN BERJALAN',
+            'BAB IV RANCANGAN JARINGAN USULAN',
+            'BAB V PENUTUP',
+        ],
+    ),
+    '158': (
+        'Skripsi Outline 158 - Aplikasi StartUp (4 Bab, Kelompok Maks. 2 Mahasiswa)',
+        [
+            'BAB I PENDAHULUAN',
+            'BAB II LANDASAN TEORI',
+            'BAB III ANALISIS DAN PERANCANGAN APLIKASI',
+            'BAB IV PENUTUP',
+        ],
+    ),
+}
+
+OUTLINE_SUBCHAPTERS = {
+    'proposal': {
+        'BAB I PENDAHULUAN': ['1.1. Latar Belakang', '1.2. Tujuan dan Manfaat'],
+        'BAB II TEMPAT DAN WAKTU PKL': [
+            '2.1. Tempat PKL',
+            '2.2. Waktu PKL',
+            '2.3. Bidang Pekerjaan yang Dijadikan Praktik Kerja',
+        ],
+        'BAB III PENUTUP': [],
+    },
+    '1': {
+        'BAB I LATAR BELAKANG IDE APLIKASI': [
+            '1.1. Latar Belakang Masalah',
+            '1.2. Kondisi Sistem Berjalan',
+            '1.3. Urgensi Inovasi',
+        ],
+        'BAB II ANALISIS MASALAH': [
+            '2.1. Identifikasi Masalah',
+            '2.2. Data Pendukung',
+            '2.3. Dampak Masalah',
+        ],
+        'BAB III SOLUSI INOVASI': [
+            '3.1. Konsep Solusi Perangkat Lunak',
+            '3.2. Nilai Inovasi dan Keunggulan',
+            '3.3. Fitur Utama dan Alur Kerja Sistem',
+        ],
+        'BAB IV TUJUAN DAN MANFAAT APLIKASI': [
+            '4.1. Tujuan Aplikasi',
+            '4.2. Manfaat Aplikasi',
+        ],
+        'BAB V METODE PENGEMBANGAN PERANGKAT LUNAK': [
+            '5.1. Model Siklus Hidup Perangkat Lunak (SDLC)',
+            '5.2. Tahapan Pengembangan',
+            '5.3. Lingkungan dan Alat Bantu Pengembangan',
+        ],
+        'BAB VI PENUTUP': ['6.1. Kesimpulan', '6.2. Saran'],
+    },
+    '2': {
+        'BAB I PENDAHULUAN': [
+            '1.1. Latar Belakang',
+            '1.2. Tujuan dan Manfaat',
+            '1.3. Metode Penelitian',
+            '1.4. Ruang Lingkup',
+        ],
+        'BAB II LANDASAN TEORI': [
+            '2.1. Konsep Dasar Mobile Computing',
+            '2.2. Platform Sistem Operasi Mobile',
+            '2.3. Alat Bantu Perancangan dan Pemodelan Sistem',
+            '2.4. Bahasa Pemrograman dan Framework Mobile',
+        ],
+        'BAB III PEMBAHASAN': [
+            '3.1. Tinjauan Kasus Aplikasi Mobile Computing',
+            '3.2. Analisa Flow Chart',
+            '3.3. Analisa Diagram Hierarchy Input Process Output (HIPO)',
+            '3.4. Analisa Aplikasi Mobile Computing',
+            '3.5. Permasalahan',
+            '3.6. Pemecahan Masalah',
+        ],
+        'BAB IV PENUTUP': ['4.1. Kesimpulan', '4.2. Saran'],
+    },
+    '3': {
+        'BAB I PENDAHULUAN': [
+            '1.1. Latar Belakang',
+            '1.2. Tujuan dan Manfaat',
+            '1.3. Metode Penelitian',
+            '1.4. Ruang Lingkup',
+        ],
+        'BAB II LANDASAN TEORI': [
+            '2.1. Konsep Dasar Jaringan Komputer',
+            '2.2. Topologi Jaringan Komputer',
+            '2.3. Model Referensi OSI dan TCP/IP',
+            '2.4. Pengalamatan IP dan Subnetting',
+            '2.5. Perangkat Keras dan Perangkat Lunak Jaringan',
+        ],
+        'BAB III PEMBAHASAN': [
+            '3.1. Tinjauan Perusahaan',
+            '3.2. Skema Jaringan',
+            '3.3. Analisa Kemampuan Jaringan Berjalan',
+            '3.4. Permasalahan Pokok',
+            '3.5. Pemecahan Masalah',
+        ],
+        'BAB IV PENUTUP': ['4.1. Kesimpulan', '4.2. Saran'],
+    },
+    '4': {
+        'BAB I PENDAHULUAN': [
+            '1.1. Latar Belakang Masalah',
+            '1.2. Maksud dan Tujuan',
+            '1.3. Metode Penelitian',
+            '1.4. Ruang Lingkup',
+        ],
+        'BAB II LANDASAN TEORI': [
+            '2.1. Konsep Dasar Sistem',
+            '2.2. Unified Modelling Language (UML)',
+        ],
+        'BAB III PEMBAHASAN': [
+            '3.1. Tinjauan Institusi',
+            '3.2. Analisis Sistem Berjalan',
+            '3.3. Permasalahan Pokok',
+            '3.4. Pemecahan Masalah',
+        ],
+        'BAB IV PENUTUP': ['4.1. Kesimpulan', '4.2. Saran'],
+    },
+    '156': {
+        'BAB I PENDAHULUAN': [
+            '1.1. Latar Belakang Masalah',
+            '1.2. Identifikasi Permasalahan',
+            '1.3. Perumusan Masalah',
+            '1.4. Maksud dan Tujuan',
+            '1.5. Metode Penelitian',
+            '1.6. Ruang Lingkup',
+        ],
+        'BAB II LANDASAN TEORI': ['2.1. Tinjauan Pustaka', '2.2. Penelitian Terkait'],
+        'BAB III ANALISIS DAN PERANCANGAN APLIKASI': [
+            '3.1. Tinjauan Perusahaan',
+            '3.2. Analisis Aplikasi',
+            '3.3. Rancangan Algoritma',
+        ],
+        'BAB IV IMPLEMENTASI DAN PENGUJIAN SOFTWARE': [
+            '4.1. Desain',
+            '4.2. Code Generation',
+            '4.3. Testing',
+            '4.4. Support',
+        ],
+        'BAB V PENUTUP': ['5.1. Kesimpulan', '5.2. Saran'],
+    },
+    '138': {
+        'BAB I PENDAHULUAN': [
+            '1.1. Latar Belakang Masalah',
+            '1.2. Identifikasi Permasalahan',
+            '1.3. Perumusan Masalah',
+            '1.4. Maksud dan Tujuan',
+            '1.5. Metode Penelitian',
+            '1.6. Ruang Lingkup',
+            '1.7. Hipotesis',
+        ],
+        'BAB II LANDASAN TEORI': [
+            '2.1. Tinjauan Pustaka',
+            '2.2. Penelitian Terkait',
+            '2.3. Tinjauan Organisasi/Objek Penelitian',
+        ],
+        'BAB III METODOLOGI PENELITIAN': [
+            '3.1. Tahapan Penelitian',
+            '3.2. Instrumen Penelitian',
+            '3.3. Metode Pengumpulan Data, Populasi, dan Sampel Penelitian',
+            '3.4. Metode Analisis Data',
+        ],
+        'BAB IV HASIL PENELITIAN DAN PEMBAHASAN': [
+            '4.1. Deskripsi Data dan Dataset Penelitian',
+            '4.2. Implementasi Metode dan Perhitungan Analisis',
+            '4.3. Hasil Pengujian Hipotesis dan Kinerja Model',
+            '4.4. Pembahasan dan Analisis Komparatif',
+        ],
+        'BAB V PENUTUP': ['5.1. Kesimpulan', '5.2. Saran'],
+    },
+    '137': {
+        'BAB I PENDAHULUAN': [
+            '1.1. Latar Belakang Masalah',
+            '1.2. Identifikasi Permasalahan',
+            '1.3. Perumusan Masalah',
+            '1.4. Tujuan dan Manfaat',
+            '1.5. Metode Penelitian',
+            '1.6. Ruang Lingkup',
+        ],
+        'BAB II LANDASAN TEORI': ['2.1. Tinjauan Pustaka', '2.2. Penelitian Terkait'],
+        'BAB III ANALISIS JARINGAN BERJALAN': [
+            '3.1. Tinjauan Perusahaan',
+            '3.2. Skema Jaringan Berjalan',
+            '3.3. Permasalahan',
+            '3.4. Alternatif Pemecahan Masalah',
+        ],
+        'BAB IV RANCANGAN JARINGAN USULAN': [
+            '4.1. Jaringan Usulan',
+            '4.2. Pengujian Jaringan',
+        ],
+        'BAB V PENUTUP': ['5.1. Kesimpulan', '5.2. Saran'],
+    },
+    '158': {
+        'BAB I PENDAHULUAN': [
+            '1.1. Latar Belakang Masalah',
+            '1.2. Identifikasi Permasalahan',
+            '1.3. Perumusan Masalah',
+            '1.4. Tujuan dan Manfaat',
+            '1.5. Metode Penelitian',
+            '1.6. Ruang Lingkup',
+        ],
+        'BAB II LANDASAN TEORI': [
+            '2.1. Tinjauan Pustaka',
+            '2.2. Penelitian Terkait',
+            '2.3. Teori Pendukung',
+        ],
+        'BAB III ANALISIS DAN PERANCANGAN APLIKASI': [
+            '3.1. Tinjauan StartUp',
+            '3.2. Analisis Kebutuhan',
+            '3.3. Implementasi',
+            '3.4. Spesifikasi Aplikasi',
+            '3.5. Pengujian Aplikasi',
+            '3.6. Uraian Tugas',
+        ],
+        'BAB IV PENUTUP': ['4.1. Kesimpulan', '4.2. Saran'],
+    },
 }
 
 
@@ -794,11 +1053,15 @@ def scaffold_pkl_docx(outline="4", doc_type="laporan", title="LAPORAN PRAKTIK KE
     format_paragraph(p_title, space_before=6, space_after=12, line_spacing=1.5, align=WD_ALIGN_PARAGRAPH.CENTER, first_line_indent=Cm(0))
     format_run(p_title.add_run(title.upper()), size_pt=14, bold=True)
 
-    if os.path.exists(logo_file):
-        p_logo = doc.add_paragraph()
-        format_paragraph(p_logo, space_before=12, space_after=12, line_spacing=1.0, align=WD_ALIGN_PARAGRAPH.CENTER, first_line_indent=Cm(0))
-        logo_cm = 5.0 if is_thesis else 4.0
-        p_logo.add_run().add_picture(logo_file, width=Cm(logo_cm), height=Cm(logo_cm))
+    if not os.path.exists(logo_file):
+        raise FileNotFoundError(
+            f"Aset wajib logo UBSI tidak ditemukan: {logo_file}. "
+            "Pastikan berkas template/gambar/logo-ubsi.png tersedia sebelum menyusun dokumen."
+        )
+    p_logo = doc.add_paragraph()
+    format_paragraph(p_logo, space_before=12, space_after=12, line_spacing=1.0, align=WD_ALIGN_PARAGRAPH.CENTER, first_line_indent=Cm(0))
+    logo_cm = 5.0 if is_thesis else 4.0
+    p_logo.add_run().add_picture(logo_file, width=Cm(logo_cm), height=Cm(logo_cm))
 
     p_label = doc.add_paragraph()
     format_paragraph(p_label, space_before=6, space_after=6, line_spacing=1.5, align=WD_ALIGN_PARAGRAPH.CENTER, first_line_indent=Cm(0))
@@ -911,12 +1174,7 @@ def scaffold_pkl_docx(outline="4", doc_type="laporan", title="LAPORAN PRAKTIK KE
         _add_body(f"[{note_map[front_list]}]", line_spacing=1.0, indent_cm=0, italic=True)
 
     # 3. Bagian Pokok (1 section per Bab: awal bab nomor bawah tengah, lanjutan kanan atas)
-    sub_templates_pkl4 = {
-        "BAB I PENDAHULUAN": ["1.1. Latar Belakang Masalah", "1.2. Maksud dan Tujuan", "1.3. Metode Penelitian", "1.4. Ruang Lingkup"],
-        "BAB II LANDASAN TEORI": ["2.1. Konsep Dasar Sistem", "2.2. Peralatan Pendukung (UML / Metode Analisis)"],
-        "BAB III ANALISIS SISTEM BERJALAN DAN USULAN": ["3.1. Tinjauan Umum Instansi", "3.2. Analisis Sistem Berjalan", "3.3. Permasalahan Pokok", "3.4. Pemecahan Masalah"],
-        "BAB IV PENUTUP": ["4.1. Kesimpulan", "4.2. Saran"],
-    }
+    sub_map = OUTLINE_SUBCHAPTERS.get(key, {})
     for ch_idx, ch in enumerate(chapters):
         sec_ch = doc.add_section(WD_SECTION.NEW_PAGE)
         _setup_ubsi_section_geometry(sec_ch)
@@ -948,13 +1206,18 @@ def scaffold_pkl_docx(outline="4", doc_type="laporan", title="LAPORAN PRAKTIK KE
             _attach_behind_text_watermark(sec_ch.header, logo_file, size_cm=10.0)
 
         _add_center_heading(ch, size_pt=14, page_break=False)
-        if not is_thesis and key == "4" and ch in sub_templates_pkl4:
-            for sub in sub_templates_pkl4[ch]:
+        sub_headings = sub_map.get(ch, [])
+        if sub_headings:
+            for sub in sub_headings:
                 _add_sub_heading(sub)
-                _add_body(f"[ISI DATA NYATA: Uraikan {sub} secara faktual sesuai Pedoman PKL UBSI 2026.]", line_spacing=2.0, indent_cm=1.2)
+                _add_body(
+                    f"[Tulis uraian akademik substantif untuk {sub} sesuai Pedoman UBSI 2026; gunakan referensi terverifikasi nyata dan sisipkan [ISI DATA NYATA: ...] hanya untuk data privat lapangan yang belum tersedia.]",
+                    line_spacing=2.0,
+                    indent_cm=1.2,
+                )
         else:
             _add_body(
-                f"[ISI DATA NYATA: Tulis konten {ch} secara faktual dan ringkas sesuai Pedoman UBSI 2026 (min. total 30 halaman isi untuk Skripsi/TA, Turnitin <= 25% no exclude).]",
+                f"[Tulis uraian akademik substantif untuk {ch} sesuai Pedoman UBSI 2026; gunakan referensi terverifikasi nyata dan sisipkan [ISI DATA NYATA: ...] hanya untuk data privat lapangan yang belum tersedia.]",
                 line_spacing=2.0,
                 indent_cm=1.2,
             )
@@ -978,9 +1241,9 @@ def scaffold_pkl_docx(outline="4", doc_type="laporan", title="LAPORAN PRAKTIK KE
 
     _add_center_heading("DAFTAR PUSTAKA", size_pt=14, page_break=False)
     _add_body(
-        "[REFERENSI DIKELOLA VIA MENDELEY APA V.7 - Kuota TA D3 min. 5 jurnal OJS / Skripsi S1 min. 10 jurnal OJS (5 tahun terakhir), "
-        "semua nama pengarang ditulis lengkap tanpa et al. atau dkk., 1 spasi per entri dan jarak 2 spasi antar entri, "
-        "kompresi PDF <= 5 MB untuk DigiSAYS.]",
+        "[Isi Daftar Pustaka APA V.7 terverifikasi nyata di sini (semua nama pengarang ditulis lengkap tanpa et al. atau dkk. "
+        "sesuai SK Rektor UBSI 2026; kuota TA D3 min. 5 jurnal OJS / Skripsi S1 min. 10 jurnal OJS 5 tahun terakhir; "
+        "1 spasi per entri, jarak 2 spasi antar entri), serta ekspor salinan berkas .txt untuk impor Mendeley.]",
         line_spacing=1.0,
         indent_cm=0,
         italic=True,
@@ -988,9 +1251,11 @@ def scaffold_pkl_docx(outline="4", doc_type="laporan", title="LAPORAN PRAKTIK KE
 
     _add_center_heading("DAFTAR RIWAYAT HIDUP", size_pt=14, page_break=True)
     _add_body(
-        f"I. Biodata Mahasiswa\nNIM : {nim}\nNama Lengkap : {author}\nTempat/Tanggal Lahir : {city}, 1 Januari 2003\n"
-        f"Alamat Lengkap : Jl. Contoh Pendidikan No. 1, {city}\n\n"
-        "II. Pendidikan\n1. Sekolah Dasar Contoh\n2. Sekolah Menengah Pertama Contoh\n3. Sekolah Menengah Atas Contoh\n"
+        f"I. Biodata Mahasiswa\nNIM : {nim}\nNama Lengkap : {author}\n"
+        f"Tempat/Tanggal Lahir : [ISI DATA NYATA: Tempat, Tanggal Lahir]\n"
+        f"Alamat Lengkap : [ISI DATA NYATA: Alamat Lengkap Mahasiswa]\n\n"
+        "II. Pendidikan\n1. [ISI DATA NYATA: Sekolah Dasar]\n2. [ISI DATA NYATA: Sekolah Menengah Pertama]\n"
+        "3. [ISI DATA NYATA: Sekolah Menengah Atas/Kejuruan]\n"
         "4. Universitas Bina Sarana Informatika (Program Studi Teknologi Informasi)\n\n"
         "III. Riwayat Pengalaman Berorganisasi / Pekerjaan\n[ISI DATA NYATA: Riwayat pengalaman mahasiswa]",
         line_spacing=1.0,

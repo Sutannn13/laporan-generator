@@ -13,6 +13,8 @@ import math
 import os
 import re
 import sys
+import xml.etree.ElementTree as ET
+import zipfile
 
 REF_HEADINGS = {"DAFTAR PUSTAKA", "REFERENSI", "REFERENCES", "BIBLIOGRAPHY"}
 POST_REF_HEADINGS = {"LAMPIRAN", "APPENDICES", "APPENDIX", "BIODATA", "DAFTAR RIWAYAT HIDUP", "RIWAYAT HIDUP"}
@@ -134,8 +136,47 @@ def compute_burstiness(body_paras):
     }
 
 
-def audit_manuscript(path, min_std=5.5, mendeley_mode=False):
-    """Run antislop-copywriting, Burstiness, and R1 compliance checks on a file."""
+def inspect_docx_cover_logo(path):
+    """Return True if the first section (cover page) of a .docx embeds a real drawing/image."""
+    if os.path.splitext(path)[1].lower() != ".docx":
+        return None
+    ns = {
+        "w": "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
+        "v": "urn:schemas-microsoft-com:vml",
+    }
+    with zipfile.ZipFile(path, "r") as zf:
+        if "word/document.xml" not in zf.namelist():
+            return False
+        root = ET.fromstring(zf.read("word/document.xml"))
+    body = root.find("w:body", ns)
+    if body is None:
+        return False
+    cover_paras = []
+    for child in body:
+        tag = child.tag.rsplit("}", 1)[-1]
+        if tag == "p":
+            cover_paras.append(child)
+            if child.find("./w:pPr/w:sectPr", ns) is not None:
+                break
+            if child.find(".//w:br[@w:type='page']", ns) is not None and len(cover_paras) >= 2:
+                break
+            if len(cover_paras) >= 20:
+                break
+    for p_el in cover_paras:
+        if p_el.find(".//w:drawing", ns) is not None or p_el.find(".//v:imagedata", ns) is not None:
+            return True
+    return False
+
+
+def audit_manuscript(
+    path,
+    min_std=5.5,
+    mendeley_mode=False,
+    require_cover_logo=False,
+    max_placeholders=None,
+    min_words=None,
+):
+    """Run antislop-copywriting, Burstiness, R1 compliance, cover logo, and completeness checks."""
     body_paras, table_texts, ref_paras = extract_document_segments(path)
     all_text = "\n".join(body_paras + table_texts + ref_paras)
     body_text = "\n".join(body_paras + table_texts)
@@ -153,6 +194,9 @@ def audit_manuscript(path, min_std=5.5, mendeley_mode=False):
     neg_parallel_hits = NEG_PARALLEL_RE.findall(body_text)
     inanimate_hits = INANIMATE_HUMAN_RE.findall(body_text)
     isi_data_placeholders = re.findall(r"\[ISI DATA NYATA:[^\]]*\]", body_text)
+    prose_without_placeholders = re.sub(r"\[ISI DATA NYATA:[^\]]*\]", " ", "\n".join(body_paras))
+    body_word_count = len(re.findall(r"\b[\w-]+\b", prose_without_placeholders))
+    cover_logo_present = inspect_docx_cover_logo(path)
     burstiness = compute_burstiness(body_paras)
 
     ref_entries_count = sum(1 for r in ref_paras if len(r.split()) >= 4 or REF_LINE_RE.search(r))
@@ -175,6 +219,19 @@ def audit_manuscript(path, min_std=5.5, mendeley_mode=False):
         critical_issues.append(
             f"R1 Pelanggaran Mendeley: Ditemukan {ref_entries_count} entri di bawah heading REFERENSI/DAFTAR PUSTAKA di .docx."
         )
+    if require_cover_logo and cover_logo_present is False:
+        critical_issues.append(
+            "Logo sampul (<w:drawing>) hilang di halaman sampul .docx (pastikan edit in-place tidak menimpa paragraf logo UBSI)."
+        )
+    if max_placeholders is not None and len(isi_data_placeholders) > max_placeholders:
+        critical_issues.append(
+            f"Draf terlalu kosong: ditemukan {len(isi_data_placeholders)} placeholder [ISI DATA NYATA] (batas maks. {max_placeholders}). "
+            "Tulis penuh materi konseptual/teori/analisis; batasi placeholder hanya untuk data privat lapangan."
+        )
+    if min_words is not None and body_word_count < min_words:
+        critical_issues.append(
+            f"Substansi naskah terlalu singkat: {body_word_count} kata prose non-placeholder (minimal {min_words} kata)."
+        )
     if burstiness["sentence_count"] >= 6 and burstiness["std_words"] < min_std:
         warnings.append(
             f"Burstiness rendah (std={burstiness['std_words']} < {min_std} kata/kalimat): variasikan kalimat pendek & kompleks."
@@ -191,6 +248,8 @@ def audit_manuscript(path, min_std=5.5, mendeley_mode=False):
         "debug_banner_hits": debug_banner_hits,
         "r1_ref_entries_in_docx": ref_entries_count,
         "isi_data_placeholders": len(isi_data_placeholders),
+        "body_word_count": body_word_count,
+        "cover_logo_present": cover_logo_present,
         "burstiness": burstiness,
         "critical_issues": critical_issues,
         "warnings": warnings,
@@ -203,19 +262,34 @@ def main():
     parser = argparse.ArgumentParser(description="Linter Anti-Slop, Anti-AI-Detector (Burstiness), & Kepatuhan R1 Mendeley")
     parser.add_argument("-i", "--input", required=True, help="Path berkas .docx, .txt, atau .md")
     parser.add_argument("--mendeley-mode", action="store_true", help="Wajibkan 0 entri daftar pustaka di dalam .docx (Aturan R1)")
+    parser.add_argument("--require-cover-logo", action="store_true", help="Wajibkan <w:drawing> logo kampus hadir di halaman sampul .docx (Laporan PKL/Skripsi UBSI)")
+    parser.add_argument("--max-placeholders", type=int, default=None, help="Batas maksimum placeholder [ISI DATA NYATA: ...] agar draf tidak kosong")
+    parser.add_argument("--min-words", type=int, default=None, help="Jumlah kata prose minimum (tidak menghitung teks placeholder)")
     parser.add_argument("--min-std", type=float, default=5.5, help="Ambang minimum simpangan baku panjang kalimat (default: 5.5)")
     parser.add_argument("--strict", action="store_true", help="Jadikan warning burstiness/parallelism juga menggagalkan exit code")
     parser.add_argument("--json", action="store_true", help="Tampilkan output JSON lengkap")
     args = parser.parse_args()
 
-    result = audit_manuscript(args.input, min_std=args.min_std, mendeley_mode=args.mendeley_mode)
+    result = audit_manuscript(
+        args.input,
+        min_std=args.min_std,
+        mendeley_mode=args.mendeley_mode,
+        require_cover_logo=args.require_cover_logo,
+        max_placeholders=args.max_placeholders,
+        min_words=args.min_words,
+    )
     if args.json:
         print(json.dumps(result, indent=2, ensure_ascii=False))
     else:
         status = "PASS" if result["passed"] else "FAIL"
         b = result["burstiness"]
         print(f"[{status}] {result['file']}")
-        print(f"  Em dash: {result['em_dash_count']} | Clichés: {len(result['cliche_hits'])} | R1 ref entries in docx: {result['r1_ref_entries_in_docx']}")
+        print(
+            f"  Em dash: {result['em_dash_count']} | Clichés: {len(result['cliche_hits'])} | "
+            f"R1 ref entries in docx: {result['r1_ref_entries_in_docx']} | "
+            f"Words: {result['body_word_count']} | Placeholders: {result['isi_data_placeholders']} | "
+            f"Cover logo: {result['cover_logo_present']}"
+        )
         print(f"  Burstiness: sentences={b['sentence_count']}, mean={b['mean_words']} words, std={b['std_words']} (range {b['min_words']}-{b['max_words']})")
         for issue in result["critical_issues"]:
             print(f"  [CRITICAL] {issue}")

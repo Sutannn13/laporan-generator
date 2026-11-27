@@ -6,7 +6,7 @@ export const GITHUB_API_REPO_URL = "https://api.github.com/repos/Sutannn13/lapor
 export const SHIELDS_STARS_URL =
   "https://img.shields.io/github/stars/Sutannn13/laporan-generator.json";
 export const QUICK_INSTALL_CMD =
-  "npx skills add Sutannn13/laporan-generator";
+  "npx -y --allow-git=all github:Sutannn13/laporan-generator install";
 
 export const NAV_LINKS = [
   { label: "Prinsip R1-R4", href: "#aturan-r1-r4" },
@@ -175,7 +175,7 @@ export const SKILL_ROWS = [
     art: "cli",
     isCliRow: true,
     description:
-      "Pasang 1 skill terpadu langsung ke coding agent lokal tanpa git clone dan tanpa meninggalkan folder repo sampah. Pilih skenario di bawah untuk menyalin perintahnya.",
+      "Satu perintah pemasangan langsung ke seluruh coding agent lokal tanpa git clone dan tanpa meninggalkan folder repo sampah. Langsung memasang skill terpadu, 5 slash command, aturan scoped, serta memeriksa runtime uv.",
     tags: [
       "/laporan-generator",
       "/mode-ilmiah",
@@ -186,31 +186,29 @@ export const SKILL_ROWS = [
   },
 ];
 
-export const INSTALL_TABS = [
-  {
-    id: "agent",
-    label: "Pasang 1 Skill (Tanpa Clone)",
-    command: "npx skills add Sutannn13/laporan-generator",
-    hint: "Standar skills.sh: memasang 1 skill terpadu (laporan-generator) berisi mode-ilmiah, jurnal-sinta, humanizer-id UBSI, & skrip OpenXML ke Antigravity, Claude Code, Cursor, OpenCode, atau Codex tanpa git clone.",
-  },
-  {
-    id: "installer",
-    label: "Installer CLI + Slash Cmd",
-    command: "npx -y --allow-git=all github:Sutannn13/laporan-generator install",
-    hint: "Installer bawaan tanpa clone (pure Node.js, kompatibel npm 12+): memasang 1 skill terpadu, 5 slash command, aturan scoped, serta cek runtime uv tanpa menimpa AGENTS.md atau CLAUDE.md proyek Anda.",
-  },
-  {
-    id: "cli",
-    label: "Scaffold PKL / Skripsi (npx)",
-    command:
-      "npx -y --allow-git=all github:Sutannn13/laporan-generator my-laporan --type laporan --outline 4 --yes",
-    hint: "Membuat folder kerja Typst PKL Prodi TI (outline 1-4 / proposal) atau Skripsi UBSI (--type skripsi --outline 156/138/137/158) tanpa clone repo.",
-  },
+export const PRIMARY_INSTALL = {
+  id: "installer",
+  label: "Installer CLI Terpadu (Rekomendasi)",
+  command: QUICK_INSTALL_CMD,
+  hint: "Satu perintah tanpa git clone (pure Node.js, kompatibel npm 12+): memasang 1 skill terpadu, 5 slash command, aturan scoped, serta cek runtime uv ke Antigravity, Claude Code, Cursor, OpenCode, KiloCode, & Freebuff tanpa menimpa AGENTS.md atau CLAUDE.md proyek Anda.",
+};
+
+export const SECONDARY_COMMANDS = [
   {
     id: "status",
-    label: "Cek Status & Runtime",
+    label: "Cek status & runtime",
     command: "npx -y --allow-git=all github:Sutannn13/laporan-generator status",
-    hint: "Memverifikasi lokasi 1 skill terpadu di seluruh agent, kesiapan runtime uv/Python, serta kelengkapan katalog SINTA 1-6 dan preset UBSI.",
+  },
+  {
+    id: "scaffold",
+    label: "Scaffold Typst PKL/Skripsi",
+    command:
+      "npx -y --allow-git=all github:Sutannn13/laporan-generator my-laporan --type laporan --outline 1 --yes",
+  },
+  {
+    id: "skills-sh",
+    label: "Alternatif skills.sh",
+    command: "npx skills add Sutannn13/laporan-generator",
   },
 ];
 
@@ -409,7 +407,7 @@ export const PROCESS_STEPS = [
     title: "Pasang 1 Skill Tanpa Clone & Pilih Outline",
     text:
       "Pasang 1 skill terpadu (laporan-generator) ke IDE Anda tanpa git clone, lalu tentukan target dokumen: Proposal/Laporan PKL UBSI, Skripsi FTI 2026, Audit COBIT, atau Jurnal SINTA 1-6.",
-    command: "npx skills add Sutannn13/laporan-generator",
+    command: "npx -y --allow-git=all github:Sutannn13/laporan-generator install",
   },
   {
     name: "Susun",
